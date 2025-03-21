@@ -7,15 +7,19 @@
 - Trình biên dịch là chương trình chuyển đổi source code C thành mã máy để máy tính có thể thực thi.
 - Quá trình biên dịch gồm 4 giai đoạn:
 <br>&nbsp;1. Preprocess (Tiền xử lý):<br>
-&nbsp;&nbsp;- **Lệnh tạo _file.i_ từ _file.c_ với trình gcc trong VS Code:** `gcc -E file.c -o file.i`.<br>
-&nbsp;&nbsp;- **Xử lý các loại chỉ thị tiền xử lý:** `#include`, `#define`, `#ifdef`, etc.<br>
-&nbsp;&nbsp;- **Xóa các comment:** `// comment`, `/* comment */`.<br>
-&nbsp;2. Compile (Biên dịch):<br>
-&nbsp;&nbsp;- **Lệnh tạo _file.i_ từ _file.c_ với trình gcc trong VS Code:** `gcc -E file.c -o file.i`.<br>
-&nbsp;&nbsp;- **Xử lý các loại chỉ thị tiền xử lý:** `#include`, `#define`, `#ifdef`, etc.<br>
-&nbsp;&nbsp;- **Xóa các comment:** `// comment`, `/* comment */`.<br>
-&nbsp;3. Assemble (Hợp ngữ):<br>
-&nbsp;4. Link (Liên kết):<br>
+&nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.i_ từ _file.c_ với trình gcc trong VS Code:** `gcc -E file.c -o file.i`.<br>
+&nbsp;&nbsp;- &nbsp;**Xử lý các loại chỉ thị tiền xử lý:** `#include`, `#define`, `#ifdef`, etc.<br>
+&nbsp;&nbsp;- &nbsp;**Xóa các comment:** `// comment`, `/* comment */`.<br>
+&nbsp;2. Compiler (Quá trình biên dịch):<br>
+&nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.s_ từ _file.i_:** `gcc -S file.i -o file.s`.<br>
+&nbsp;&nbsp;- &nbsp;**File.s là file assembly code (mã hợp ngữ):** là ngôn ngữ bậc thấp, giúp điều khiển phần cứng dễ dàng.<br>
+&nbsp;3. Assembler (Quá trình dịch hợp ngữ):<br>
+&nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.o_ từ _file.s_:** `gcc -c file.s -o file.o`.<br>
+&nbsp;&nbsp;- &nbsp;**File.o là file Object:** dịch Assembly code thành mã máy mà máy tính có thể hiểu được.<br>
+&nbsp;4. Linker (Quá trình liên kết):<br>
+&nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.exe_ từ các _file.o_:** `gcc file1.o file2.o -o filemain.o`.<br>
+&nbsp;&nbsp;- &nbsp;**Lệnh chạy _file.exe_:** `./filemain`.<br>
+&nbsp;&nbsp;- &nbsp;**Liên kết các file.o:** Tất cả các file.o sẽ được liên kết lại và tạo thành 1 file.exe để có thể chạy được chương trình.<br>
 ### 📑 II. Preprocessor Directives (Chỉ thị tiền xử lý):
 - Là các instructors cho Preprocessor để thực hiện các nhiệm vụ như thay thế văn bản, mở rộng macro, thêm header file, và các nhiệm vụ khác.
 - Bắt đầu bằng `#`.
