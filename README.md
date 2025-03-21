@@ -38,10 +38,24 @@
   |**`#ifndef`**|Kiểm tra 1 Macro chưa được định nghĩa, nếu đúng mã bên dưới sẽ được thực thi|`#ifndef PI`<br>`#define PI 3.14159`<br>`#endif`|
 - Một số các toán tử trong Macro:<br>
 
-  |📋 Macro's Operators|📄 Description|💡 Examples|
+  |📋 Macro of Operators|📄 Description|💡 Examples|
   |:------------------------:|:------------------------|:------------------------|
   |**`#`**|Biến tham số thàng dạng chuỗi (string literal)|`#define TO_STRING(X) #X`<br>`printf("%s\n", TO_STRING(Hello World));`: TO_STRING(Hello World) sẽ thành chuỗi "Hello World" khi biên dịch|
   |**`##`**|Nối 2 tham số|`#define VAR(name,num) name##num`<br>`int var1 = 10;`<br>`int var2 = 20;`<br>`printf("var1 = %d, var2 = %d", VAR(var,1), VAR(var,2));`: nối var với 1 thành var1 và tương tự với var2|
   |**`Variadic`**|Toán tử `__VA_ARGS__` được dùng khi Macro nhận nhiều tham số không xác định|`#define sum(...) \`<br>`int arr[__VA_ARGS__]; \`<br>`int result = 0; \`<br>`for (int i=0; i<(sizeof(arr)/sizeof(arr[0])); i++) \`<br>`{ result += arr[i]; } \`<br>`printf("Sum = %d\n", result);`<br>--> `sum(1,2,3,4);`: tính tổng 1+2+3+4|
 <br>
   </details>
+<details>
+<summary>🔖 <b>BÀI 2: STDARG - ASSERT</b></summary>
+ 
+### 📑 I. Thư viện STDARG:
+- Cung cấp các Macro để xử lý các hàm với số lượng tham số không xác định.
+- Thư viện có các Macro chính như sau:<br>
+
+  |📋 Macro of STDARG|📄 Description|💡 Examples|
+  |:------------------------:|:------------------------|:------------------------|
+  |**`va_list`**|Khai báo 1 biến để lưu trữ danh sách tham số|`#define TO_STRING(X) #X`<br>`printf("%s\n", TO_STRING(Hello World));`|
+  |**`##`**|Nối 2 tham số|`#define VAR(name,num) name##num`<br>`int var1 = 10;`<br>`int var2 = 20;`<br>`printf("var1 = %d, var2 = %d", VAR(var,1), VAR(var,2));`: nối var với 1 thành var1 và tương tự với var2|
+  |**`Variadic`**|Toán tử `__VA_ARGS__` được dùng khi Macro nhận nhiều tham số không xác định|`#define sum(...) \`<br>`int arr[__VA_ARGS__]; \`<br>`int result = 0; \`<br>`for (int i=0; i<(sizeof(arr)/sizeof(arr[0])); i++) \`<br>`{ result += arr[i]; } \`<br>`printf("Sum = %d\n", result);`<br>--> `sum(1,2,3,4);`: tính tổng 1+2+3+4|
+<br>
+</details>
