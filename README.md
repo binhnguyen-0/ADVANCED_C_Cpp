@@ -59,4 +59,13 @@
   |**`va_arg(list, type)`**|Truy xuất tham số - Trả về tham số tiếp theo từ list & type: kiểu dữ liệu của tham số để truy xuất|`int result = 0;`<br>`for (int i = 0; i < count; i++)`<br>`{result += va_arg(args, int);}`: dùng va_arg để **truy xuất từng tham số trong danh sách sau mỗi lần gọi** và cộng dồn lên vào result ta được tổng tất cả các tham số|
   |**`va_end(list)`**|Dọn dẹp va_list|`va_end(args);`<br>`return result;`<br>`}`|
 <br>
+- Ví dụ kết hợp **STDARG** với ____VA_ARGS____:<br>
+
+  |📋 STDARG & __VA_ARGS__|📄 Description|
+  |:----------------------|:-------------|
+  |`#define tong(...) sum(__VA_ARGS__,0)`||
+  |`int sum(int count,...)`<br>`{`|: khởi tạo hàm sum truyền vào 1 fixed argument và các tham số chưa biết trước|
+  |`va_list args;`<br>`va_start(args, count;)`<br>`int result = count;`|: khai báo biến args kiểu va_list<br>: khởi tạo list args và tham số cuối count<br>: khởi tạo biến result = tham số cuối count để tính tổng từ count trở đi.|
+  |`int value;`<br>``<br>``|: khai báo 1 biến tạm value để lưu trữ giá trị của va_arg(args, int)<br>: khởi tạo list args và tham số cuối count<br>: khởi tạo biến result = tham số cuối count để tính tổng từ count trở đi.|
+<br>
 </details>
