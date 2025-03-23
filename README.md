@@ -59,13 +59,17 @@
   |**`va_arg(list, type)`**|Truy xuất tham số - Trả về tham số tiếp theo từ list & type: kiểu dữ liệu của tham số để truy xuất|`int result = 0;`<br>`for (int i = 0; i < count; i++)`<br>`{result += va_arg(args, int);}`: dùng va_arg để **truy xuất từng tham số trong danh sách sau mỗi lần gọi** và cộng dồn lên vào result ta được tổng tất cả các tham số|
   |**`va_end(list)`**|Dọn dẹp va_list|`va_end(args);`<br>`return result;`<br>`}`|
 <br>
-- Ví dụ kết hợp **STDARG** với ____VA_ARGS____:<br>
+- Ví dụ kết hợp **STDARG** với ____VA_ARGS____:
+
+<br>
 
   |📋 STDARG & __VA_ARGS__|📄 Description|
   |:----------------------|:-------------|
-  |`#define tong(...) sum(__VA_ARGS__,0)`||
+  |`#define tong(...) sum(__VA_ARGS__,'\n')`||
   |`int sum(int count,...)`<br>`{`|: khởi tạo hàm sum truyền vào 1 fixed argument và các tham số chưa biết trước|
-  |`va_list args;`<br>`va_start(args, count;)`<br>`int result = count;`|: khai báo biến args kiểu va_list<br>: khởi tạo list args và tham số cuối count<br>: khởi tạo biến result = tham số cuối count để tính tổng từ count trở đi.|
-  |`int value;`<br>``<br>``|: khai báo 1 biến tạm value để lưu trữ giá trị của va_arg(args, int)<br>: khởi tạo list args và tham số cuối count<br>: khởi tạo biến result = tham số cuối count để tính tổng từ count trở đi.|
+  |`va_list args;`<br>`va_list check;`<br>`va_copy(check, args);`<br>`va_start(args, count;)`<br>`int result = count;`|: khai báo biến args kiểu va_list dùng để tính tổng.<br>: khai báo biến check sử dụng để kiểm tra điều kiện mà không phải gọi thêm va_arg(args, int).<br>: sao chép dữ liệu từ args vào check<br>: khởi tạo list args và tham số cuối count.<br>: khởi tạo biến result = tham số cuối count để tính tổng từ count trở đi.|
+  |`while ((va_arg(check, char*)) != (char*)'\n')`<br>`{ result += va_arg(args, int);}`|: dùng hàm while để kiểm tra điều kiện dừng check = '\n'.<br>: dùng va_arg để truy xuất từng tham số trong danh sách sau mỗi lần gọi và cộng dồn lên vào result ta được tổng tất cả các tham số|
+  |`va_end(args);`|: dọn sạch args.|
+  |`int main()`<br>`{`<br>`printf("Tổng: %d\n", tong(3, 2, 4, 0, 6));`<br>`return 0;`<br>`}`|: tính tổng tất cả các số trong gọi hàm.|
 <br>
 </details>
