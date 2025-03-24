@@ -81,3 +81,59 @@
 |`define LOG(condition, cmd) assert(condition && #cmd)`|: có thể kết hợp với define|
 <br>
 </details>
+
+<details>
+<summary>🔖 <b>BÀI 3: BITMASK</b></summary>
+- Bitmask là một kỹ thuật thao tác trên các bit của dữ liệu để kiểm tra, đặt hoặc xóa bit cụ thể.
+ 
+### 📑 I. Các toán tử bitwise:
+- Gồm:<br>
+1. NOT bitwise:
+   - Truth table:
+
+|A|~A|
+|:-----:|:-----:|
+|0|1|
+|1|0|
+
+2. AND bitwise:
+   - Truth table:
+
+|A|B|A&B|
+|:-:|:-:|:-:|
+|0|0|0|
+|0|1|0|
+|1|0|0|
+|1|1|1|
+
+3. OR bitwise:
+   - Truth table:
+
+|A|B|A&B|
+|:-:|:-:|:-:|
+|0|0|0|
+|0|1|1|
+|1|0|1|
+|1|1|1|
+
+4. XOR bitwise:
+   - Truth table: **Bằng 1** nếu 2 bit khác nhau, **bằng 0** nếu 2 bit giống nhau.
+
+|A|B|A&B|
+|:-:|:-:|:-:|
+|0|0|0|
+|0|1|1|
+|1|0|1|
+|1|1|0|
+
+5. Dịch trái `<<`, dịch phải `>>`:
+   - Dịch trái là nhân với 2^n, n - số bit dịch.
+   - Dịch phải là chia với 2^n, n - số bit dịch.
+   
+|A|A' = A << 1|A' >> 1|
+|:-:|:-:|:-:|
+|0001 (1)|0010 (2)|0001 (1)|
+|0010 (2)|0100 (4)|0010 (2)|
+|0100 (4)|1000 (8)|0100 (4)|
+
+</details>
