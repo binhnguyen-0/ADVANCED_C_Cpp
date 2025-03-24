@@ -87,8 +87,8 @@
 - Bitmask là một kỹ thuật thao tác trên các bit của dữ liệu để kiểm tra, đặt hoặc xóa bit cụ thể.
  
 ### 📑 I. Các toán tử bitwise:
-- Gồm:<br>
-1. NOT bitwise:
+
+👉 1. NOT bitwise:
    - Truth table:
 
 |A|~A|
@@ -96,7 +96,7 @@
 |0|1|
 |1|0|
 
-2. AND bitwise:
+👉 2. AND bitwise:
    - Truth table:
 
 |A|B|A&B|
@@ -106,7 +106,7 @@
 |1|0|0|
 |1|1|1|
 
-3. OR bitwise:
+👉 3. OR bitwise:
    - Truth table:
 
 |A|B|A&B|
@@ -116,7 +116,7 @@
 |1|0|1|
 |1|1|1|
 
-4. XOR bitwise:
+👉 4. XOR bitwise:
    - Truth table: **Bằng 1** nếu 2 bit khác nhau, **bằng 0** nếu 2 bit giống nhau.
 
 |A|B|A&B|
@@ -126,9 +126,9 @@
 |1|0|1|
 |1|1|0|
 
-5. Dịch trái `<<`, dịch phải `>>`:
-   - Dịch trái là nhân với 2^n, n - số bit dịch.
-   - Dịch phải là chia với 2^n, n - số bit dịch.
+👉 5. Dịch trái `<<`, dịch phải `>>`:
+   - Dịch trái là nhân với 2^n, n - số bit dịch, xóa bit bên trái ngoài cùng và thêm 0 vào đuôi bên phải ngoài cùng.
+   - Dịch phải là chia với 2^n, n - số bit dịch, xóa bit bên phải ngoài cùng và thêm 0 hoặc 1 (tùy thuộc vào bit MSB)  vào đuôi bên trái ngoài cùng.
    
 |A|A' = A << 1|A' >> 1|
 |:-:|:-:|:-:|
