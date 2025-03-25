@@ -64,7 +64,7 @@
 
 |📋 STDARG & __VA_ARGS__|📄 Description|
 |:----------------------|:-------------|
-|`#define tong(...) sum(__VA_ARGS__,'\n')`||
+|`#define tong(...) sum(__VA_ARGS__,'\n')`|: |
 |`int sum(int count,...)`<br>`{`|: khởi tạo hàm sum truyền vào 1 fixed argument và các tham số chưa biết trước|
 |`va_list args;`<br>`va_list check;`<br>`va_copy(check, args);`<br>`va_start(args, count;)`<br>`int result = count;`|: khai báo biến args kiểu va_list dùng để tính tổng.<br>: khai báo biến check sử dụng để kiểm tra điều kiện mà không phải gọi thêm va_arg(args, int).<br>: sao chép dữ liệu từ args vào check<br>: khởi tạo list args và tham số cuối count.<br>: khởi tạo biến result = tham số cuối count để tính tổng từ count trở đi.|
 |`while ((va_arg(check, char*)) != (char*)'\n')`<br>`{ result += va_arg(args, int);}`|: dùng hàm while để kiểm tra điều kiện dừng check = '\n'.<br>: dùng va_arg để truy xuất từng tham số trong danh sách sau mỗi lần gọi và cộng dồn lên vào result ta được tổng tất cả các tham số|
@@ -84,6 +84,7 @@
 
 <details>
 <summary>🔖 <b>BÀI 3: BITMASK</b></summary>
+ 
 - Bitmask là một kỹ thuật thao tác trên các bit của dữ liệu để kiểm tra, đặt hoặc xóa bit cụ thể.
  
 ### 📑 I. Các toán tử bitwise:
@@ -136,5 +137,69 @@
 |0010 (2)|0100 (4)|0010 (2)|
 |0100 (4)|1000 (8)|0100 (4)|
 
+- Ví dụ: 
+<br>
+
+```C
+#define GENDER 1 << 0    // 0b00000001
+#define TSHIRT 1 << 1    // 0b00000010
+#define HAT 1 << 2       // 0b00000100
+#define SHOES 1 << 3     // 0b00001000
+#define FEATURES 1 << 4  // 0b00010000
+
+/* Hàm bật tính năng */
+void enableFeature(uint8_t *options, uint8_t feature)
+{
+  *options |= feature;     // Bật tính năng cho options sử dụng phép OR.
+}
+
+/* Hàm tắt tính năng */
+void disableFeature(uint8_t *options, uint8_t feature)
+{
+  *options &= ~feature;   // Tắt tính năng sử dụng phép AND với ~feature.
+}
+
+/* Hàm kiểm tra tính năng đã bật hay chưa*/
+int8_t isFeatureEnabled(uint8_t options, uint8_t feature)
+{
+    return (options & feature) != 0;    // Đọc xem các bit tính năng có bằng 0 hay không dùng phép AND.
+}
+
+/* In ra những tính năng đã bật*/
+void listSelectedFeatures(uint8_t options)
+{
+  printf("Selected Features: \n");
+  const char* featureName[] =
+  {
+    "Gender",
+    "Shirt",
+    "Hat",
+    "Shoes",
+    "Additional feature"
+  };
+  for (int i = 0; i < 8; i++)
+  {
+    if ((options >> i) & 1)
+    {
+      printf("%s\n", featureName[i]);     // Kiểm tra xem options dịch phải i lần & với 1 = 1 thì in ra phần tử chuỗi thứ i của mảng featureName.
+    }
+  }
+}
+
+int main(int argc, char const *argv[])
+{
+  uint8_t options = 0;
+  enableFeature(&options, GENDER | TSHIRT | HAT);    // truyền vào địa chỉ options, và các giá trị tính năng cần thiết để bật tính năng.
+  disableFeature(&options, HAT | TSHIRT);    // loại bỏ 2 tính năng đã bật trước đó
+}
+  listSelectedFeatures(options);    truyền vào giá trị sao chép của options sau khi đã bật cá tính năng để in ra các tính năng đó.
+  return 0;
+```
+
+<a href="#top">
+  <button style="padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">
+    ⬆️ Quay lại đầu trang
+  </button>
+</a>
 
 </details>
