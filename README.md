@@ -45,6 +45,9 @@
 |**`##`**|Nối 2 tham số|`#define VAR(name,num) name##num`<br>`int var1 = 10;`<br>`int var2 = 20;`<br>`printf("var1 = %d, var2 = %d", VAR(var,1), VAR(var,2));`: nối var với 1 thành var1 và tương tự với var2|
 |**`Variadic`**|Toán tử `__VA_ARGS__` được dùng khi Macro nhận nhiều tham số không xác định|`#define sum(...) \`<br>`int arr[__VA_ARGS__]; \`<br>`int result = 0; \`<br>`for (int i=0; i<(sizeof(arr)/sizeof(arr[0])); i++) \`<br>`{ result += arr[i]; } \`<br>`printf("Sum = %d\n", result);`<br>--> `sum(1,2,3,4);`: tính tổng 1+2+3+4|
 <br>
+
+[🔼 _UP_](#top)
+
   </details>
 <details>
 <summary>🔖 <b>BÀI 2: STDARG - ASSERT</b></summary>
@@ -81,6 +84,9 @@
 |`assert(x == 5 && "x phải bằng 5")`|: sử dụng assert để kiểm tra xem liệu có thỏa mãn điều kiện thì mới cho chương trình chạy tiếp còn không thì dừng lại và thông báo lỗi|
 |`define LOG(condition, cmd) assert(condition && #cmd)`|: có thể kết hợp với define|
 <br>
+
+[🔼 _UP_](#top)
+
 </details>
 
 <details>
@@ -196,5 +202,5 @@ int main(int argc, char const *argv[])
   listSelectedFeatures(options);    truyền vào giá trị sao chép của options sau khi đã bật cá tính năng để in ra các tính năng đó.
   return 0;
 ```
-[🔼:__Quay lại đầu trang__](#top)
+[🔼 _UP_](#top)
 </details>
