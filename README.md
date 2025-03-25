@@ -1,5 +1,6 @@
 # 📖 ADVANCED_C_Cpp
 ----
+<a name="top"></a>
 <details>
 <summary>🔖 <b>BÀI 1: COMPILER - MACRO</b></summary>
  
@@ -195,11 +196,5 @@ int main(int argc, char const *argv[])
   listSelectedFeatures(options);    truyền vào giá trị sao chép của options sau khi đã bật cá tính năng để in ra các tính năng đó.
   return 0;
 ```
-
-<a href="#top">
-  <button style="padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">
-    ⬆️ Quay lại đầu trang
-  </button>
-</a>
-
+[🔼:__Quay lại đầu trang__](#top)
 </details>
