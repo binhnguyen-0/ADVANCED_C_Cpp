@@ -208,7 +208,9 @@ int main(int argc, char const *argv[])
 <details>
 <summary>🔖 <b>BÀI 4: POINTER</b></summary>
 - Con trỏ là một biến chứa giá trị là địa chỉ bộ nhớ của một đối tượng khác (biến, mảng, hàm).
-- Cách cấp phát địa chỉ và giá trị của 1 biến: 
+- Cách cấp phát địa chỉ và giá trị của 1 biến:
+ 
+![Cách lưu trữ địa chỉ và giá trị của biến int](https://github.com/binhnguyen-0/ADVANCED_C_Cpp/issues/1#issue-2948280929)
 
 [🔼 _UP_](#top)
 </details>
