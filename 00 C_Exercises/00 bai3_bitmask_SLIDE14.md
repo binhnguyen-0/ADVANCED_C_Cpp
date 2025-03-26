@@ -1,4 +1,4 @@
-```C
+```c
 #include <stdio.h>
 #include <stdint.h>
 
@@ -36,34 +36,34 @@ typedef struct {
 /* Hàm cấu hình xe ô tô */
 void configureCar(CarOptions *car, CarColor color, CarPower power, CarEngine engine, uint8_t options)
 {
-    car->color = color;        // Truy cập thành phần color trong struct CarOptions và gán giá trị của biến color.
-    car->power = power;        // Truy cập thành phần power trong struct CarOptions và gán giá trị của biến power.
-    car->engine = engine;      // Truy cập thành phần engine trong struct CarOptions và gán giá trị của biến engine.
-    car->additionalOptions = options;     // Truy cập thành phần additionalOptions trong struct CarOptions và gán giá trị của biến options.
+    car->color = color;        // Truy cập thành phần color trong struct CarOptions qua con trỏ car và gán giá trị của biến color.
+    car->power = power;        // Truy cập thành phần power trong struct CarOptions qua con trỏ car và gán giá trị của biến power.
+    car->engine = engine;      // Truy cập thành phần engine trong struct CarOptions qua con trỏ car và gán giá trị của biến engine.
+    car->additionalOptions = options;     // Truy cập thành phần additionalOptions trong struct CarOptions qua con trỏ car và gán giá trị của biến options.
 }
 
 /* Hàm cài Options cho ô tô */
 void setOption(CarOptions *car, uint8_t optionMask)
 {
-    car->additionalOptions |= optionMask;      // Truy cập thành phần additionalOptions trong struct CarOptions và bật optionMask.
+    car->additionalOptions |= optionMask;      // Truy cập thành phần additionalOptions trong struct CarOptions qua con trỏ car và bật optionMask.
 }
 
 /* Hàm hủy cài Options cho ô tô */
 void unsetOption(CarOptions *car, uint8_t optionMask)
 {
-    car->additionalOptions &= ~optionMask;      // Truy cập thành phần additionalOptions trong struct CarOptions và tắt optionMask bằng cách dùng phép AND với đảo của optionMask.
+    car->additionalOptions &= ~optionMask;      // Truy cập thành phần additionalOptions trong struct CarOptions qua con trỏ car và tắt optionMask bằng cách dùng phép AND với đảo của optionMask.
 }
 
 /* Hàm in ra các thông tin */
 void displayCarOptions(const CarOptions car) {
-    const char *colors[] = {"Red", "Blue", "Black", "White"};
+    const char *colors[] = {"Red", "Blue", "Black", "White"};	// Khai báo mảng con trỏ trỏ đến từng thành phần chuỗi ký tự không thay đổi được.
     const char *powers[] = {"100HP", "150HP", "200HP"};
     const char *engines[] = {"1.5L", "2.0L"};
 
     printf("Car Configuration: \n");
-    printf("Color: %s\n", colors[car.color]);
-    printf("Power: %s\n", powers[car.power]);
-    printf("Engine: %s\n", engines[car.engine]);
+    printf("Color: %s\n", colors[car.color]);		// In ra thành phần color trong struct bằng car.color
+    printf("Power: %s\n", powers[car.power]);		// In ra thành phần power trong struct bằng car.power
+    printf("Engine: %s\n", engines[car.engine]);	// In ra thành phần engine trong struct bằng car.engine
     printf("Sunroof: %s\n", (car.additionalOptions & SUNROOF_MASK) ? "Yes" : "No");
     printf("Premium Audio: %s\n", (car.additionalOptions & PREMIUM_AUDIO_MASK) ? "Yes" : "No");
     printf("Sports Package: %s\n", (car.additionalOptions & SPORTS_PACKAGE_MASK) ? "Yes" : "No");
@@ -73,7 +73,6 @@ int main() {
     CarOptions myCar;
     configureCar(&myCar, COLOR_BLACK, POWER_150HP, ENGINE_2_0L, 0); 
 	
-
     setOption(&myCar, SUNROOF_MASK);
     setOption(&myCar, PREMIUM_AUDIO_MASK);
     
