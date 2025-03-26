@@ -219,6 +219,8 @@ int main(int argc, char const *argv[])
   - Phụ thuộc vào kiến trúc máy tính và trình biên dịch hoặc là kiến trúc của vi xử lý.
   - Ví dụ với máy tính có 64 bit operating system thì thường là pointer sẽ có kích thước là 8 bytes (64 bit).
 - Cách 1 con trỏ được lưu trữ trong bộ nhớ:
+  - Ví dụ 1 con trỏ trỏ tới 1 biến int, mối địa chỉ của con trỏ sẽ lưu trữ 1 giá trị là địa chỉ của biến int đó, và những địa chỉ còn lại sẽ được mặc định là chứa 0x00.
+![image](https://github.com/user-attachments/assets/ead4d1e7-bd97-4098-bb93-aa32a198e32a)
 
 [🔼 _UP_](#top)
 </details>
