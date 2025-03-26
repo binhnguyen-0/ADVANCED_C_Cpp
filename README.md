@@ -199,7 +199,7 @@ int main(int argc, char const *argv[])
   enableFeature(&options, GENDER | TSHIRT | HAT);    // truyền vào địa chỉ options, và các giá trị tính năng cần thiết để bật tính năng.
   disableFeature(&options, HAT | TSHIRT);    // loại bỏ 2 tính năng đã bật trước đó
 }
-  listSelectedFeatures(options);    truyền vào giá trị sao chép của options sau khi đã bật cá tính năng để in ra các tính năng đó.
+  listSelectedFeatures(options);    // truyền vào giá trị sao chép của options sau khi đã bật cá tính năng để in ra các tính năng đó.
   return 0;
 ```
 [🔼 _UP_](#top)
@@ -208,19 +208,36 @@ int main(int argc, char const *argv[])
 <details>
 <summary>🔖 <b>BÀI 4: POINTER</b></summary>
  
-- Con trỏ là một biến chứa giá trị là địa chỉ bộ nhớ của một đối tượng khác (biến, mảng, hàm).
-  - Cách khai báo: `type ptrname` - `int *ptr;`.
-  - Lấy địa chỉ của 1 biến x kiểu int: `int *ptr = &x;`.
-  - Truy cập giá trị của biến bằng cách giải tham chiếu: `int y = *ptr;`: y = giá trị của biến x mà con trỏ ptr trỏ tới.
+<br>
+
+|📋 Pointer|📄 Description|💡 Examples|
+|:------------------------:|:------------------------|:------------------------|
+|**Khái niệm**|Là một biến chứa giá trị là địa chỉ bộ nhớ của một đối tượng khác (biến, mảng, hàm).||
+|**Address Operator (&)**|Được sử dụng để lấy địa chỉ của một biến hoặc để truy cập địa chỉ của một biến tới con trỏ.|`int x =10;`<br>`int *ptr = &x;`: biến con trỏ ptr lưu trữ địa chỉ của biến x|
+|**Dereferencing Operator (*)**|Được sử dụng để khai báo biến con trỏ và truy cập giá trị được lưu trữ trong địa chỉ.|`int x =10;`<br>`int *ptr = &x;`<br>`int y = *ptr;`: biến y sẽ bằng giá trị của biến x;|
+|**Kích thước**|Phụ thuộc vào kiến trúc máy tính và trình biên dịch hoặc là kiến trúc của vi xử lý.|Với máy tính có 64 bit operating system thì thường là pointer sẽ có kích thước là 8 bytes (64 bit).|
+|**Format Specifier %p**|Dùng để in địa chỉ được lưu trữ trong con trỏ. Định dạng địa chỉ bộ nhớ luôn ở dạng thập lục phân (0x...)|`printf("%p\n", ptr);`|
+|**Declare pointer**|Để khai báo 1 con trỏ, ta dùng Dereferencing Operator (*).|`int *ptr;`|
+|**Initialize Pointer**|Để khởi tạo 1 con trỏ, ta dùng Address Operator (&) để gán giá trị địa chỉ của 1 biến vào con trỏ.|`*ptr = &variable;`|
+|**Pointer Definition**|Có thể vừa khai báo vừa khởi tạo trong một bước - định nghĩa con trỏ.|`int *ptr = &variable;`|
+
+### I. Con trỏ trỏ tới biến:
+- Con trỏ có thể trỏ tới bất kỳ kiểu dữ liệu nguyên thủy nào.
 - Cách 1 biến được lưu trữ trong bộ nhớ:
   - Ví dụ 1 biến int 32 bit (4 byte) được lưu trữ thành 1 nhóm địa chỉ, mỗi địa chỉ lưu trữ 8 bit (1 byte) giá trị bắt đầu từ LSB đến MSB.
  ![Cách lưu trữ địa chỉ và giá trị của biến int](https://github.com/user-attachments/assets/3f4514ad-3758-4354-9fec-4e81327a2e0c)
-- Kích thước của con trỏ:
-  - Phụ thuộc vào kiến trúc máy tính và trình biên dịch hoặc là kiến trúc của vi xử lý.
-  - Ví dụ với máy tính có 64 bit operating system thì thường là pointer sẽ có kích thước là 8 bytes (64 bit).
 - Cách 1 con trỏ được lưu trữ trong bộ nhớ:
   - Ví dụ 1 con trỏ trỏ tới 1 biến int, mối địa chỉ của con trỏ sẽ lưu trữ 1 giá trị là địa chỉ của biến int đó, và những địa chỉ còn lại sẽ được mặc định là chứa 0x00 (địa chỉ mặc định này có thể chứa giá trị rác).
 ![image](https://github.com/user-attachments/assets/ead4d1e7-bd97-4098-bb93-aa32a198e32a)
+
+### II. Con trỏ mảng:
+
+<br>
+
+|📋 Array Pointer|📄 Description|
+|:------------------------|:------------------------|
+|`int main() {`<br>`int arr[5] = {1, 2, 3, 4, 5};`<br>`int *ptr = arr;`<br>`int (*ptr_arr)[5] = &arr;`|<br><br>: ptr là con trỏ trỏ tới phần tử đầu tiên của mảng.<br>: ptr_arr là con trỏ trỏ đến toàn bộ mảng|
+|`int n = sizeof(arr)/sizeof(arr[0]);`<br>`for (int i; i < n; i++)`<br>`printf("%d", (*ptr)[i]);`<br>`for (int i; i < n; i++)`<br>`printf("%d", ptr+i);`|: n = số phần tử trong mảng.<br><br>: truy cập từng phần tử trong mảng đối với con trỏ trỏ đến toàn bộ mảng<br><br>: truy cập phần tử trong mảng đối với con trỏ trỏ đến thành phần đầu tiên của mảng.|
 
 
 [🔼 _UP_](#top)
