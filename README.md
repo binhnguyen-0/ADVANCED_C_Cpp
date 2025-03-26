@@ -221,7 +221,7 @@ int main(int argc, char const *argv[])
 |**Initialize Pointer**|Để khởi tạo 1 con trỏ, ta dùng Address Operator (&) để gán giá trị địa chỉ của 1 biến vào con trỏ.|`*ptr = &variable;`|
 |**Pointer Definition**|Có thể vừa khai báo vừa khởi tạo trong một bước - định nghĩa con trỏ.|`int *ptr = &variable;`|
 
-### I. Con trỏ trỏ tới biến:
+### I. Con trỏ thường:
 - Con trỏ có thể trỏ tới bất kỳ kiểu dữ liệu nguyên thủy nào.
 - Cách 1 biến được lưu trữ trong bộ nhớ:
   - Ví dụ 1 biến int 32 bit (4 byte) được lưu trữ thành 1 nhóm địa chỉ, mỗi địa chỉ lưu trữ 8 bit (1 byte) giá trị bắt đầu từ LSB đến MSB.
