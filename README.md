@@ -218,6 +218,7 @@ int main(int argc, char const *argv[])
 - Kích thước của con trỏ:
   - Phụ thuộc vào kiến trúc máy tính và trình biên dịch hoặc là kiến trúc của vi xử lý.
   - Ví dụ với máy tính có 64 bit operating system thì thường là pointer sẽ có kích thước là 8 bytes (64 bit).
+- Cách 1 con trỏ được lưu trữ trong bộ nhớ:
 
 [🔼 _UP_](#top)
 </details>
