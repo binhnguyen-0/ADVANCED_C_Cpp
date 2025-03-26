@@ -207,10 +207,17 @@ int main(int argc, char const *argv[])
 
 <details>
 <summary>🔖 <b>BÀI 4: POINTER</b></summary>
-- Con trỏ là một biến chứa giá trị là địa chỉ bộ nhớ của một đối tượng khác (biến, mảng, hàm).
-- Cách cấp phát địa chỉ và giá trị của 1 biến:
  
-![Cách lưu trữ địa chỉ và giá trị của biến int](https://github.com/binhnguyen-0/ADVANCED_C_Cpp/issues/1#issue-2948280929)
+- Con trỏ là một biến chứa giá trị là địa chỉ bộ nhớ của một đối tượng khác (biến, mảng, hàm).
+  - Cách khai báo: `type ptrname` - `int *ptr;`.
+  - Lấy địa chỉ của 1 biến x kiểu int: `int *ptr = &x;`.
+  - Truy cập giá trị của biến bằng cách giải tham chiếu: `int y = *ptr;`: y = giá trị của biến x mà con trỏ ptr trỏ tới.
+- Cách 1 biến được lưu trữ trong bộ nhớ:
+  - Ví dụ 1 biến int 32 bit (4 byte) được lưu trữ thành 1 nhóm địa chỉ, mỗi địa chỉ lưu trữ 8 bit (1 byte) giá trị bắt đầu từ LSB đến MSB.
+ ![Cách lưu trữ địa chỉ và giá trị của biến int](https://github.com/user-attachments/assets/3f4514ad-3758-4354-9fec-4e81327a2e0c)
+- Kích thước của con trỏ:
+  - Phụ thuộc vào kiến trúc máy tính và trình biên dịch hoặc là kiến trúc của vi xử lý.
+  - Ví dụ với máy tính có 64 bit operating system thì thường là pointer sẽ có kích thước là 8 bytes (64 bit).
 
 [🔼 _UP_](#top)
 </details>
