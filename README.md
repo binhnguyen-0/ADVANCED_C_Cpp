@@ -227,11 +227,12 @@ int main(int argc, char const *argv[])
   - Ví dụ 1 biến int 32 bit (4 byte) được lưu trữ thành 1 nhóm địa chỉ, mỗi địa chỉ lưu trữ 8 bit (1 byte) giá trị bắt đầu từ LSB đến MSB.
  ![Cách lưu trữ địa chỉ và giá trị của biến int](https://github.com/user-attachments/assets/3f4514ad-3758-4354-9fec-4e81327a2e0c)
 - Cách 1 con trỏ được lưu trữ trong bộ nhớ:
-  - Ví dụ 1 con trỏ trỏ tới 1 biến int, mối địa chỉ của con trỏ sẽ lưu trữ 1 giá trị là địa chỉ của biến int đó, và những địa chỉ còn lại sẽ được mặc định là chứa 0x00 (địa chỉ mặc định này có thể chứa giá trị rác).
+  - Ví dụ 1 con trỏ trỏ tới 1 biến int, mỗi địa chỉ của con trỏ sẽ lưu trữ 1 giá trị là địa chỉ của biến int đó, và những địa chỉ còn lại sẽ được mặc định là chứa 0x00 (địa chỉ mặc định này có thể chứa giá trị rác).
 ![image](https://github.com/user-attachments/assets/ead4d1e7-bd97-4098-bb93-aa32a198e32a)
 
-### II. Con trỏ mảng:
+### II. Array Pointer - Con trỏ mảng:
 
+- Con trỏ mảng là con trỏ trỏ tới phần tử đầu tiên của mảng hoặc là trỏ tới toàn bộ mảng.
 <br>
 
 |📋 Array Pointer|📄 Description|
@@ -239,6 +240,72 @@ int main(int argc, char const *argv[])
 |`int main() {`<br>`int arr[5] = {1, 2, 3, 4, 5};`<br>`int *ptr = arr;`<br>`int (*ptr_arr)[5] = &arr;`|<br><br>: ptr là con trỏ trỏ tới phần tử đầu tiên của mảng.<br>: ptr_arr là con trỏ trỏ đến toàn bộ mảng|
 |`int n = sizeof(arr)/sizeof(arr[0]);`<br>`for (int i; i < n; i++)`<br>`printf("%d", (*ptr)[i]);`<br>`for (int i; i < n; i++)`<br>`printf("%d", ptr+i);`|: n = số phần tử trong mảng.<br><br>: truy cập từng phần tử trong mảng đối với con trỏ trỏ đến toàn bộ mảng<br><br>: truy cập phần tử trong mảng đối với con trỏ trỏ đến thành phần đầu tiên của mảng.|
 
+### III. Void Pointer:
+- Là con trỏ không có kiểu dữ liệu liên kết với nó. Nó có thể trỏ tới bất kỳ địa chỉ nào thuộc bất kỳ kiểu dữ liệu nào.
+- Ví dụ:
+  - Con trỏ void không thể giải tham chiếu để lấy giá trị nên phải sử dụng ép kiểu và sau đó là giải tham chiếu cho nó.
+```c
+int main()
+{
+  int a = 10;
+  char b = 'N';
+  char arr[] = "Hello World";
+
+  void *ptr = &a;
+  printf("Địa chỉ: %p - Giá trị: %d\n", ptr, *(int*)ptr);
+
+  ptr = &b;
+  printf("Địa chỉ: %p - Giá trị: %c\n", ptr, *(char*)ptr);
+
+  ptr = arr;
+  for (int i=0; i < (sizeof(arr)/sizeof(arr[1])); i++)
+    printf("Địa chỉ: %p - Giá trị: %s\n", ptr, *(char*)(ptr+i));
+
+  /* Mảng con trỏ */
+  void *ptr1[] = {&a, &b, arr};
+  printf("Địa chỉ: %p - Giá trị: %d\n", ptr1[0], *(int*)ptr1[0]);
+  printf("Địa chỉ: %p - Giá trị: %c\n", ptr1[1], *(char*)ptr1[1]);
+  return 0;
+}
+```
+
+### IV. Function Pointer - Con trỏ hàm:
+
+<br>
+
+|📋 Function Pointer|📄 Description|💡 Examples|
+|:------------------------:|:------------------------|:------------------------|
+|**Khái niệm**|Con trỏ hàm lưu trữ địa chỉ của một hàm, cho phép hàm được truyền dưới dạng tham số cho một hàm khác, hoặc là truyền hàm như một giá trị trả về từ một hàm khác.||
+|**Declaration**|Cú pháp khai báo:<br>`<return type> (*pointer_name) (parameter_types)`.|`int sum(int a, int b)<br>{return a+b;}`<br>-->`int (*ptr) = (int, int);`: con trỏ hàm phải được khai báo sao cho trùng khớp với kiểu trả về, số lượng và loại tham số của hàm.|
+|**Initialization**|Sau khai báo con trỏ hàm thì đến bước khởi tạo nó.|`ptr = &sum`<br>hoặc `ptr = sum;`|
+|**Function call**|Có 3 cách gọi hàm khi có con trỏ hàm: <br>1. `sum(1, 2);`<br>2. `ptr(1,2);`: gọi trực tiếp giống gọi hàm.<br>3. `(*ptr)(1,2);`: dùng `*` để giải tham chiếu.||
+
+<br>
+
+- Ví dụ:
+```c
+void tong(int a, int b) {printf("Tổng là: %d", a+b);}
+void hieu(int a, int b) {printf("Hiệu là: %d", a-b);}
+void tich(int a, int b) {printf("Tích là: %d", a*b);}
+void thuong(int a, int b) {printf("Thương là: %d", (double)a/b);}
+void tinhtoan(void (*ptr_arg)(int, int), int a, int b) {ptr_arg(a,b);} // Định nghĩa hàm tinhtoan chứa tham số là con trỏ hàm.
+
+int main ()
+{
+  void (*ptr)(int, int);  // Khai báo con trỏ hàm
+  ptr = tong;  // Khởi tạo con trỏ hàm là hàm tong
+  ptr(1,2);
+  ptr = hieu;  // Khởi tạo con trỏ hàm là hàm hieu
+  ptr(1,2);
+
+  void (*ptr_arr[])(int, int) = {tong, hieu, tich, thuong};  // Định nghĩa một mảng con trỏ hàm chứa địa chỉ của các hàm.
+  ptr_arr[0](1,2);  // Gọi hàm tổng
+  ptr_arr[1](1,2);  // Gọi hàm hiệu
+
+  tinhtoan(tong, 1, 2);  // Truyền tham số là hàm tong để tính tổng.
+  tinhtoan(hieu, 1, 2);  // Truyền tham số là hàm hieu để tính hiệu.
+}
+```
 
 [🔼 _UP_](#top)
 </details>
