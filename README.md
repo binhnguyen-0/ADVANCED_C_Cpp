@@ -309,9 +309,11 @@ int main ()
 
 ### V. Pointer & Constant - Con trỏ & Hằng số:
 
-|📋 Function Pointer|📄 Description|💡 Examples|
-|:------------------------:|:------------------------|:------------------------|
-|**Khái niệm**|Con trỏ hàm lưu trữ địa chỉ của một hàm, cho phép hàm được truyền dưới dạng tham số cho một hàm khác, hoặc là truyền hàm như một giá trị trả về từ một hàm khác.||
+|📋 Đặc điểm |Pointer to Constant|Constant Pointer|Constant Pointer to Constant|
+|:------------------------:|:------------------------:|:------------------------|:------------------------|
+|**Cách khai báo**|`const int *ptr`|`int *const ptr`|`const int *const ptr`|
+|**Giá trị biến**|❌ Không thể thay đổi|✔️ Có thể thay đổi|❌ Không thể thay đổi|
+|**Địa chỉ trỏ tới**|✔️ Có thể thay đổi|❌ Không thể thay đổi|❌ Không thể thay đổi|
 
 [🔼 _UP_](#top)
 </details>
