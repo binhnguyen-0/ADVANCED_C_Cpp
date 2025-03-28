@@ -342,10 +342,10 @@ int main ()
 
 - Storage class xác định phạm vi (scope), thời gian tồn tại (lifetime), và khả năng hiển thị của biến - chỉ định vị trí lưu trữ của biến, giá trị tồn tại trong bao lâu và cách truy cập giúp theo dõi sự tồn tại của 1 biến trong thời gian chạy chương trình.
 - Có 4 lớp lưu trữ chính:
-  - `auto`.
-  - `register`.
-  - `static`.
-  - `extern`.
+  - `auto`
+  - `register`
+  - `static`
+  - `extern`
 
 |📋 Storage Class |`auto`|`extern`|`static`<br>(Local)|`static`<br>(Global)|`register`|
 |:------------------------:|:------------------------:|:------------------------:|:------------------------:|:------------------------:|:------------------------:|
@@ -354,6 +354,15 @@ int main ()
 |**Life time**|Cho đến khi kết thúc phạm vi của nó|Đến khi kết thúc chương trình|Đến khi kết thúc chương trình|Đến khi kết thúc chương trình|Cho đến khi kết thúc phạm vi của nó|
 |**Memory location**|RAM|RAM|RAM|RAM|Thanh ghi trong CPU|
 |**Đặc điểm**|Sử dụng để khai báo 1 biến cục bộ với bộ nhớ tự động. Tuy nhiên trong C, các biến cục bộ sẽ theo mặc định là 1 auto nên việc thêm auto là tùy chọn.|Dùng lại biến toàn cục trong 1 hàm khác. Hoặc sử dụng biến từ file khác|Duy trì giá trị của 1 biến|Hạn chế truy cập từ file khác|Truy xuất nhanh hơn, nhưng không thể lấy địa chỉ - `&`|
+
+### I. Từ khóa Extern:
+- Cú pháp:
+  - extern type var_name;
+  - extern return_type func_name;
+>ℹ️Khai báo trên nói Compiler biết rằng biến và hàm được định nghĩa trong file khác. Nên bước tiếp theo là phải biên dịch 2 file này lại với nhau để Compiler có thể tìm thấy định nghĩa của chúng.
+>Các biến & hàm này phải là global scope, còn nếu trong local scope thì Compiler không thể tìm thấy được.
+
+
 
 
 
