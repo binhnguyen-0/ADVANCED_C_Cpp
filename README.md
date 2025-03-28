@@ -365,8 +365,7 @@ int main ()
 >Các biến & hàm này phải là global scope, còn nếu trong local scope thì Compiler không thể tìm thấy được.
 - Ví dụ:
   - Sử dụng từ khóa `extern` để khai báo các biến và hàm trong file.h để dễ dàng thêm vào các file khác.
-![Image](https://github.com/user-attachments/assets/cbb390d1-6a64-4916-ac3e-0893d02c52d9)
-![Image](https://github.com/user-attachments/assets/cebe8d3f-2b34-4cdd-ae5a-50b6ae35f058)
+![Image](https://github.com/user-attachments/assets/98f450b0-f6b5-4ee3-a5d9-d873eac24129)
 
 ### II. Static local:
 - Khi `static` được sử dụng với biến cục bộ thì:
