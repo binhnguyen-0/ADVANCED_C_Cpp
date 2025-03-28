@@ -408,7 +408,11 @@ int main()
 - Khi `static` sử dụng với biến và hàm ở phạm vi global thì nó sẽ hạn chế phạm vi của biến và hàm đó chỉ được dùng trong file hiện tại.
 - Ứng dụng:
   - Thiết kế file thư viện mà không muốn người dùng sử dụng đến 1 số biến hay hàm có chức năng đặc biệt.
+- Ví dụ:
+  - Khi sử dụng từ khóa static cho các biến `var_global` và hàm `display` trong `file1.c` thì biến và hàm đó đã bị hạn chế chỉ được sử dụng trong `file1.c` đó.
+  - Dù có sử dụng thêm `extern int var_global` trong `main.c` đã được include `file1.h` để thông báo Compiler nhưng Compiler không thể tìm thấy do đặc tính của **static global**.
 
+![Image](https://github.com/user-attachments/assets/71f2ee4a-b1f6-4481-a4fd-337aafb34f62)
 
 
 [🔼 _UP_](#top)
