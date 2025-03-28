@@ -359,8 +359,11 @@ int main ()
 - Cú pháp:
   - extern type var_name;
   - extern return_type func_name;
->ℹ️Khai báo trên nói Compiler biết rằng biến và hàm được định nghĩa trong file khác. Nên bước tiếp theo là phải biên dịch 2 file này lại với nhau để Compiler có thể tìm thấy định nghĩa của chúng.
+>ℹ️Khai báo trên nói Compiler biết rằng biến và hàm được định nghĩa trong file khác. Nên bước tiếp theo là phải liên kết 2 file này lại với nhau để Compiler có thể tìm thấy định nghĩa của chúng.
+>`gcc file.c file1.c -o main`: tạo ra file thực thi cho các file liên kết.
+>`/.main`: chạy file thực thi.
 >Các biến & hàm này phải là global scope, còn nếu trong local scope thì Compiler không thể tìm thấy được.
+- Ví dụ:
 
 
 
