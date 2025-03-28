@@ -380,7 +380,8 @@ int main ()
  
 ![Image](https://github.com/user-attachments/assets/71b379bd-c709-4b8d-ac9d-d9a046600f3a)
 
->ℹ️Có thể thay đổi giá trị của biến static từ bên ngoài bằng con trỏ:
+>ℹ️ Không thể khai báo hàm static bên trong 1 hàm khác, từ khóa `static` chỉ áp dụng cho hàm global.<br>
+>Có thể thay đổi giá trị của biến static từ bên ngoài bằng con trỏ:
 ```C
 #include <stdio.h>
 
@@ -403,6 +404,11 @@ int main()
     return 0;
 }
 ```
+### III. Static global:
+- Khi `static` sử dụng với biến và hàm ở phạm vi global thì nó sẽ hạn chế phạm vi của biến và hàm đó chỉ được dùng trong file hiện tại.
+- Ứng dụng:
+  - Thiết kế file thư viện mà không muốn người dùng sử dụng đến 1 số biến hay hàm có chức năng đặc biệt.
+
 
 
 [🔼 _UP_](#top)
