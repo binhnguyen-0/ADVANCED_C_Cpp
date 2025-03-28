@@ -7,6 +7,7 @@
 ### 📑 I. Compiler:
 - Trình biên dịch là chương trình chuyển đổi source code C thành mã máy để máy tính có thể thực thi.
 - Quá trình biên dịch gồm 4 giai đoạn:
+![Image](https://github.com/user-attachments/assets/3a955cb2-1589-4680-a75e-5d2ec4b280ac)
 <br>&nbsp;1. Preprocess (Tiền xử lý):<br>
 &nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.i_ từ _file.c_ với trình gcc trong VS Code:** `gcc -E file.c -o file.i`.<br>
 &nbsp;&nbsp;- &nbsp;**Xử lý các loại chỉ thị tiền xử lý:** `#include`, `#define`, `#ifdef`, etc.<br>
