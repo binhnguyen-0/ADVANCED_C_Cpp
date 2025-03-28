@@ -311,9 +311,29 @@ int main ()
 
 |📋 Đặc điểm |Pointer to Constant|Constant Pointer|Constant Pointer to Constant|
 |:------------------------:|:------------------------:|:------------------------|:------------------------|
-|**Cách khai báo**|`const int *ptr`|`int *const ptr`|`const int *const ptr`|
+|**Cách khai báo**|`const int *ptr;`<br>`int const *ptr;`|`int *const ptr;`|`const int *const ptr;`|
 |**Giá trị biến**|❌ Không thể thay đổi|✔️ Có thể thay đổi|❌ Không thể thay đổi|
 |**Địa chỉ trỏ tới**|✔️ Có thể thay đổi|❌ Không thể thay đổi|❌ Không thể thay đổi|
+
+### VI. NULL Pointer - Con trỏ NULL:
+
+<br>
+
+|📋 NULL Pointer|📄 Description|💡 Examples|
+|:------------------------:|:------------------------|:------------------------|
+|**Khái niệm**|Con trỏ NULL là con trỏ không trỏ đến bất cứ 1 địa chỉ nào ngoài NULL.||
+|**Declaration**|Cú pháp khai báo:<br>`<type> (*pointer_name) = NULL;`<br>`<type> (*pointer_name) = 0;`.||
+|**Uses**|1. Khai báo 1 con trỏ mà chưa cần dùng tới ngay.<br>2. Gán NULL cho con trỏ khi sử dụng xong để tránh thay đổi giá trị của một biến nó trỏ tới.|`int *ptr = NULL;`: trỏ tới địa chỉ 0x00|
+
+### VII. Pointer to Pointer - Con trỏ trỏ đến con trỏ:
+- Là con trỏ lưu trữ địa chỉ của con trỏ khác - con trỏ kép.
+- Để truy cập giá trị được trỏ bới con trỏ kép ta phải giải tham chiếu 2 lần:
+
+
+
+
+
+
 
 [🔼 _UP_](#top)
 </details>
