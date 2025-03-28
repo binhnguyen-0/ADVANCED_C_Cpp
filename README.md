@@ -371,6 +371,39 @@ int main ()
 - Khi `static` được sử dụng với biến cục bộ thì:
   - Giữ phạm vi của biến chỉ trong hàm chứa nó.
   - Giữ giá trị của biến qua các lần gọi.
+- Ví dụ:
+  - Khi mỗi lần gọi hàm `count` thì kết quả biến `a` luôn = 0 bởi vì dòng khởi tạo biến luôn được thực thi nên mỗi lần gọi kết quả đều giống nhau.
+
+![image](https://github.com/user-attachments/assets/e3d99e12-f937-4b09-88e5-60403b8dfb75)
+
+  - Khi sử dụng từ khóa `static` thì kết quả biến `a` sẽ được giữ nguyên sau mỗi lần gọi hàm bởi vì dòng khởi tạo sẽ bị bỏ qua trong lần gọi hàm tới nên giá trị sẽ được cộng thêm.
+ 
+![Image](https://github.com/user-attachments/assets/71b379bd-c709-4b8d-ac9d-d9a046600f3a)
+
+>ℹ️Có thể thay đổi giá trị của biến static từ bên ngoài bằng con trỏ:
+```C
+#include <stdio.h>
+
+int *ptr = NULL;  // Khởi tạo 1 con trỏ kiểu NULL
+
+void count()
+{
+    static int a = 0;   // Giá trị của biến a sẽ được giữ nguyên mỗi lần gọi hàm
+    ptr = &a;  // Gán địa chỉ biến a vào con trỏ
+    printf("a = %d\n", ++a);
+}
+
+int main()
+{
+    count();    // a = 1
+    count();    // a = 2
+    count();    // a = 3
+    *ptr = 99;  // a = 99
+    count();    // a = 100
+    return 0;
+}
+```
+
 
 [🔼 _UP_](#top)
 </details>
