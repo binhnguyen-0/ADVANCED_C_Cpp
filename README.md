@@ -327,13 +327,11 @@ int main ()
 
 ### VII. Pointer to Pointer - Con trỏ trỏ đến con trỏ:
 - Là con trỏ lưu trữ địa chỉ của con trỏ khác - con trỏ kép.
-- Để truy cập giá trị được trỏ bới con trỏ kép ta phải giải tham chiếu 2 lần:
-
-
-
-
-
-
+- Để truy cập giá trị được trỏ bởi con trỏ kép ta phải giải tham chiếu 2 lần:
+![Image](https://github.com/user-attachments/assets/65958e2e-2243-45f0-81b4-dd802755b3f6)
+- Được ứng dụng trong:
+  - Kiểu dữ liệu JSON.
+  - Cấu trúc dữ liệu danh sách liên kết.
 
 [🔼 _UP_](#top)
 </details>
