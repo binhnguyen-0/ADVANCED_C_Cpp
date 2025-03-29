@@ -414,6 +414,58 @@ int main()
 
 ![Image](https://github.com/user-attachments/assets/71f2ee4a-b1f6-4481-a4fd-337aafb34f62)
 
+### IV. Từ khóa register:
+- Từ khóa `register` được sử dụng để yêu cầu Compiler lưu trữ một biến trong **thanh ghi CPU** thay vì bộ nhớ RAM, nhằm tăng tốc độ truy xuất.
+- Ví dụ:
+  - Tính thời gian chạy khi sử dụng `register`.
+```C
+#include <stdio.h>
+#include <time.h>
+
+int main()
+{
+
+  clock_t start_time = clock();  // Lưu lại thời gian bắt đầu
+  int i;
+  register int a = 5;
+  register int b = 6;
+  a = a ^ b;
+
+  for(int i = 0; i < 2000000; ++i)
+  {
+    // Thực hiện hàm for
+  }
+  clock_t end_time = clock();  // Lưu lại thời gian kết thúc
+  double time_take = ((double)(end_time - start_time))/CLOCKS_PER_SEC;  // Số thời gian cần để chạy đoạn mã trên
+  printf("Time: %f giây\n", time_take);
+  return 0;
+}
+```
+
+>ℹ️ Không dùng toán tử `&` cho các biến `register` được vì biến lưu trữ trong thanh ghi thì không có địa chỉ.
+>Không thể sử dụng từ khóa `register` cho các biến global: <br>1. Do biến được lưu trữ trên thanh ghi sẽ không có địa chỉ (do tính chất của biến global là tồn tại xuyên suốt chương trình nên phải có 1 địa chỉ cố định để có thể tham chiếu đến). <br>2. Thanh ghi có số lượng hạn chế mà biến toàn cục thì không.
+
+### V. Type qualifier - Từ khóa định kiểu volatile:
+- Trong quá trình biên dịch, Compiler thường cố gắng tối ưu hóa đầu ra để chỉ cần thực thi ít mã máy hơn, nếu mã máy đó không cần thiết khi truy cập biến cái mà không thay đổi gì xét theo quan điểm của Compiler.
+- Ví dụ:
+  - Tối ưu hóa vòng lặp while thành vô hạn vì bỏ qua kiểm tra biến check.
+```c
+int check = 1;
+while (check)
+{
+  // Trình biên dịch có thẻ tối ưu hóa vòng lặp - sẽ không kiểm tra lại biến check trong vòng lặp tới do Compiler nghĩ là check không thay đổi.
+}
+```
+- Từ khóa `volatile` được sử dụng để báo hiệu cho Compiler rằng 1 biến có thể thay đổi ngẫu nhiên ngoài sự kiểm soát của chương trình, nên `volatile` sẽ giúp ngăn Compiler tối ưu hóa hoặc xóa bỏ thao tác trên các biến đó, giữ cho các thao tác luôn được thực hiện như đã được định nghĩa.
+- Ví dụ:
+  - Không tối ưu hóa vòng lặp while thành vô hạn và luôn kiểm tra biến check.
+```c
+volatile int check = 1;
+while (check)
+{
+  // Luôn kiểm tra biến check xem có bị thay đổi hay không.
+}
+```
 
 [🔼 _UP_](#top)
 </details>
