@@ -473,15 +473,44 @@ while (check)
 <details>
 <summary>🔖 <b>BÀI 6: GOTO - SETJMP.H</b></summary>
 I. Câu lệnh goto trong C:
-<br>
+- Là một lệnh nhảy không điều kiện, cho phép chương trình nhảy đến 1 nhãn (label) trong cùng 1 hàm để thực thi tiếp.
+- Cú pháp: 
+ ```c
+ goto label;
+ label:
+ ```
+- Việc sử dụng goto là không được khuyến khích vì nó làm cho code trở nên khó đọc và khó bảo trì.
+- Ví dụ:
  
-|📋 goto|📄 Description|💡 Examples|
-|:------------------------:|:------------------------|:------------------------|
-|**Concept**|Là một lệnh nhảy không điều kiện, cho phép chương trình nhảy đến 1 nhãn (label) trong cùng 1 hàm để thực thi tiếp.||
-|**Syntax**|Cú pháp:<br>1. goto label;<br>label:<br>2. label:<br>goto label;|`int main()`<br>`{`<br>`int i = 0;`<br>`start:`<br>`if (i >= 5)`<br>`{ goto end;}`<br>`printf("%d\n", i);`<br>`i++;`<br>`goto start;`<br>`end:`<br>`printf("END");`<br>`return 0;`<br>`}`|
-|**Disadvantages**|- Khó đọc, khó bảo trì.||
+```c
+#include <stdio.h>
 
-II. Câu lệnh goto trong C:
+int main()
+{
+   int i = 0;
 
+   start:
+      if (i >= 5)
+      {
+         goto end;  // Nhảy đến label end khi i = 5
+      }
+
+      printf("%d ", i);
+      i++;
+
+      goto start;  // Nhảy đến label start khi i < 5
+
+   end:
+      printf("\n");
+   return 0;
+}
+```
+
+II. Thư viện setjmp:
+- Cung cấp 2 hàm chính là `setjump` và `longjmp`:
+  - **setjmp(jmp_buf env)**: đánh dấu vị trí để quay lại bằng `longjump`.
+    - Trả về `0` khi được gọi lần đầu.
+    - Trả về khác `0` khi quay lại từ `longjmp`.
+  - **longjmp(jmp_buf env, int value)**: nhảy về vị trí hiện tại của `setjump` và tiếp tục thực thi từ đó.
 [🔼 _UP_](#top)
 </details>
