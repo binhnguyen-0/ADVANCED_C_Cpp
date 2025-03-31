@@ -472,6 +472,7 @@ while (check)
 
 <details>
 <summary>🔖 <b>BÀI 6: GOTO - SETJMP.H</b></summary>
+ 
 I. Câu lệnh goto trong C:
 - Là một lệnh nhảy không điều kiện, cho phép chương trình nhảy đến 1 nhãn (label) trong cùng 1 hàm để thực thi tiếp.
 - Cú pháp: 
@@ -512,5 +513,73 @@ II. Thư viện setjmp:
     - Trả về `0` khi được gọi lần đầu.
     - Trả về khác `0` khi quay lại từ `longjmp`.
   - **longjmp(jmp_buf env, int value)**: nhảy về vị trí hiện tại của `setjump` và tiếp tục thực thi từ đó.
+ - Ví dụ:
+```c
+#include <stdio.h>
+#include <setjmp.h>
+
+jmp_buf buf;  // Biến buf kiểu jmp_buf để setjmp lưu trạng thái của chương trình.
+
+int exception = 0;
+
+void func2()
+{
+    printf("This is function 2\n");
+    longjmp(buf, 2);  // Nhảy trở lại vị trí setjmp(buf) và giá trị trả về khi nhảy về setjmp() bởi longjmp(buf, 2) là 2 --> setjmp(buf) = 2.
+}
+
+void func3()
+{
+    printf("This is function 3\n");
+    longjmp(buf, 3);  // Nhảy trở lại vị trí setjmp(buf) và giá trị trả về khi nhảy về setjmp() bởi longjmp(buf, 3) là 3 --> setjmp(buf) = 3.
+}
+
+void func1()
+{
+    exception = setjmp(buf);  // Khi gọi trực tiếp thì giá trị trả về là 0 (setjmp(buf) = 0).
+    if (exception == 0)
+    {
+        printf("This is function 1\n");
+        printf("exception = %d\n", exception);
+        func2();  // Gọi hàm 2
+    }
+    else if (exception == 2)  // setjmp(buf) = 2 thực thi tiếp
+    {
+        printf("exception = %d\n", exception);
+        func3();  // Gọi hàm 3
+    }
+    else if (exception == 3)  // setjmp(buf) = 3 thực thi tiếp
+    {
+        printf("exception = %d\n", exception);
+    }
+}
+
+int main(int argc, char const *argv[])
+{
+    func1();
+    return 0;
+}
+```
+- Ứng dụng của setjmp:
+  - Exception Handling: Xử lý ngoại lệ là một cơ chế trong lập trình giúp phát hiện và xử lý các lỗi bất thường xảy ra trong quá trình thực thi, giúp chương trình hoạt động ổn định và không bị dừng đột ngột.
+    - Những ngoại lệ gồm:
+      - Chia cho 0.
+      - Truy cập chỉ số của mảng mà nằm ngoài phạm vi.
+      - Truy xuất con trỏ NULL.
+      - Lỗi mở tập tin.
+      - Lỗi cấp phát bộ nhớ.
+    - C++, Java, Python, C# đều hỗ trợ xử lý ngoại lệ qua các từ khóa chính như:
+      - **try**: định nghĩa một khối lệnh có thể phát sinh lỗi.
+      - **catch**: xử lý ngoại lệ nếu có lỗi xảy ra.
+      - **throw**: ném ra một ngoại lệ khi xảy ra lỗi.
+    - Trong C chúng ta phải tự định nghĩa những từ khóa trên thông qua thư viện `setjmp`.
+
+
+
+
+
+
+
+ 
 [🔼 _UP_](#top)
 </details>
