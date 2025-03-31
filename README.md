@@ -469,3 +469,19 @@ while (check)
 
 [🔼 _UP_](#top)
 </details>
+
+<details>
+<summary>🔖 <b>BÀI 6: GOTO - SETJMP.H</b></summary>
+I. Câu lệnh goto trong C:
+<br>
+ 
+|📋 goto|📄 Description|💡 Examples|
+|:------------------------:|:------------------------|:------------------------|
+|**Concept**|Là một lệnh nhảy không điều kiện, cho phép chương trình nhảy đến 1 nhãn (label) trong cùng 1 hàm để thực thi tiếp.||
+|**Syntax**|Cú pháp:<br>1. goto label;<br>label:<br>2. label:<br>goto label;|`int main()`<br>`{`<br>`int i = 0;`<br>`start:`<br>`if (i >= 5)`<br>`{ goto end;}`<br>`printf("%d\n", i);`<br>`i++;`<br>`goto start;`<br>`end:`<br>`printf("END");`<br>`return 0;`<br>`}`|
+|**Disadvantages**|- Khó đọc, khó bảo trì.||
+
+II. Câu lệnh goto trong C:
+
+[🔼 _UP_](#top)
+</details>
