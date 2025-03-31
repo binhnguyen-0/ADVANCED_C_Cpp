@@ -560,22 +560,135 @@ int main(int argc, char const *argv[])
     return 0;
 }
 ```
-- Ứng dụng của setjmp:
+- Ứng dụng xử lý lỗi của setjmp:
   - Exception Handling: Xử lý ngoại lệ là một cơ chế trong lập trình giúp phát hiện và xử lý các lỗi bất thường xảy ra trong quá trình thực thi, giúp chương trình hoạt động ổn định và không bị dừng đột ngột.
-    - Những ngoại lệ gồm:
-      - Chia cho 0.
-      - Truy cập chỉ số của mảng mà nằm ngoài phạm vi.
-      - Truy xuất con trỏ NULL.
-      - Lỗi mở tập tin.
-      - Lỗi cấp phát bộ nhớ.
-    - C++, Java, Python, C# đều hỗ trợ xử lý ngoại lệ qua các từ khóa chính như:
-      - **try**: định nghĩa một khối lệnh có thể phát sinh lỗi.
-      - **catch**: xử lý ngoại lệ nếu có lỗi xảy ra.
-      - **throw**: ném ra một ngoại lệ khi xảy ra lỗi.
-    - Trong C chúng ta phải tự định nghĩa những từ khóa trên thông qua thư viện `setjmp`.
+  - Những ngoại lệ gồm:
+       - Chia cho 0.
+       - Truy cập chỉ số của mảng mà nằm ngoài phạm vi.
+       - Truy xuất con trỏ NULL.
+       - Lỗi mở tập tin.
+       - Lỗi cấp phát bộ nhớ.
+  - C++, Java, Python, C# đều hỗ trợ xử lý ngoại lệ qua các từ khóa chính như:
+       - **try**: định nghĩa một khối lệnh có thể phát sinh lỗi.
+       - **catch**: xử lý ngoại lệ nếu có lỗi xảy ra.
+       - **throw**: ném ra một ngoại lệ khi xảy ra lỗi.
+  - Trong C chúng ta phải tự định nghĩa những từ khóa trên thông qua thư viện `setjmp`.
+       - Cú pháp:
 
+ ```c
+        try
+        {
+          // Khối lệnh có thể có lỗi phát sinh.
+        }
+        catch (loại lỗi 1)
+        {
+          // Xử lý lỗi loại 1
+        }
+        catch (loại lỗi 2)
+        {
+          // Xử lý lỗi loại 2
+        }
+        catch (...)
+        {
+          // Xử lý tất cả các ngoại lệ khác
+        }
+```
+  - Ví dụ:
+    - Phát hiện lỗi khi chia cho 0.
+```c
+#include <stdio.h>
+#include <setjmp.h>
 
+jmp_buf buf;
 
+int exception = 0;
+
+/* Hàm chia 2 số nguyên */
+double divide(int a, int b)
+{
+  if (a == 0 && b == 0)
+  {
+    longjmp(buf, 1);  // Nếu a và b đều bằng 0 thì nhảy về setjmp và trả về 1
+  }
+  else if (b == 0)
+  {
+    longjmp(buf, 2);  // Nếu a và b đều bằng 0 thì nhảy về setjmp và trả về 2
+  }
+  return (double)a/b;
+}
+
+int main()
+{
+  exception = setjmp(buf);
+  if (exception == 0)
+  {
+    printf("Kết quả: %d\n", divide(2,3));  // Lần gọi trực tiếp setjmp đầu tiên luôn có kq là 0 trả về
+  }
+  else if (exception == 1)
+  {
+    printf("No exist");  // Nếu kq trả về là 1 thì hiện câu lệnh.
+  }
+  else if (exception == 2)
+  {
+    printf("Lỗi chia cho 0");  // Nếu kq trả về là 2 thì hiện câu lệnh.
+  }
+  return 0;
+}
+```
+- Định nghĩa **try, catch, throw** trong C:
+  - Thay vì phải sử dụng trực tiếp setjmp hay longjmp ta sẽ define chúng.
+```c
+#include <stdio.h>
+#include <setjmp.h>
+
+#define TRY if (exception == setjmp(buf) == 0)
+#define CATCH(x) else if (exception == x)
+#define THROW(x) longjmp(buf, x)
+
+jmp_buf buf;
+
+int exception = 0;
+
+typedef enum
+{
+  NO_ERROR,
+  NO_EXIST,
+  DIVIDE_BY_0
+}ErrorCodes;
+
+/* Hàm chia 2 số nguyên */
+double divide(int a, int b)
+{
+  if (a == 0 && b == 0)
+  {
+   THROW(NO_EXIST);  // Nếu a và b đều bằng 0 thì nhảy về setjmp và trả về 1
+  }
+  else if (b == 0)
+  {
+    THROW(DIVIDE_BY_0);  // Nếu a và b đều bằng 0 thì nhảy về setjmp và trả về 2
+  }
+  return (double)a/b;
+}
+
+int main()
+{
+  exception = NO_ERROR;
+  TRY
+  {
+    printf("Kết quả: %d\n", divide(2,3));  // Lần gọi trực tiếp setjmp đầu tiên luôn có kq là 0 trả về
+  }
+  CATCH(NO_EXIST)
+  {
+    printf("No exist");  // Nếu kq trả về là 1 thì hiện câu lệnh.
+  }
+  CATCH(DIVIDE_BY_0)
+  {
+    printf("Lỗi chia cho 0");  // Nếu kq trả về là 2 thì hiện câu lệnh.
+  }
+  return 0;
+}
+
+```
 
 
 
