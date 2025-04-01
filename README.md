@@ -473,7 +473,7 @@ while (check)
 <details>
 <summary>🔖 <b>BÀI 6: GOTO - SETJMP.H</b></summary>
  
-I. Câu lệnh goto trong C:
+### I. Câu lệnh goto trong C:
 - Là một lệnh nhảy không điều kiện, cho phép chương trình nhảy đến 1 nhãn (label) trong cùng 1 hàm để thực thi tiếp.
 - Cú pháp: 
  ```c
@@ -507,7 +507,7 @@ int main()
 }
 ```
 
-II. Thư viện setjmp:
+### II. Thư viện setjmp:
 - Cung cấp 2 hàm chính là `setjump` và `longjmp`:
   - **setjmp(jmp_buf env)**: đánh dấu vị trí để quay lại bằng `longjump`.
     - Trả về `0` khi được gọi lần đầu.
@@ -689,10 +689,33 @@ int main()
 }
 
 ```
+[🔼 _UP_](#top)
+</details>
+
+<details>
+<summary>🔖 <b>BÀI 7: STRUCT - UNION</b></summary>
+
+### I. Struct:
+
+|📋 Structure|📄 Description|💡 Examples|
+|:------------------------:|:------------------------|:------------------------|
+|**Khái niệm**|Là 1 kiểu dữ liệu do người dùng tự định nghĩa.<br>Struct được sử dụng khi muốn lưu trữ một tập hợp các kiểu dữ liệu khác nhau dưới một tên duy nhất.||
+|**Declaration**|Cú pháp khai báo:<br>Cú pháp 1:<br>`struct struct_name`<br>`{`<br>`<datatype_1> <member1>;`<br>`<datatype_2> <member2>; `<br>`};`<br>Cú pháp 2:<br> `typedef struct struct_name`<br>`{`<br>`<datatype_1> <member1>;`<br>`<datatype_2> <member2>; `<br>`}struct_name;`||
+|**Initialization**|1. Các thành viên của struct không được khởi tạo khi khai báo struct.<br>2. Theo mặc định, các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi một biến được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.<br>3. Khởi tạo bằng toán tử gán.<br>4. Khởi tạo khi khai báo biến kiểu struct.<br>5. Khởi tạo chỉ 1 số thành viên.|1. `struct struct_name{ <datatype_1> <member1> = value1; }`: gây ra lỗi Compiler error bởi vì khi một kiểu dữ liệu được khai báo thì không có bộ nhớ nào được phân bổ cho nó , vì vậy không có không gian để lưu trữ giá trị được gán (bộ nhớ chỉ được phân bổ khi biến được tạo).<br>3. `struct struct_name str;`<br>`str.member1 = val1;`<br>`str.member2 = val2;`<br>4. `struct struct_name str = {"abc", val1, val2, ...};`: các giá trị sẽ gán theo thứ tự.<br>5. `struct struct_name str = {.member1 = "abc",.member2 = val1};`: các thành viên còn lại sẽ cso giá trị 0 hoặc NULL|
+|**Acess member**|1. (.) dot operator: Toán tử dấu chấm giúp ta truy cập hoặc sửa đổi các thành viên của cấu trúc.<br>` struct_name.member1;`<br>` struct_name.member2;`<br>2. (->) arrow operator: Toán tử mũi tên được sử dụng để truy cập thành viên khi có con trỏ trỏ đến cấu trúc.<br>`struct_ptr->member1;`<br>`struct_ptr->member2;`||
 
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
 [🔼 _UP_](#top)
 </details>
