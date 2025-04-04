@@ -698,7 +698,7 @@ int main()
 ### I. Struct:
 - Khái niệm	Là 1 kiểu dữ liệu do người dùng tự định nghĩa. Struct được sử dụng khi muốn lưu trữ một tập hợp các kiểu dữ liệu khác nhau dưới một tên duy nhất.	
 - Declaration - Cú pháp khai báo:
->Cú pháp 1:
+>✍️ Cú pháp 1:
 ```C
 struct struct_name
 {
@@ -715,7 +715,7 @@ struct User
 
 struct User user1, user2;  // khi khai báo biến cần struct.
 ```
->Cú pháp 2:
+>✍️ Cú pháp 2:
 ```C
 typedef struct
 {
@@ -733,28 +733,28 @@ typedef struct
 User user1, user2, *user3;  // khi khai báo biến không cần thêm struct.
 ```
 - Initialization - Khởi tạo:
->1. Các thành viên của struct không được khởi tạo khi khai báo struct.
->2. Theo mặc định, các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi một biến được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.
->3. Khởi tạo khi khai báo biến kiểu struct.
+>✍️ 1. Các thành viên của struct không được khởi tạo khi khai báo struct.<br>
+>✍️ 2. Theo mặc định, các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi một biến được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.<br>
+>✍️ 3. Khởi tạo khi khai báo biến kiểu struct.<br>
 ```c
 struct struct_name str = {"abc", val1, val2, ...};  // Các giá trị sẽ được gán theo thứ tự.
 ```
->4. Khởi tạo chỉ 1 số thành viên.	1. struct struct_name{ <datatype_1> <member1> = value1; }: gây ra lỗi Compiler error bởi vì khi một kiểu dữ liệu được khai báo thì không có bộ nhớ nào được phân bổ cho nó , vì vậy không có không gian để lưu trữ giá trị được gán (bộ nhớ chỉ được phân bổ khi biến được tạo).
+>✍️ 4. Khởi tạo chỉ 1 số thành viên.	1. struct struct_name{ <datatype_1> <member1> = value1; }: gây ra lỗi Compiler error bởi vì khi một kiểu dữ liệu được khai báo thì không có bộ nhớ nào được phân bổ cho nó , vì vậy không có không gian để lưu trữ giá trị được gán (bộ nhớ chỉ được phân bổ khi biến được tạo).
 ```c
 struct struct_name str = {.member1 = "abc",.member2 = val1};  // Các thành viên còn lại sẽ có giá trị 0 hoặc NULL
 ```
 - Acess member - Cách truy cập thành viên của struct:
->1. (.) dot operator: Toán tử dấu chấm giúp ta truy cập hoặc sửa đổi các thành viên của cấu trúc.
-
+>✍️ 1. (.) dot operator: Toán tử dấu chấm giúp ta truy cập hoặc sửa đổi các thành viên của cấu trúc.<br>
+➡️
  `struct_name.member1;`
  `struct_name.member2;`
  
->3. (->) arrow operator: Toán tử mũi tên được sử dụng để truy cập thành viên khi có con trỏ trỏ đến cấu trúc.
-
+>✍️ 2. (->) arrow operator: Toán tử mũi tên được sử dụng để truy cập thành viên khi có con trỏ trỏ đến cấu trúc.<br>
+➡️
 `struct_ptr->member1;`
 `struct_ptr->member2;`
 
->Ví dụ:
+>👉 Ví dụ:
 ```c
 typedef struct
 {
@@ -772,6 +772,8 @@ int main()
   user3->name = "K";  // Đối với biến là con trỏ thì dùng mũi tên để truy cập các biến thành viên
 }
 ```
+- Data Structure Alignment:
+  - 
 
 
 
