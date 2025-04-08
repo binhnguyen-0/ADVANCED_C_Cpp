@@ -372,7 +372,7 @@ int main ()
   - Giữ phạm vi của biến chỉ trong hàm chứa nó.
   - Giữ giá trị của biến qua các lần gọi.
 - Ví dụ:
-  - Khi mỗi lần gọi hàm `count` thì kết quả biến `a` luôn = 0 bởi vì dòng khởi tạo biến luôn được thực thi nên mỗi lần gọi kết quả đều giống nhau.
+  - Khi mỗi lần gọi hàm `count` thì kết quả biến `a` luôn = 1 bởi vì dòng khởi tạo biến luôn được thực thi nên mỗi lần gọi kết quả đều giống nhau.
 
 ![image](https://github.com/user-attachments/assets/e3d99e12-f937-4b09-88e5-60403b8dfb75)
 
