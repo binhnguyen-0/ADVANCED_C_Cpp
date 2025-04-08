@@ -838,7 +838,24 @@ int main()
 > 
 >ℹ️ Nếu thêm một thành viên thứ 5 kiểu `char` thì tổng số byte sẽ là 16 (bội số của 4), vì 3 byte padding sẽ được thêm vào những địa chỉ cuối.
 
+>👉 Ví dụ: Tìm kích thước của struct có thành viên là chuỗi.
+```c
+#include <stdio.h>
 
+typedef struct Data
+{
+    char data1;
+    int data2;
+    char data3;
+    short data4;
+}DataSet;
+
+int main()
+{
+
+    return 0;
+}
+```
 
 [🔼 _UP_](#top)
 </details>
