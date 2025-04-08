@@ -777,15 +777,21 @@ int main()
     - Data alignment: Căn chỉnh dữ liệu.
     - Data structure padding: Đệm cấu trúc dữ liệu.
     - Packing: Đóng gói.
-  - CPU truy cập bộ nhớ bằng 1 `word` (CPU 32 bit: 1 word = 4 byte | CPU 64 bit: 1 word = 8 byte) tại 1 thời điểm, nên CPU thực hiện đọc và ghi vào bộ nhớ hiệu quả nhất là khi dữ liệu được căn chỉnh - nghĩa là memory address của data là bội số của data size.
-  - Tóm lại, để đọc một data có `n` byte, data đó nên đặt ở address là bội số của `n`.
+  - Data alignment:
+    - Để đọc một data có `n` byte, data đó nên đặt ở address là bội số của `n`.
+  - Data structure padding:
+    - Khi alignment, Compiler cần phải đệm thêm 1 số byte để đảm bảo mỗi trường bắt đầu ở đúng địa chỉ của nó. 
+  - Packing:
+    - Yêu cầu Compier không chèn thêm các byte đệm.
+  - Cấp phát địa chỉ:
+    - Compiler dựa trên kích thước member lớn nhất để cấp phát địa chỉ mỗi lần khởi tạo biến.
   - Boundary - Ranh giới:
     - Ranh giới `n` byte là địa chỉ bộ nhớ mà chia hết cho `n`.
     - Đối với kiểu `int` - ranh giới 4 byte: đặt tại địa chỉ thường có kết thúc bằng `0, 4, 8, 12, ... `.
     - Đối với kiểu `char` - ranh giới 1 byte: đặt tại địa chỉ có kết thúc bằng `0, 1, 2, 3, 4, ... `.
     - Đối với kiểu `short` - ranh giới 2 byte: đặt tại địa chỉ thường có kết thúc bằng `0, 2, 4, 6, 8, ... `.
     - Đối với kiểu `double` - ranh giới 8 byte: đặt tại địa chỉ thường có kết thúc bằng `0, 8, 16, 24, ... `.
->👉 Ví dụ:
+>👉 Ví dụ: Tìm kích thước của struct và in ra từng byte với địa chỉ tương ứng.
 ```c
 #include <stdio.h>
 
@@ -821,9 +827,16 @@ int main()
 ```
 >👉 Kết quả:
 ![Image](https://github.com/user-attachments/assets/9bbd7654-4522-45cb-ba48-f8d6533e65e7)
->➡️ Những địa chỉ chứa 0 chính là padding
-
-
+>➡️ Tổng là 12 byte là bội số của 4:
+> - Trong cấu trúc này, `int` có kích thước lớn nhất nên Compiler lấy 4 byte làm chuẩn để cấp phát 4 byte địa chỉ.
+> - `char` - thành viên đầu tiên, địa chỉ bắt đầu là: `00000000005FFE84` là bội số của 1, 3 byte tiếp theo là padding: `85, 86, 87` vì không những địa chỉ này không phải là bội số của 4.
+> - `int` - thành viên thứ 2, địa chỉ bắt đầu là: `00000000005FFE88` là bội số của 4, 4 byte này nằm trong boundary từ `88 -> 8B`.
+> - `char` - thành viên thứ 3, địa chỉ bắt đầu là: `00000000005FFE8C` là bội số của 1, 1 byte tiếp theo là padding: `8D`.
+> - `short` - thành viên thứ 4, địa chỉ bắt đầu là: `00000000005FFE8E` là bội số của 2, 2 byte này nằm trong boundary `8E, 8F`.
+![Image](https://github.com/user-attachments/assets/5c57ccd9-24a5-433b-8c58-5f4bd6d96fef)
+> - Tóm lại ta có 8 byte thực tế và 4 byte padding.
+> 
+>ℹ️ Nếu thêm một thành viên thứ 5 kiểu `char` thì tổng số byte sẽ là 16 (bội số của 4), vì 3 byte padding sẽ được thêm vào những địa chỉ cuối.
 
 
 
