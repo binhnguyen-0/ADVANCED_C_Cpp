@@ -773,12 +773,54 @@ int main()
 }
 ```
 - Data Structure Alignment:
-  - 
+  - Là cách dữ liệu sắp xếp và truy cập trong bộ nhớ máy tính. Nó gồm 3 phần riêng biệt nhưng có liên quan:
+    - Data alignment: Căn chỉnh dữ liệu.
+    - Data structure padding: Đệm cấu trúc dữ liệu.
+    - Packing: Đóng gói.
+  - CPU truy cập bộ nhớ bằng 1 `word` (CPU 32 bit: 1 word = 4 byte | CPU 64 bit: 1 word = 8 byte) tại 1 thời điểm, nên CPU thực hiện đọc và ghi vào bộ nhớ hiệu quả nhất là khi dữ liệu được căn chỉnh - nghĩa là memory address của data là bội số của data size.
+  - Tóm lại, để đọc một data có `n` byte, data đó nên đặt ở address là bội số của `n`.
+  - Boundary - Ranh giới:
+    - Ranh giới `n` byte là địa chỉ bộ nhớ mà chia hết cho `n`.
+    - Đối với kiểu `int` - ranh giới 4 byte: đặt tại địa chỉ thường có kết thúc bằng `0, 4, 8, 12, ... `.
+    - Đối với kiểu `char` - ranh giới 1 byte: đặt tại địa chỉ có kết thúc bằng `0, 1, 2, 3, 4, ... `.
+    - Đối với kiểu `short` - ranh giới 2 byte: đặt tại địa chỉ thường có kết thúc bằng `0, 2, 4, 6, 8, ... `.
+    - Đối với kiểu `double` - ranh giới 8 byte: đặt tại địa chỉ thường có kết thúc bằng `0, 8, 16, 24, ... `.
+>👉 Ví dụ:
+```c
+#include <stdio.h>
 
+typedef struct Data
+{
+    char data1;
+    int data2;
+    char data3;
+    short data4;
+}DataSet;
 
+int main()
+{
+    /* data */
+    DataSet data;
+    data.data1 = 'A';
+    data.data2 = 0xFFFFEEEE;
+    data.data3 = 0x22;
+    data.data4 = 0xABCD;
+    
+    /* Pointer */
+    unsigned char *ptr;
+    ptr = (unsigned char*)&data;
 
-
-
+    int totalsize = sizeof(DataSet);
+    printf("Total size of struct: %d\n", totalsize);
+    for (int i = 0; i < totalsize; i++)
+    {
+        printf(" %p,  %x\n", ptr, *ptr);
+        ptr++;
+    }
+    return 0;
+}
+```
+>👉 Kết quả:
 
 
 
