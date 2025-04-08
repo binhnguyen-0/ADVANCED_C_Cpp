@@ -799,17 +799,16 @@ typedef struct Data
 
 int main()
 {
-    /* data */
+    /* Khởi tạo các thành viên của struct */
     DataSet data;
     data.data1 = 'A';
     data.data2 = 0xFFFFEEEE;
     data.data3 = 0x22;
     data.data4 = 0xABCD;
     
-    /* Pointer */
+    /* In ra từng byte với từng địa chỉ tương ứng */
     unsigned char *ptr;
     ptr = (unsigned char*)&data;
-
     int totalsize = sizeof(DataSet);
     printf("Total size of struct: %d\n", totalsize);
     for (int i = 0; i < totalsize; i++)
@@ -821,8 +820,8 @@ int main()
 }
 ```
 >👉 Kết quả:
-
-
+![Image](https://github.com/user-attachments/assets/9bbd7654-4522-45cb-ba48-f8d6533e65e7)
+>➡️ Những địa chỉ chứa 0 chính là padding
 
 
 
