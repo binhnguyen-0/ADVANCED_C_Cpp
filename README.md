@@ -825,9 +825,8 @@ int main()
     return 0;
 }
 ```
->👉 Kết quả:
+>➡️ Tổng là 12 byte (là bội số của 4):
 ![Image](https://github.com/user-attachments/assets/9bbd7654-4522-45cb-ba48-f8d6533e65e7)
->➡️ Tổng là 12 byte là bội số của 4:
 > - Trong cấu trúc này, `int` có kích thước lớn nhất nên Compiler lấy 4 byte làm chuẩn để cấp phát 4 byte địa chỉ.
 > - `char` - thành viên đầu tiên, địa chỉ bắt đầu là: `00000000005FFE84` là bội số của 1, 3 byte tiếp theo là padding: `85, 86, 87` vì không những địa chỉ này không phải là bội số của 4.
 > - `int` - thành viên thứ 2, địa chỉ bắt đầu là: `00000000005FFE88` là bội số của 4, 4 byte này nằm trong boundary từ `88 -> 8B`.
@@ -841,21 +840,53 @@ int main()
 >👉 Ví dụ: Tìm kích thước của struct có thành viên là chuỗi.
 ```c
 #include <stdio.h>
+#include <string.h>
 
-typedef struct Data
+typedef struct Array
 {
-    char data1;
-    int data2;
-    char data3;
-    short data4;
-}DataSet;
+    char arr1[5];
+    short arr2[4];
+    int arr3[2];
+}ArraySet;
 
 int main()
 {
+    /* data */
+    ArraySet arrayS;
 
+    /* Member 1 */
+    // Dùng strcpy để sao chép từng ký tự vào mảng arr1
+    strcpy(arrayS.arr1,"Hello");  // Đối số 1 được truyền vào là con trỏ `char *` hoặc mảng kiểu `char arr[]`
+
+    /* Member 2 */
+    // Để gán giá trị cho chuỗi kiểu số nguyên thì phải gán từng thành viên một
+    arrayS.arr2[0] = 0xabcd;
+    arrayS.arr2[1] = 0xcdef;
+    arrayS.arr2[2] = 0x1234;
+    arrayS.arr2[3] = 0x4567;
+
+    /* Member 3 */
+    // Để gán giá trị cho chuỗi kiểu số nguyên thì phải gán từng thành viên một
+    arrayS.arr3[0] = 0xAAAAFFFF;
+    arrayS.arr3[1] = 0xBBBBEEEE;
+
+    /* Pointer */
+    unsigned char *ptr;
+    ptr = (unsigned char*)&arrayS;
+
+    int totalsize = (int)sizeof(ArraySet);
+    printf("Total size of struct: %d\n", totalsize);
+    for (int i = 0; i < totalsize; i++)
+    {
+        printf(" %p,  %x\n", ptr, *ptr);
+        ptr++;
+    }
     return 0;
 }
 ```
+>➡️ Tổng là 12 byte (là bội số của 4):
+
+
 
 [🔼 _UP_](#top)
 </details>
