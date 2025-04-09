@@ -897,11 +897,23 @@ int main()
 > - Thành viên đầu có 5 phần tử `char arr1[5]` có 5 byte thực + 1 byte padding: bắt đầu từ địa chỉ `00000000005FFE70` -> `00000000005FFE75` lần lượt là giá trị của các ký tự trong chuỗi "Hello", cuối cùng là byte padding = `0`.
 > - Thành viên thứ 2 có 4 phần tử kiểu short_kích thước 2 byte  `short arr2[4]` có 8 byte thực và 2 byte padding: bắt đầu từ địa chỉ `00000000005FFE76` với `76` là bội số của 2 -> `00000000005FFE7F` lần lượt là địa chỉ của các giá trị đã được gán, 2 byte padding ở cuối = `0`.
 > - Thành viên thứ 3 có 2 phần tử kiểu int_kích thước 4 byte  `int arr3[2]` có 8 byte: bắt đầu từ địa chỉ `00000000005FFE80` với `80` là bội số của 4 -> `00000000005FFE87` lần lượt là địa chỉ của các giá trị đã được gán.
-
-<br>
-
 ![Image](https://github.com/user-attachments/assets/27757309-d213-4651-ba0c-631d2b2468bb)
 
+### II. Bit Field:
+- Trong C, ta có thể chỉ định kích thước theo bit của thành viên trong 1 struct hay union.
+- Cú pháp:
+```c
+struct
+{
+  data_type member : width_of_bit_field;
+}
+/* Ví dụ */
+struct
+{
+  int data1 : 2;  // chỉ sử dụng 2 bit trong tổng số 4 byte
+  char data2 : 4;  // chỉ sử dụng 4 bit trong tổng số 1 byte
+}
+```
 
 [🔼 _UP_](#top)
 </details>
