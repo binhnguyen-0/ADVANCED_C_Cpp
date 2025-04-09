@@ -826,16 +826,21 @@ int main()
 }
 ```
 >➡️ Tổng là 12 byte (là bội số của 4):
-<br>
+
 ![Image](https://github.com/user-attachments/assets/9bbd7654-4522-45cb-ba48-f8d6533e65e7)
+
 > - Trong cấu trúc này, `int` có kích thước lớn nhất nên Compiler lấy 4 byte làm chuẩn để cấp phát 4 byte địa chỉ.
 > - `char` - thành viên đầu tiên, địa chỉ bắt đầu là: `00000000005FFE84` là bội số của 1, 3 byte tiếp theo là padding: `85, 86, 87` vì không những địa chỉ này không phải là bội số của 4.
 > - `int` - thành viên thứ 2, địa chỉ bắt đầu là: `00000000005FFE88` là bội số của 4, 4 byte này nằm trong boundary từ `88 -> 8B`.
 > - `char` - thành viên thứ 3, địa chỉ bắt đầu là: `00000000005FFE8C` là bội số của 1, 1 byte tiếp theo là padding: `8D`.
 > - `short` - thành viên thứ 4, địa chỉ bắt đầu là: `00000000005FFE8E` là bội số của 2, 2 byte này nằm trong boundary `8E, 8F`.
+
 <br>
+
 ![Image](https://github.com/user-attachments/assets/5c57ccd9-24a5-433b-8c58-5f4bd6d96fef)
+
 <br>
+
 > - Tóm lại ta có 8 byte thực tế và 4 byte padding.
 > 
 >ℹ️ Nếu thêm một thành viên thứ 5 kiểu `char` thì tổng số byte sẽ là 16 (bội số của 4), vì 3 byte padding sẽ được thêm vào những địa chỉ cuối.
@@ -892,7 +897,9 @@ int main()
 > - Thành viên đầu có 5 phần tử `char arr1[5]` có 5 byte thực + 1 byte padding: bắt đầu từ địa chỉ `00000000005FFE70` -> `00000000005FFE75` lần lượt là giá trị của các ký tự trong chuỗi "Hello", cuối cùng là byte padding = `0`.
 > - Thành viên thứ 2 có 4 phần tử kiểu short_kích thước 2 byte  `short arr2[4]` có 8 byte thực và 2 byte padding: bắt đầu từ địa chỉ `00000000005FFE76` với `76` là bội số của 2 -> `00000000005FFE7F` lần lượt là địa chỉ của các giá trị đã được gán, 2 byte padding ở cuối = `0`.
 > - Thành viên thứ 3 có 2 phần tử kiểu int_kích thước 4 byte  `int arr3[2]` có 8 byte: bắt đầu từ địa chỉ `00000000005FFE80` với `80` là bội số của 4 -> `00000000005FFE87` lần lượt là địa chỉ của các giá trị đã được gán.
+
 <br>
+
 ![Image](https://github.com/user-attachments/assets/27757309-d213-4651-ba0c-631d2b2468bb)
 
 
