@@ -696,7 +696,8 @@ int main()
 <summary>🔖 <b>BÀI 7: STRUCT - UNION</b></summary>
 
 ### I. Struct:
-- Khái niệm	Là 1 kiểu dữ liệu do người dùng tự định nghĩa. Struct được sử dụng khi muốn lưu trữ một tập hợp các kiểu dữ liệu khác nhau dưới một tên duy nhất.	
+- Khái niệm:
+  - Là 1 kiểu dữ liệu do người dùng tự định nghĩa. Struct được sử dụng khi muốn lưu trữ một tập hợp các kiểu dữ liệu khác nhau dưới một tên duy nhất.	
 - Declaration - Cú pháp khai báo:
 >✍️ Cú pháp 1:
 ```C
@@ -913,6 +914,45 @@ struct
   int data1 : 2;  // chỉ sử dụng 2 bit trong tổng số 4 byte
   char data2 : 4;  // chỉ sử dụng 4 bit trong tổng số 1 byte
 }
+```
+### III. UNION:
+- Khái niệm:
+  - Là 1 kiểu dữ liệu do người dùng tự định nghĩa, có thể chứa các phần tử có kiểu dữ liệu khác nhau như struct.
+  - Nhưng không giống cấu trúc, tất cả các thành viên của `union` được lưu trữ trong cùng một vị trí bộ nhớ, vì vậy mà chỉ có 1 thành viên mới có thể lưu trữ dữ liệu tại 1 thời điểm.
+- Declaration - Cú pháp khai báo:
+>✍️ Cú pháp 1:
+```C
+union union_name
+{
+  <datatype_1> <member1>;
+  <datatype_2> <member2>; 
+};
+/* Ví dụ 1 */
+union Point
+{
+  char x;
+  int y;
+  float f;
+};
+
+union Point p1, p2;  // khi khai báo biến cần thêm union.
+```
+>✍️ Cú pháp 2:
+```C
+typedef union
+{
+  <datatype_1> <member1>;
+  <datatype_2> <member2>; 
+}union_name;
+/* Ví dụ */
+typedef struct
+{
+  char x;
+  int y;
+  float f;
+}Point;
+
+Point p1, p2;  // khi khai báo biến không cần thêm union.
 ```
 
 [🔼 _UP_](#top)
