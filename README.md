@@ -856,7 +856,7 @@ int main()
 > 
 >ℹ️ Nếu thêm một thành viên thứ 5 kiểu `char` thì tổng số byte sẽ là 16 (bội số của 4), vì 3 byte padding sẽ được thêm vào những địa chỉ cuối.
 
->👉 Ví dụ: Tìm kích thước của struct có thành viên là chuỗi.
+>👉 Ví dụ: Tìm kích thước của struct có thành viên là mảng.
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -1100,7 +1100,10 @@ int main()
 }
 ```
 >➡️ Kết quả:
->
+>- Lý do phải gán và đọc thành viên riêng một thời điểm là do union chỉ lưu trữ giá trị trong 4 byte địa chỉ chung nên khi gán một địa chỉ cho 1 thành viên thì giá trị đó sẽ bị ghi đè lên giá trị của thành viên trước đó.
+>![Image](https://github.com/user-attachments/assets/96e8e621-33c1-42fb-90d6-16971d344f08)
+
+### IV. Kết hợp STRUCT và UNION:
 
 
 [🔼 _UP_](#top)
