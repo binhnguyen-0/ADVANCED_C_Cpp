@@ -736,9 +736,11 @@ User user1, user2, *user3;  // khi khai báo biến không cần thêm struct.
 - Initialization - Khởi tạo:
 >✍️ 1. Các thành viên của struct không được khởi tạo khi khai báo struct.
 >  - `struct struct_name{ <datatype_1> <member1> = value1; }`: gây ra lỗi Compiler error bởi vì khi một kiểu dữ liệu được khai báo thì không có bộ nhớ nào được phân bổ cho nó , vì vậy không có không gian để lưu trữ giá trị được gán (bộ nhớ chỉ được phân bổ khi biến được tạo).<br>
+
 >✍️ 2. Theo mặc định,
- - Nếu biến được khai báo cục bộ trong hàm thì các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi thành viên đầu tiên được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.
- - Nếu biến là global hoặc static thì các thành viên sẽ tự động gán = 0 hoặc NULLL.
+>- Nếu biến được khai báo cục bộ trong hàm thì các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi thành viên đầu tiên được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.
+>- Nếu biến là global hoặc static thì các thành viên sẽ tự động gán = 0 hoặc NULLL.
+
 >✍️ 3. Khởi tạo khi khai báo biến kiểu struct.<br>
 ```c
 struct struct_name str = {"abc", val1, val2, ...};  // Các giá trị sẽ được gán theo thứ tự.
@@ -960,9 +962,11 @@ Point p1, p2;  // khi khai báo biến không cần thêm union.
 - Initialization - Khởi tạo:
 >✍️ 1. Các thành viên của struct không được khởi tạo khi khai báo struct.
 >  - `struct struct_name{ <datatype_1> <member1> = value1; }`: gây ra lỗi Compiler error bởi vì khi một kiểu dữ liệu được khai báo thì không có bộ nhớ nào được phân bổ cho nó , vì vậy không có không gian để lưu trữ giá trị được gán (bộ nhớ chỉ được phân bổ khi biến được tạo).<br>
+
 >✍️ 2. Theo mặc định,
- - Nếu biến được khai báo cục bộ trong hàm thì các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi thành viên đầu tiên được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.
- - Nếu biến là global hoặc static thì các thành viên sẽ tự động gán = 0 hoặc NULLL.
+>- Nếu biến được khai báo cục bộ trong hàm thì các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi thành viên đầu tiên được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.
+>- Nếu biến là global hoặc static thì các thành viên sẽ tự động gán = 0 hoặc NULLL.
+
 - Acess member - Cách truy cập thành viên của struct:
 >✍️ 1. (.) dot operator: Toán tử dấu chấm giúp ta truy cập hoặc sửa đổi các thành viên của `union`.<br>
 ➡️
@@ -973,7 +977,8 @@ Point p1, p2;  // khi khai báo biến không cần thêm union.
 ➡️
 `union_ptr->member1;`
 `union_ptr->member2;`
->👉 Ví dụ: Tìm kích thước của struct có thành viên là chuỗi.
+
+>👉 Ví dụ: So sánh kích thước của union với struct.
 ```c
 #include <stdio.h>
 
@@ -1042,11 +1047,9 @@ int main()
     }
     return 0;
 }
->➡️ Kết quả:
-
-
 ```
-
+>➡️ Kết quả:
+![Image](https://github.com/user-attachments/assets/de162709-3e48-4f89-abb9-6af26607a557)
 
 
 
