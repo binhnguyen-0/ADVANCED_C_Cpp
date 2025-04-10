@@ -734,13 +734,16 @@ typedef struct
 User user1, user2, *user3;  // khi khai báo biến không cần thêm struct.
 ```
 - Initialization - Khởi tạo:
->✍️ 1. Các thành viên của struct không được khởi tạo khi khai báo struct.<br>
->✍️ 2. Theo mặc định, các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi một biến được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.<br>
+>✍️ 1. Các thành viên của struct không được khởi tạo khi khai báo struct.
+>  - `struct struct_name{ <datatype_1> <member1> = value1; }`: gây ra lỗi Compiler error bởi vì khi một kiểu dữ liệu được khai báo thì không có bộ nhớ nào được phân bổ cho nó , vì vậy không có không gian để lưu trữ giá trị được gán (bộ nhớ chỉ được phân bổ khi biến được tạo).<br>
+>✍️ 2. Theo mặc định,
+ - Nếu biến được khai báo cục bộ trong hàm thì các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi thành viên đầu tiên được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.
+ - Nếu biến là global hoặc static thì các thành viên sẽ tự động gán = 0 hoặc NULLL.
 >✍️ 3. Khởi tạo khi khai báo biến kiểu struct.<br>
 ```c
 struct struct_name str = {"abc", val1, val2, ...};  // Các giá trị sẽ được gán theo thứ tự.
 ```
->✍️ 4. Khởi tạo chỉ 1 số thành viên.	1. struct struct_name{ <datatype_1> <member1> = value1; }: gây ra lỗi Compiler error bởi vì khi một kiểu dữ liệu được khai báo thì không có bộ nhớ nào được phân bổ cho nó , vì vậy không có không gian để lưu trữ giá trị được gán (bộ nhớ chỉ được phân bổ khi biến được tạo).
+>✍️ 4. Khởi tạo chỉ 1 số thành viên.	1. 
 ```c
 struct struct_name str = {.member1 = "abc",.member2 = val1};  // Các thành viên còn lại sẽ có giá trị 0 hoặc NULL
 ```
@@ -954,6 +957,98 @@ typedef struct
 
 Point p1, p2;  // khi khai báo biến không cần thêm union.
 ```
+- Initialization - Khởi tạo:
+>✍️ 1. Các thành viên của struct không được khởi tạo khi khai báo struct.
+>  - `struct struct_name{ <datatype_1> <member1> = value1; }`: gây ra lỗi Compiler error bởi vì khi một kiểu dữ liệu được khai báo thì không có bộ nhớ nào được phân bổ cho nó , vì vậy không có không gian để lưu trữ giá trị được gán (bộ nhớ chỉ được phân bổ khi biến được tạo).<br>
+>✍️ 2. Theo mặc định,
+ - Nếu biến được khai báo cục bộ trong hàm thì các thành viên chưa được khởi tạo chứa giá trị rác, nhưng khi thành viên đầu tiên được khởi tạo thì những thành viên còn lại chưa được khởi tạo rõ ràng sẽ được khởi tạo bằng 0.
+ - Nếu biến là global hoặc static thì các thành viên sẽ tự động gán = 0 hoặc NULLL.
+- Acess member - Cách truy cập thành viên của struct:
+>✍️ 1. (.) dot operator: Toán tử dấu chấm giúp ta truy cập hoặc sửa đổi các thành viên của `union`.<br>
+➡️
+ `union_name.member1;`
+ `union_name.member2;`
+ 
+>✍️ 2. (->) arrow operator: Toán tử mũi tên được sử dụng để truy cập thành viên khi có con trỏ trỏ đến `union`.<br>
+➡️
+`union_ptr->member1;`
+`union_ptr->member2;`
+>👉 Ví dụ: Tìm kích thước của struct có thành viên là chuỗi.
+```c
+#include <stdio.h>
+
+/* Định nghĩa kiểu union */
+typedef union Data
+{
+    char data1;
+    int data2;
+    char data3;
+    short data4;
+    char data5;
+}DataUnion;
+
+/* Định nghĩa kiểu struct */
+typedef struct Data1
+{
+    char data1;
+    int data2;
+    char data3;
+    short data4;
+    char data5;
+}DataStruct;
+
+int main()
+{
+    /* Union */
+    DataUnion data_union;
+    data_union.data1 = 'A';
+    data_union.data2 = 0xFFFFEEEE;
+    data_union.data3 = 0x22;
+    data_union.data4 = 0xABCD;
+    data_union.data5 = 0x12;
+
+    /* Struct */
+    DataStruct data_struct;
+    data_struct.data1 = 'A';
+    data_struct.data2 = 0xFFFFEEEE;
+    data_struct.data3 = 0x22;
+    data_struct.data4 = 0xABCD;
+    data_struct.data5 = 0x12;
+    
+    /* Pointer to union */
+    unsigned char *ptr_union;
+    ptr_union = (unsigned char*)&data_union;
+
+     /* Pointer to struct */
+     unsigned char *ptr_struct;
+     ptr_struct = (unsigned char*)&data_struct;
+
+     /* Union: Print address and value by byte */
+    int union_size = sizeof(data_union);
+    printf("Total size of union: %d\n", union_size);
+    for (int i = 0; i < union_size; i++)
+    {
+        printf(" %p,  %x\n", ptr_union, *ptr_union);
+        ptr_union++;
+    }
+
+    /* Struct: Print address and value by byte */
+    int struct_size = sizeof(data_struct);
+    printf("Total size of struct: %d\n", struct_size);
+    for (int i = 0; i < struct_size; i++)
+    {
+        printf(" %p,  %x\n", ptr_struct, *ptr_struct);
+        ptr_struct++;
+    }
+    return 0;
+}
+>➡️ Kết quả:
+
+
+```
+
+
+
 
 [🔼 _UP_](#top)
 </details>
