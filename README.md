@@ -1059,11 +1059,48 @@ int main()
 >➡️ Kết quả:
 ![Image](https://github.com/user-attachments/assets/de162709-3e48-4f89-abb9-6af26607a557)
 
->👉 Ví dụ: So sánh kích thước của union với struct.
+>👉 Ví dụ: Sự khác nhau giữa đọc giá trị của các thành viên riêng lẻ và cùng lúc.
 ```c
+#include <stdio.h>
 
+typedef union Data
+{
+    char data1;
+    char data2;
+    char data3;
+    int data4;
+}DataUnion;
+
+int main()
+{
+    DataUnion data_union;
+
+    printf("/****** Đọc riêng từng thành viên data1 & data2 ******/\n");
+    data_union.data1 = 34;
+    printf("Data 1: %d\n", data_union.data1);
+    data_union.data2 = 64;
+    printf("Data 2: %d\n", data_union.data2);
+
+    printf("/****** Đọc cùng lúc 2 thành viên data2 & data3 ******/\n");
+    data_union.data2 = 64;
+    data_union.data3 = 10;
+    printf("Data 2: %d\n", data_union.data2);
+    printf("Data 3: %d\n", data_union.data3);
+    
+    unsigned char *ptr;
+    ptr = (unsigned char*)&data_union;
+    int total_size = sizeof(data_union);
+    printf("/****** Giá trị của từng byte ******/\n");
+    for(int i = 0; i < sizeof(total_size); i++)
+    {
+        printf("Address: %p - 1 byte value: %d\n", ptr, *ptr);
+        ptr++;
+    }
+    return 0;
+}
 ```
-
+>➡️ Kết quả:
+>
 
 
 [🔼 _UP_](#top)
