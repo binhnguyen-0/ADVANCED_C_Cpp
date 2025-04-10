@@ -797,6 +797,11 @@ int main()
     - Đối với kiểu `char` - ranh giới 1 byte: đặt tại địa chỉ có kết thúc bằng `0, 1, 2, 3, 4, ... `.
     - Đối với kiểu `short` - ranh giới 2 byte: đặt tại địa chỉ thường có kết thúc bằng `0, 2, 4, 6, 8, ... `.
     - Đối với kiểu `double` - ranh giới 8 byte: đặt tại địa chỉ thường có kết thúc bằng `0, 8, 16, 24, ... `.
+- Size of struct - Kích thước:
+  - Mỗi thành viên có một vùng nhớ riêng.
+  - Có thể lưu nhiều dữ liệu đồng thời.
+  - Lấy kiểu dữ liệu lớn nhất trong số các thành viên làm chuẩn để cấp phát bộ nhớ.
+  - Tổng kích thước bằng tổng kích thước của các thành viên + padding.
 >👉 Ví dụ: Tìm kích thước của struct và in ra từng byte với địa chỉ tương ứng.
 ```c
 #include <stdio.h>
@@ -977,7 +982,10 @@ Point p1, p2;  // khi khai báo biến không cần thêm union.
 ➡️
 `union_ptr->member1;`
 `union_ptr->member2;`
-
+- Size of union - Kích thước:
+  - Trong union, tất cả các thành viên cùng chia sẻ một vùng nhớ.
+  - Kích thước của union sẽ bằng với kích thước của thành viên lớn nhất.
+  - Chỉ một thành viên lưu trữ giá trị tại một thời điểm nếu không dữ liệu sẽ bị ghi đè.
 >👉 Ví dụ: So sánh kích thước của union với struct.
 ```c
 #include <stdio.h>
@@ -1050,6 +1058,7 @@ int main()
 ```
 >➡️ Kết quả:
 ![Image](https://github.com/user-attachments/assets/de162709-3e48-4f89-abb9-6af26607a557)
+
 
 
 
