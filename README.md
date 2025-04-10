@@ -1059,6 +1059,10 @@ int main()
 >➡️ Kết quả:
 ![Image](https://github.com/user-attachments/assets/de162709-3e48-4f89-abb9-6af26607a557)
 
+>👉 Ví dụ: So sánh kích thước của union với struct.
+```c
+
+```
 
 
 
