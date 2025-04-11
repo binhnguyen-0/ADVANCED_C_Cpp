@@ -1165,14 +1165,75 @@ int main(int argc, char const *argv[])
 [🔼 _UP_](#top)
 </details>
 
+
 <details>
 <summary>🔖 <b>BÀI 8: MEMORY LAYOUT</b></summary>
 
-### I. :
+<br>
 
+- Đối với chương trình `main.exe` (trên window) được lưu vào bộ nhớ SSD, nhấn nút run chương trình trên window thì `main.exe` được copy vào bộ nhớ RAM để thực thi.
+- Đối với `main.hex` (nạp vào vi điều khiển) thì được lưu vào bộ nhớ FLASH, và khi cấp nguồn cho vi điều khiển thì `main.hex` được copy vào RAM để thực thi.
+- Có 5 vùng nhớ trong RAM:
+  - Text segment (Code segment).
+  - Data segment (Initialized data).
+  - BSS segment (Uninitialized data).
+  - Stack.
+  - Heap.
 
+### I. Text segment (Code segment):
 
+|📋 Text segment|📄 Description|
+|:------------------------:|:------------------------|
+|**Chứa**| - Chứa mã thực thi của chương trình - mã máy đã được biên dịch.<br> - Đối với trình biên dịch Clang (macOS), còn lưu trữ biến hằng số toàn cục `const` và chuỗi hằng `char *ptr = "Hello"; // Hello là chuỗi hằng` nhưng với quyền là read-only.|
+|**Quyền truy cập**|Chỉ read-only, không có quyền write - thay đổi giá trị, địa chỉ là không được phép.|
 
+### II. Data segment (Initialized data):
+
+|📋 Data segment|📄 Description|
+|:------------------------:|:------------------------|
+|**Chứa**| - Chứa biến global được khởi tạo với giá trị khác 0.<br> - Chứa biến static (global + local) được khởi tạo với giá trị khác 0.<br> - Đối với trình biên dịch GCC/G++ (Windows), còn lưu trữ biến hằng số toàn cục `const` và chuỗi hằng `char *ptr = "Hello"; // Hello là chuỗi hằng` nhưng với quyền là read-only.|
+|**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
+|**Life time**|Các biến trên sẽ bị thu hồi khi chương trình kết thúc - những địa chỉ cấp phát ra sẽ bị thu hồi.|
+
+### III. BSS segment (Uninitialized data):
+
+|📋 BSS segment|📄 Description|
+|:------------------------:|:------------------------|
+|**Chứa**| - Chứa biến global và biến static (global + local) được khởi tạo với giá trị = 0 hoặc không gán giá trị.|
+|**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
+|**Life time**|Các biến trên sẽ bị thu hồi khi chương trình kết thúc - những địa chỉ cấp phát ra sẽ bị thu hồi.|
+
+```c
+#include <stdio.h>
+
+typedef struct{
+   int x;
+   int y;
+} Point_Data;
+
+static Point_Data p1 = {0,0};  // p1: nằm ở bss -> x,y cũng nằm ở bss
+Point_Data p2;  // p2: chưa khởi tạo, nằm ở bss -> x,y nằm ở bss
+Point_Data p3 = {0, 1};  // p3: khởi tạo khác 0, nằm ở data -> x,y nằm ở data
+
+int a = 0;  // a: bss
+int b;  // b: bss
+int a = 10;  // a: data
+
+static int global = 0;  // bss
+static int global_2;  // bss
+void test(){
+   static int local = 0;  // bss
+   static int local_2;  // bss
+   static int local_3 = 2;  // data
+}
+
+int main(){
+   global = 10;
+   printf("a: %d\n", a);
+   printf("global: %d\n", global);
+   return 0;
+}
+```
 
 
 
