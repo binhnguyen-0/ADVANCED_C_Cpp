@@ -1106,6 +1106,8 @@ int main()
 ### IV. Kết hợp STRUCT và UNION:
 
 >👉 Ví dụ: Kết hợp `struct` với `union`.
+> - Để struct làm thành viên của union, để tiết kiệm (không để có byte padding) ta sẽ chỉ cần dùng `uint8_t` - 1 byte cho tất cả các thành viên của struct.
+
 ```c
 #include <stdio.h>
 #include <stdint.h>
@@ -1124,17 +1126,36 @@ typedef union
 
 int main(int argc, char const *argv[])
 {
+    // Copy dữ liệu vào các thành viên của struct
     Data_Frame transmit_data;
     strcpy((char*)transmit_data.data.id, "10");
     strcpy((char*)transmit_data.data.data, "1234");
     strcpy((char*)transmit_data.data.check_sum, "70");
 
+    // Copy dữ liệu của biến transmit_data vào receive_data
     Data_Frame receive_data;
     strcpy((char*)receive_data.frame, (char*)transmit_data.frame);
     return 0;
-}
 
+    /* In ra địa chỉ và dữ liệu của từng byte */
+    // Pointer trỏ tới biến receive_data
+    unsigned char *ptr;
+    ptr = (unsigned char*)&receive_data;
+    int total_size = sizeof(receive_data);
+    // In địa chỉ và dữ liệu
+    printf("/****** Giá trị của từng byte ******/\n");
+    for(int i = 0; i < total_size; i++)
+    {
+        printf("Address: %p - 1 byte value: %c\n", ptr, *ptr);
+        ptr++;
+    }
+    return 0;
+}
 ```
+>➡️ Kết quả:
+
+
+
 
 [🔼 _UP_](#top)
 </details>
