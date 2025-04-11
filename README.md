@@ -1101,6 +1101,7 @@ int main()
 ```
 >➡️ Kết quả:
 >- Lý do phải gán và đọc thành viên riêng một thời điểm là do union chỉ lưu trữ giá trị trong 4 byte địa chỉ chung nên khi gán một địa chỉ cho 1 thành viên thì giá trị đó sẽ bị ghi đè lên giá trị của thành viên trước đó.
+>
 >![Image](https://github.com/user-attachments/assets/96e8e621-33c1-42fb-90d6-16971d344f08)
 
 ### IV. Kết hợp STRUCT và UNION:
@@ -1153,6 +1154,22 @@ int main(int argc, char const *argv[])
 }
 ```
 >➡️ Kết quả:
+>
+![Image](https://github.com/user-attachments/assets/f340caf1-f886-4ce6-af17-7efa0c8263f4)
+
+### V. So sánh `STRUCT` và `UNION`:
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
