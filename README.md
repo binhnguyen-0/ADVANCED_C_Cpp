@@ -1195,6 +1195,27 @@ int main(int argc, char const *argv[])
 |**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
 |**Life time**|Các biến trên sẽ bị thu hồi khi chương trình kết thúc - những địa chỉ cấp phát ra sẽ bị thu hồi.|
 
+```c
+#include <stdio.h>
+
+const int a = 10;  // hằng số a: data segment
+char arr[] = "Hello";  // arr[] là tên mảng, chuỗi "Hello" các biến arr[0] ... arr[5]
+char *arr1 = "Hello";  // biến con trỏ arr1: data segment
+
+int main()
+{
+   a = 50;
+   printf("a: %d\n", a);
+
+   arr[3] = 'W';
+   printf("arr: %s", arr);
+
+   arr1[3] = 'E';
+   printf("arr1: %s", arr1);
+   return 0;
+}
+
+```
 ### III. BSS segment (Uninitialized data):
 
 |📋 BSS segment|📄 Description|
@@ -1203,6 +1224,7 @@ int main(int argc, char const *argv[])
 |**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
 |**Life time**|Các biến trên sẽ bị thu hồi khi chương trình kết thúc - những địa chỉ cấp phát ra sẽ bị thu hồi.|
 
+>👉 Ví dụ: 
 ```c
 #include <stdio.h>
 
@@ -1227,7 +1249,8 @@ void test(){
    static int local_3 = 2;  // data
 }
 
-int main(){
+int main()
+{
    global = 10;
    printf("a: %d\n", a);
    printf("global: %d\n", global);
@@ -1235,7 +1258,13 @@ int main(){
 }
 ```
 
+### IV. Stack:
 
+|📋 Stack|📄 Description|
+|:------------------------:|:------------------------|
+|**Chứa**| - Chứa biến cục bộ (trừ static), tham số truyền vào hàm, hằng số cục bộ (thay đổi được thông qua con trỏ).|
+|**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
+|**Life time**|Sau khi ra khỏi hàm, tự động thu hồi vùng nhớ.|
 
 
 [🔼 _UP_](#top)
