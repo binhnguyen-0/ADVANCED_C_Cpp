@@ -1159,13 +1159,16 @@ int main(int argc, char const *argv[])
 
 ### V. So sánh `STRUCT` và `UNION`:
 
+![Image](https://github.com/user-attachments/assets/b8444418-1695-4ada-9b0a-cce6271a06be)
 
 
+[🔼 _UP_](#top)
+</details>
 
+<details>
+<summary>🔖 <b>BÀI 8: MEMORY LAYOUT</b></summary>
 
-
-
-
+### I. :
 
 
 
@@ -1176,3 +1179,5 @@ int main(int argc, char const *argv[])
 
 [🔼 _UP_](#top)
 </details>
+
+
