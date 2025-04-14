@@ -1195,27 +1195,6 @@ int main(int argc, char const *argv[])
 |**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
 |**Life time**|Các biến trên sẽ bị thu hồi khi chương trình kết thúc - những địa chỉ cấp phát ra sẽ bị thu hồi.|
 
-```c
-#include <stdio.h>
-
-const int a = 10;  // hằng số a: data segment
-char arr[] = "Hello";  // arr[] là tên mảng, chuỗi "Hello" - các biến arr[0] ... arr[5] là ở stack
-char *arr1 = "Hello";  // biến con trỏ arr1: data segment
-
-int main()
-{
-   a = 50;
-   printf("a: %d\n", a);
-
-   arr[3] = 'W';
-   printf("arr: %s", arr);
-
-   arr1[3] = 'E';
-   printf("arr1: %s", arr1);
-   return 0;
-}
-
-```
 ### III. BSS segment (Uninitialized data):
 
 |📋 BSS segment|📄 Description|
@@ -1233,30 +1212,54 @@ typedef struct{
    int y;
 } Point_Data;
 
-static Point_Data p1 = {0,0};  // p1: nằm ở bss -> x,y cũng nằm ở bss
-Point_Data p2;  // p2: chưa khởi tạo, nằm ở bss -> x,y nằm ở bss
-Point_Data p3 = {0, 1};  // p3: khởi tạo khác 0, nằm ở data -> x,y nằm ở data
+/* Khởi tạo biến struct (global) */
+static Point_Data p1 = {0,0};   // p1: nằm ở bss -> x,y cũng nằm ở bss
+Point_Data p2;                  // p2: chưa khởi tạo, nằm ở bss -> x,y nằm ở bss
+Point_Data p3 = {0, 1};         // p3: khởi tạo khác 0, nằm ở data -> x,y nằm ở data
 
-int a = 0;  // a: bss
-int b;  // b: bss
-int a = 10;  // a: data
+/* Khởi tạo biến thường (global) */
+int zero_val_global = 0;     // nằm ở bss
+int unitialized_var_global;  // nằm ở bss
+int val_global = 10;         // nằm ở data
 
-static int global = 0;  // bss
-static int global_2;  // bss
-void test(){
-   static int local = 0;  // bss
-   static int local_2;  // bss
-   static int local_3 = 2;  // data
+void check_memory()
+{
+    /* Khởi tạo biến struct trong hàm (local) */
+    static Point_Data p4 = {0,1};   // p4: nằm ở data -> x,y cũng nằm ở data
+    Point_Data p5;                  // p5: nằm ở stack -> x,y cũng nằm ở stack
+    Point_Data p6 = {0, 1};         // p6: nằm ở stack -> x,y cũng nằm ở stack
+
+    /* Khởi tạo biến thường (local) */
+    int zero_val_local = 0;     // nằm ở stack
+    int unitialized_var_local;  // nằm ở stack
+    int val_local = 20;         // nằm ở stack
+
+    /* In địa chỉ của biến struct  */
+    printf("Static global struct (value = 0): Bss   %p\n", (void*)&p1);
+    printf("Global uninitialized struct:      Bss   %p\n", (void*)&p2);
+    printf("Global struct (value = !0):       data  %p\n", (void*)&p3);
+    printf("Static local struct (value = !0): data  %p\n", (void*)&p4);
+    printf("Local uninitialized struct:       Stack %p\n", (void*)&p5);
+    printf("Local struct (value = !0):        Stack %p\n", (void*)&p6);
+
+    /* In địa chỉ của biến struct  */
+    printf("\nGlobal var (value = 0):   Bss   %p\n", (void*)&zero_val_global);
+    printf("Global uninitialized var: Bss   %p\n", (void*)&unitialized_var_global);
+    printf("Global var (value = !0):  data  %p\n", (void*)&val_global);
+    printf("Local var (value = 0):    Stack %p\n", (void*)&zero_val_local);
+    printf("Local uninitialized var:  Stack %p\n", (void*)&unitialized_var_local);
+    printf("Local var (value = !0):   Stack %p\n", (void*)&val_local);
 }
 
 int main()
 {
-   global = 10;
-   printf("a: %d\n", a);
-   printf("global: %d\n", global);
-   return 0;
+    check_memory();
+    return 0;
 }
 ```
+>➡️ Kết quả:
+>
+>
 
 ### IV. Stack:
 
@@ -1271,15 +1274,15 @@ int main()
 #include <stdio.h>
 #include <stdlib.h>
 
-char global_arr[] = "Hello";
-char *global_literal = "Hello";
+char global_arr[] = "Hello";    // nằm ở data segment
+char *global_literal = "Hello"; // nằm ở data segment (rodata)
 
 void check_memory()
 {
-    static char static_arr[] = "Hello";
-    char local_arr[] = "Hello";
-    char *local_literal = "Hello";
-    char *heap_arr = (char*)malloc(sizeof(char)*10);
+    static char static_arr[] = "Hello";  // nằm ở data segment
+    char local_arr[] = "Hello";          // nằm ở stack
+    char *local_literal = "Hello";       // nằm ở data segment (rodata)
+    char *heap_arr = (char*)malloc(sizeof(char)*10);  // nằm ở heap segment
     
     printf("Global arr:     %p\n",(void*)global_arr);
     printf("Global literal: %p\n",(void*)global_literal);
@@ -1291,18 +1294,30 @@ void check_memory()
 
     printf("Heap arr:       %p\n",(void*)heap_arr);
 
+    /* Có thể thay dổi giá trị mảng cục bộ trong stack */
+    printf("Trc thay đổi: %s\n", local_arr);
+    strcpy(local_arr,"Local") ;
+    printf("Thay đổi: %s\n", local_arr);
+
     free(heap_arr);
 }
 
 int main()
 {
-
     check_memory();
+
+    /* Có thể thay đổi giá trị của phần tử mảng toàn cục */
+    global_arr[0] = 'A';
+    printf("%s", global_arr);
+
     return 0;
 }
 ```
 >➡️ Kết quả:
 >
+>![Image](https://github.com/user-attachments/assets/3574fd7e-a74f-42aa-a11d-0135fd851b81)
+
+
 
 [🔼 _UP_](#top)
 </details>
