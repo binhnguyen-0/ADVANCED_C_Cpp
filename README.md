@@ -1199,7 +1199,7 @@ int main(int argc, char const *argv[])
 #include <stdio.h>
 
 const int a = 10;  // hằng số a: data segment
-char arr[] = "Hello";  // arr[] là tên mảng, chuỗi "Hello" các biến arr[0] ... arr[5]
+char arr[] = "Hello";  // arr[] là tên mảng, chuỗi "Hello" - các biến arr[0] ... arr[5] là ở stack
 char *arr1 = "Hello";  // biến con trỏ arr1: data segment
 
 int main()
@@ -1262,10 +1262,47 @@ int main()
 
 |📋 Stack|📄 Description|
 |:------------------------:|:------------------------|
-|**Chứa**| - Chứa biến cục bộ (trừ static), tham số truyền vào hàm, hằng số cục bộ (thay đổi được thông qua con trỏ).|
+|**Chứa**| - Chứa biến cục bộ (trừ static), tham số truyền vào hàm, mảng, hằng số cục bộ (thay đổi được thông qua con trỏ).|
 |**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
 |**Life time**|Sau khi ra khỏi hàm, tự động thu hồi vùng nhớ.|
 
+>👉 Ví dụ: Cách mảng được lưu trữ trong vùng nhớ.
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+char global_arr[] = "Hello";
+char *global_literal = "Hello";
+
+void check_memory()
+{
+    static char static_arr[] = "Hello";
+    char local_arr[] = "Hello";
+    char *local_literal = "Hello";
+    char *heap_arr = (char*)malloc(sizeof(char)*10);
+    
+    printf("Global arr:     %p\n",(void*)global_arr);
+    printf("Global literal: %p\n",(void*)global_literal);
+
+    printf("Static arr:     %p\n",(void*)static_arr);
+
+    printf("Local arr:      %p\n",(void*)local_arr);
+    printf("Local literal:  %p\n",(void*)local_literal);
+
+    printf("Heap arr:       %p\n",(void*)heap_arr);
+
+    free(heap_arr);
+}
+
+int main()
+{
+
+    check_memory();
+    return 0;
+}
+```
+>➡️ Kết quả:
+>
 
 [🔼 _UP_](#top)
 </details>
