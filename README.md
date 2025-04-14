@@ -1203,11 +1203,12 @@ int main(int argc, char const *argv[])
 |**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
 |**Life time**|Các biến trên sẽ bị thu hồi khi chương trình kết thúc - những địa chỉ cấp phát ra sẽ bị thu hồi.|
 
->👉 Ví dụ: 
+>👉 Ví dụ: Các biến thường và biến struct lưu trữ trong memory.
 ```c
 #include <stdio.h>
 
-typedef struct{
+typedef struct
+{
    int x;
    int y;
 } Point_Data;
@@ -1259,7 +1260,7 @@ int main()
 ```
 >➡️ Kết quả:
 >
->
+>![Image](https://github.com/user-attachments/assets/937241d9-498f-44cb-8b68-3ac29e142c4e)
 
 ### IV. Stack:
 
@@ -1317,7 +1318,7 @@ int main()
 >
 >![Image](https://github.com/user-attachments/assets/3574fd7e-a74f-42aa-a11d-0135fd851b81)
 
-
+### V. Heap:
 
 [🔼 _UP_](#top)
 </details>
