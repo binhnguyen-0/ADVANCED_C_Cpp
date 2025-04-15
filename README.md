@@ -1353,12 +1353,18 @@ int main()
         printf("Heap Address: %p - Value: %d\n", ptr + i, *(ptr + i));
     }
 
+    /* Thu hồi vùng nhớ đã cấp phát */
+    //  Nếu không thu hồi:
+    // - Luôn tồn tại những vùng nhớ đó và giá trị đó, và có thể truy xuất được như bình thường ().
+    // - Khi cấp phát tiếp thì sẽ bị cộng dồn lên và có thể sẽ bị lỗi memoryleak.
+    // Nếu ghi quá giới hạn mảng thì bị overflow.
+    free(ptr);  
     return 0;
 }
 ```
 >➡️ Kết quả:
 >
->![Image](https://github.com/user-attachments/assets/f3f93c8f-cb71-443d-9ebf-1e13624122e1)
+>![Image](https://github.com/user-attachments/assets/9596729b-7b16-4c9f-9c2f-ae47cc3272c5)
 
 
 
