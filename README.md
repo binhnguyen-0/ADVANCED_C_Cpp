@@ -1329,8 +1329,33 @@ int main()
 |**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
 |**Life time**|Sau khi ra khỏi hàm, tự động thu hồi vùng nhớ.|
 
+>👉 Ví dụ: Dùng malloc().
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
+int main()
+{
+    /* Cấp phát tĩnh */
+    uint16_t arr[5];    // 5 phần tử * 2 bytes kích thước = 10 bytes.
 
+    /* Cấp phát động */
+    int size = 5;
+    printf("Stack address: %p - Value: %d\n\n", (void*)&size);
+    // Để dùng malloc: 
+    // - Xác định kích thước dựa trên 2 thành phần.
+    // - Ép kiểu malloc vì malloc là con trỏ kiểu void (không truy xuất được) cùng kiểu với từng phần tử để có thể đọc đúng.
+    // - Khai báo con trỏ để truy xuất được dữ liệu trong vùng nhớ đã cấp phát.
+    uint16_t *ptr = (uint16_t*)malloc(size * sizeof(uint16_t));    // cấp phát địa chỉ bộ nhớ trong Heap
+    for (int i = 0; i < size; i++)
+    {
+        printf("Heap Address: %p - Value: %d\n", ptr + i, *(ptr + i));
+    }
+
+    return 0;
+}
+```
 
 
 
