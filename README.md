@@ -1327,7 +1327,8 @@ int main()
 |**Cách dùng**|- Để cấp phát bộ nhớ động trong quá trình thực thi của chương trình.<br>- Cho phép chương trình tạo ra và giải phóng bộ nhớ theo nhu cầu.<br>- Các hàm `malloc()`, `calloc()`, `realloc()` được sử dụng để cấp phát và `free()` để giải phóng bộ nhớ trên heap.|
 |**malloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
 |**realloc**|Thay đổi kích thước vùng nhớ đã được cấp phát ra thông qua malloc hoặc calloc.|
-|**Life time**|Sau khi ra khỏi hàm, tự động thu hồi vùng nhớ.|
+|**Quyền truy cập**|Quyền read-write.|
+|**Life time**|Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
 
 >👉 Ví dụ: Dùng malloc(), realloc().
 ```c
@@ -1342,15 +1343,37 @@ int main()
 
     /* Cấp phát động */
     int size = 5;
-    printf("Stack address: %p - Value: %d\n\n", (void*)&size);
+    printf("Stack address: %p - Value: %d\n", (void*)&size, size);
     // Để dùng malloc: 
     // - Xác định kích thước dựa trên 2 thành phần.
     // - Ép kiểu malloc vì malloc là con trỏ kiểu void (không truy xuất được) cùng kiểu với từng phần tử để có thể đọc đúng.
     // - Khai báo con trỏ để truy xuất được dữ liệu trong vùng nhớ đã cấp phát.
     uint16_t *ptr = (uint16_t*)malloc(size * sizeof(uint16_t));    // cấp phát địa chỉ bộ nhớ trong Heap
+    printf("\nPtr address_stack: %p - Value_heap: %X\n\n", &ptr, ptr);
+    for (int i = 0; i < size; i++)
+    {
+        ptr[i] = 2*i;
+    }
     for (int i = 0; i < size; i++)
     {
         printf("Heap Address: %p - Value: %d\n", ptr + i, *(ptr + i));
+    }
+
+    /* Thay đổi kích thước vùng nhớ */
+    int new_size = 10;
+    // Để dùng realloc: 
+    // - Truyền vào vùng nhớ đã cấp phát và kích thước mới.
+    // - Ép kiểu realloc để đồng bộ dữ liệu.
+    // - Thay đổi con trỏ để trỏ tới realloc.
+    ptr = (uint16_t*)realloc(ptr, new_size * sizeof(uint16_t));
+    printf("\nPtr address_stack: %p - Value_heap: %X\n\n", &ptr, ptr);
+    for (int i = 0; i < new_size; i++)
+    {
+        ptr[i] = 2*i;
+    }
+    for (int i = 0; i < new_size; i++)
+    {
+        printf("Add new Heap Address: %p - Value: %d\n", ptr + i, *(ptr + i));
     }
 
     /* Thu hồi vùng nhớ đã cấp phát */
@@ -1358,15 +1381,26 @@ int main()
     // - Luôn tồn tại những vùng nhớ đó và giá trị đó, và có thể truy xuất được như bình thường ().
     // - Khi cấp phát tiếp thì sẽ bị cộng dồn lên và có thể sẽ bị lỗi memoryleak khiến chương trình bị dừng hoặc treo.
     // Nếu ghi quá giới hạn mảng thì bị overflow.
-    free(ptr);  
+    free(ptr);
+
+    /* Gán ptr = NULL sau khi không còn sử dụng */
+    ptr = NULL;    // tránh trỏ tới những vùng nhớ khác trong RAM gây lỗi không mong muốn
     return 0;
 }
 ```
 >➡️ Kết quả:
 >
->![Image](https://github.com/user-attachments/assets/9596729b-7b16-4c9f-9c2f-ae47cc3272c5)
+>![Image](https://github.com/user-attachments/assets/0abfedda-cf8a-4ed2-80dd-c4f9cb37c0f8)
 
+### VI. Memory leak & Overflow:
 
+|📋 Heap|📄 Description|
+|:------------------------:|:------------------------|
+|**Cách dùng**|- Để cấp phát bộ nhớ động trong quá trình thực thi của chương trình.<br>- Cho phép chương trình tạo ra và giải phóng bộ nhớ theo nhu cầu.<br>- Các hàm `malloc()`, `calloc()`, `realloc()` được sử dụng để cấp phát và `free()` để giải phóng bộ nhớ trên heap.|
+|**malloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
+|**realloc**|Thay đổi kích thước vùng nhớ đã được cấp phát ra thông qua malloc hoặc calloc.|
+|**Quyền truy cập**|Quyền read-write.|
+|**Life time**|Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
 
 
 
