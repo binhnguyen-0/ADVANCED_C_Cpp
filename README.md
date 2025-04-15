@@ -1356,7 +1356,9 @@ int main()
     return 0;
 }
 ```
-
+>➡️ Kết quả:
+>
+>![Image](https://github.com/user-attachments/assets/f3f93c8f-cb71-443d-9ebf-1e13624122e1)
 
 
 
