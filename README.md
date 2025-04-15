@@ -1326,10 +1326,10 @@ int main()
 |:------------------------:|:------------------------|
 |**Cách dùng**|- Để cấp phát bộ nhớ động trong quá trình thực thi của chương trình.<br>- Cho phép chương trình tạo ra và giải phóng bộ nhớ theo nhu cầu.<br>- Các hàm `malloc()`, `calloc()`, `realloc()` được sử dụng để cấp phát và `free()` để giải phóng bộ nhớ trên heap.|
 |**malloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
-|**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
+|**realloc**|Thay đổi kích thước vùng nhớ đã được cấp phát ra thông qua malloc hoặc calloc.|
 |**Life time**|Sau khi ra khỏi hàm, tự động thu hồi vùng nhớ.|
 
->👉 Ví dụ: Dùng malloc().
+>👉 Ví dụ: Dùng malloc(), realloc().
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -1356,7 +1356,7 @@ int main()
     /* Thu hồi vùng nhớ đã cấp phát */
     //  Nếu không thu hồi:
     // - Luôn tồn tại những vùng nhớ đó và giá trị đó, và có thể truy xuất được như bình thường ().
-    // - Khi cấp phát tiếp thì sẽ bị cộng dồn lên và có thể sẽ bị lỗi memoryleak.
+    // - Khi cấp phát tiếp thì sẽ bị cộng dồn lên và có thể sẽ bị lỗi memoryleak khiến chương trình bị dừng hoặc treo.
     // Nếu ghi quá giới hạn mảng thì bị overflow.
     free(ptr);  
     return 0;
