@@ -7,21 +7,23 @@
 ### 📑 I. Compiler:
 - Trình biên dịch là chương trình chuyển đổi source code C thành mã máy để máy tính có thể thực thi.
 - Quá trình biên dịch gồm 4 giai đoạn:
+  - Preprocess (Tiền xử lý):
+    - **Lệnh tạo _file.i_ từ _file.c_ với trình gcc trong VS Code:** `gcc -E file.c -o file.i`.
+    - **Xử lý các loại chỉ thị tiền xử lý:** `#include`, `#define`, `#ifdef`, etc.
+    - **Xóa các comment:** `// comment`, `/* comment */`.
+  - Compiler (Quá trình biên dịch):
+    - **Lệnh tạo _file.s_ từ _file.i_:** `gcc -S file.i -o file.s`.
+    - **File.s là file assembly code (mã hợp ngữ):** là ngôn ngữ bậc thấp, giúp điều khiển phần cứng dễ dàng.
+  - Assembler (Quá trình dịch hợp ngữ):
+    - **Lệnh tạo _file.o_ từ _file.s_:** `gcc -c file.s -o file.o`.
+    - **File.o là file Object:** dịch Assembly code thành mã máy mà máy tính có thể hiểu được.
+  - Linker (Quá trình liên kết):
+    - **Lệnh tạo _file.exe_ từ các _file.o_:** `gcc file1.o file2.o -o filemain`.
+    - **Lệnh chạy _file.exe_:** `./filemain`.
+    - **Liên kết các file.o:** Tất cả các file.o sẽ được liên kết lại và tạo thành 1 file.exe để có thể chạy được chương trình.
+
 ![Image](https://github.com/user-attachments/assets/3a955cb2-1589-4680-a75e-5d2ec4b280ac)
-<br>&nbsp;1. Preprocess (Tiền xử lý):<br>
-&nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.i_ từ _file.c_ với trình gcc trong VS Code:** `gcc -E file.c -o file.i`.<br>
-&nbsp;&nbsp;- &nbsp;**Xử lý các loại chỉ thị tiền xử lý:** `#include`, `#define`, `#ifdef`, etc.<br>
-&nbsp;&nbsp;- &nbsp;**Xóa các comment:** `// comment`, `/* comment */`.<br>
-&nbsp;2. Compiler (Quá trình biên dịch):<br>
-&nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.s_ từ _file.i_:** `gcc -S file.i -o file.s`.<br>
-&nbsp;&nbsp;- &nbsp;**File.s là file assembly code (mã hợp ngữ):** là ngôn ngữ bậc thấp, giúp điều khiển phần cứng dễ dàng.<br>
-&nbsp;3. Assembler (Quá trình dịch hợp ngữ):<br>
-&nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.o_ từ _file.s_:** `gcc -c file.s -o file.o`.<br>
-&nbsp;&nbsp;- &nbsp;**File.o là file Object:** dịch Assembly code thành mã máy mà máy tính có thể hiểu được.<br>
-&nbsp;4. Linker (Quá trình liên kết):<br>
-&nbsp;&nbsp;- &nbsp;**Lệnh tạo _file.exe_ từ các _file.o_:** `gcc file1.o file2.o -o filemain`.<br>
-&nbsp;&nbsp;- &nbsp;**Lệnh chạy _file.exe_:** `./filemain`.<br>
-&nbsp;&nbsp;- &nbsp;**Liên kết các file.o:** Tất cả các file.o sẽ được liên kết lại và tạo thành 1 file.exe để có thể chạy được chương trình.<br>
+
 ### 📑 II. Preprocessor Directives (Chỉ thị tiền xử lý):
 - Là các instructors cho Preprocessor để thực hiện các nhiệm vụ như thay thế văn bản, mở rộng macro, thêm header file, và các nhiệm vụ khác.
 - Bắt đầu bằng `#`.
@@ -1319,6 +1321,21 @@ int main()
 >![Image](https://github.com/user-attachments/assets/3574fd7e-a74f-42aa-a11d-0135fd851b81)
 
 ### V. Heap:
+
+|📋 Heap|📄 Description|
+|:------------------------:|:------------------------|
+|**Cách dùng**|- Để cấp phát bộ nhớ động trong quá trình thực thi của chương trình.<br>- Cho phép chương trình tạo ra và giải phóng bộ nhớ theo nhu cầu.<br>- Các hàm `malloc()`, `calloc()`, `realloc()` được sử dụng để cấp phát và `free()` để giải phóng bộ nhớ trên heap.|
+|**malloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
+|**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
+|**Life time**|Sau khi ra khỏi hàm, tự động thu hồi vùng nhớ.|
+
+
+
+
+
+
+
+
 
 [🔼 _UP_](#top)
 </details>
