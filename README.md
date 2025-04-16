@@ -1329,7 +1329,7 @@ int main()
 |**realloc()**|Thay đổi kích thước vùng nhớ đã được cấp phát ra thông qua malloc hoặc calloc.|
 |**calloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước và khởi tạo bộ nhớ được phân bổ về 0.|
 |**Quyền truy cập**|Quyền read-write.|
-|**Life time**|Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
+|**Life time**|- Phải thu hồi thủ công, không tự động thu hồi khi kết thúc hàm như stack.<br>- Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
 
 >👉 Ví dụ: Dùng malloc(), calloc(), realloc().
 ```c
@@ -1421,10 +1421,10 @@ int main()
     }
 
     // ***************** Thu hồi vùng nhớ đã cấp phát *****************
-    //  Nếu không thu hồi:
-    // - Luôn tồn tại những vùng nhớ đó và giá trị đó, và có thể truy xuất được như bình thường ().
-    // - Khi cấp phát tiếp thì sẽ bị cộng dồn lên và có thể sẽ bị lỗi memoryleak khiến chương trình bị dừng hoặc treo.
-    // Nếu ghi quá giới hạn mảng thì bị overflow.
+    //  Memory leak:
+    // - Không thu hồi bộ nhớ đã phân bổ thì bộ nhớ vẫn chiếm RAM nhưng không còn biến nào trỏ tới nó dẫn đến không truy cập lại được gây lãng phí tài nguyên.
+    // - Khi cấp phát tiếp thì sẽ bị cộng dồn mức sử dụng RAM lên dễ dẫn đến treo chương trình, thoát đột ngột hoặc làm chậm dần hệ thống.
+    // Overflow: Nếu ghi dữ liệu vượt quá kích thước mảng hoặc vùng nhớ được cấp phát.
     free(ptr);  
     free(ptr_calloc);
 
@@ -1444,11 +1444,9 @@ int main()
 
 |📋 So sánh|📄 Memory leak|📄 Overflow|
 |:------------------------:|:------------------------|
-|**Cách dùng**|- Để cấp phát bộ nhớ động trong quá trình thực thi của chương trình.<br>- Cho phép chương trình tạo ra và giải phóng bộ nhớ theo nhu cầu.<br>- Các hàm `malloc()`, `calloc()`, `realloc()` được sử dụng để cấp phát và `free()` để giải phóng bộ nhớ trên heap.|
-|**malloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
-|**realloc**|Thay đổi kích thước vùng nhớ đã được cấp phát ra thông qua malloc hoặc calloc.|
-|**Quyền truy cập**|Quyền read-write.|
-|**Life time**|Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
+|**Khái niệm**|- Xảy ra khi phân bổ bộ nhớ động nhưng quên không giải phóng nó, và bộ nhớ được phân bổ này vẫn tồn tại trong suốt thời gian của chương trình và không thể sử dụng lại bộ nhớ đó.|- Ghi quá dung lượng cho phép của stack.<br>- Ghi dữ liệu vượt quá kích thước mảng hoặc vùng nhớ được cấp phát (heap).|
+|**Nguyên nhân**|Quên không free(), mất con trỏ.|- Stack overflow: gọi đệ quy vô hạn, tạo biến quá lớn.<br>- Heap overflow: Ghi dữ liệu vượt quá  kích thước mảng hoặc vùng nhớ được cấp phát.|
+|**Ảnh hưởng**|Lãng phí RAM, làm chương trình chậm hoặc treo.|Crash chương trình|
 
 ### VII. malloc vs. calloc vs. realloc:
 
