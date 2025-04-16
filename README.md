@@ -1326,7 +1326,8 @@ int main()
 |:------------------------:|:------------------------|
 |**Cách dùng**|- Để cấp phát bộ nhớ động trong quá trình thực thi của chương trình.<br>- Cho phép chương trình tạo ra và giải phóng bộ nhớ theo nhu cầu.<br>- Các hàm `malloc()`, `calloc()`, `realloc()` được sử dụng để cấp phát và `free()` để giải phóng bộ nhớ trên heap.|
 |**malloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
-|**realloc**|Thay đổi kích thước vùng nhớ đã được cấp phát ra thông qua malloc hoặc calloc.|
+|**realloc()**|Thay đổi kích thước vùng nhớ đã được cấp phát ra thông qua malloc hoặc calloc.|
+|**calloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
 |**Quyền truy cập**|Quyền read-write.|
 |**Life time**|Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
 
