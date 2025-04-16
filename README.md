@@ -1443,7 +1443,7 @@ int main()
 ### VI. Memory leak & Overflow:
 
 |📋 So sánh|📄 Memory leak|📄 Overflow|
-|:------------------------:|:------------------------|
+|:------------------------:|:------------------------|:------------------------|
 |**Khái niệm**|- Xảy ra khi phân bổ bộ nhớ động nhưng quên không giải phóng nó, và bộ nhớ được phân bổ này vẫn tồn tại trong suốt thời gian của chương trình và không thể sử dụng lại bộ nhớ đó.|- Ghi quá dung lượng cho phép của stack.<br>- Ghi dữ liệu vượt quá kích thước mảng hoặc vùng nhớ được cấp phát (heap).|
 |**Nguyên nhân**|Quên không free(), mất con trỏ.|- Stack overflow: gọi đệ quy vô hạn, tạo biến quá lớn.<br>- Heap overflow: Ghi dữ liệu vượt quá  kích thước mảng hoặc vùng nhớ được cấp phát.|
 |**Ảnh hưởng**|Lãng phí RAM, làm chương trình chậm hoặc treo.|Crash chương trình|
