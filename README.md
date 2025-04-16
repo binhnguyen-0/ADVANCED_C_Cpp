@@ -1327,11 +1327,11 @@ int main()
 |**Cách dùng**|- Để cấp phát bộ nhớ động trong quá trình thực thi của chương trình.<br>- Cho phép chương trình tạo ra và giải phóng bộ nhớ theo nhu cầu.<br>- Các hàm `malloc()`, `calloc()`, `realloc()` được sử dụng để cấp phát và `free()` để giải phóng bộ nhớ trên heap.|
 |**malloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
 |**realloc()**|Thay đổi kích thước vùng nhớ đã được cấp phát ra thông qua malloc hoặc calloc.|
-|**calloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
+|**calloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước và khởi tạo bộ nhớ được phân bổ về 0.|
 |**Quyền truy cập**|Quyền read-write.|
 |**Life time**|Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
 
->👉 Ví dụ: Dùng malloc(), realloc().
+>👉 Ví dụ: Dùng malloc(), calloc(), realloc().
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -1339,10 +1339,11 @@ int main()
 
 int main()
 {
-    /* Cấp phát tĩnh */
+    // ***************** Cấp phát tĩnh *****************
     uint16_t arr[5];    // 5 phần tử * 2 bytes kích thước = 10 bytes.
 
-    /* Cấp phát động */
+    // ***************** Cấp phát động *****************
+    // *** malloc: cấp phát bộ nhớ động mà không khởi tạo (chứa giá trị rác) ***
     int size = 5;
     printf("Stack address: %p - Value: %d\n", (void*)&size, size);
     // Để dùng malloc: 
@@ -1350,52 +1351,98 @@ int main()
     // - Ép kiểu malloc vì malloc là con trỏ kiểu void (không truy xuất được) cùng kiểu với từng phần tử để có thể đọc đúng.
     // - Khai báo con trỏ để truy xuất được dữ liệu trong vùng nhớ đã cấp phát.
     uint16_t *ptr = (uint16_t*)malloc(size * sizeof(uint16_t));    // cấp phát địa chỉ bộ nhớ trong Heap
-    printf("\nPtr address_stack: %p - Value_heap: %X\n\n", &ptr, ptr);
+    printf("\nPtr_malloc address_stack: %p - Value_heap: %X\n\n", &ptr, ptr);
+
+    // Kiểm tra liệu malloc có cấp phát chuẩn không
+    if (ptr == NULL)
+    {
+        printf("Cấp phát bị lỗi\n");
+        return 1;
+    }
+    // Khởi tạo giá trị cho các thành phần
     for (int i = 0; i < size; i++)
     {
         ptr[i] = 2*i;
     }
+    // In ra địa chỉ và giá trị con trỏ trỏ tới
     for (int i = 0; i < size; i++)
     {
         printf("Heap Address: %p - Value: %d\n", ptr + i, *(ptr + i));
     }
 
-    /* Thay đổi kích thước vùng nhớ */
+    // *** calloc: cấp phát bộ nhớ động khởi tạo toàn bộ = 0. ***
+    int size_calloc = 5;
+    uint16_t *ptr_calloc = (uint16_t*)calloc(size_calloc, sizeof(uint16_t));
+    printf("\nPtr_calloc address_stack: %p - Value_heap: %X\n\n", &ptr_calloc, ptr_calloc);
+
+    // Kiểm tra liệu malloc có cấp phát chuẩn không
+    if (ptr_calloc == NULL)
+    {
+        printf("Cấp phát bị lỗi\n");
+        return 1;
+    }
+
+    // In ra địa chỉ và giá trị con trỏ trỏ tới
+    for (int i = 0; i < size; i++)
+    {
+        printf("Heap Address: %p - Value: %d\n", ptr_calloc + i, *(ptr_calloc + i));
+    }
+
+    // ***************** Phân bổ lại cấp phát động *****************
     int new_size = 10;
     // Để dùng realloc: 
     // - Truyền vào vùng nhớ đã cấp phát và kích thước mới.
     // - Ép kiểu realloc để đồng bộ dữ liệu.
     // - Thay đổi con trỏ để trỏ tới realloc.
-    ptr = (uint16_t*)realloc(ptr, new_size * sizeof(uint16_t));
-    printf("\nPtr address_stack: %p - Value_heap: %X\n\n", &ptr, ptr);
+
+    uint16_t *ptr_realloc = (uint16_t*)realloc(ptr, new_size * sizeof(uint16_t));
+
+    printf("\nPtr_realloc address_stack: %p - Value_heap: %X\n\n", &ptr_realloc, ptr_realloc);
+
+    // Kiểm tra xem phân bổ lại có lỗi hay không
+    if (ptr_realloc == NULL)
+    {
+        printf("Cấp phát bị lỗi\n");
+        return 1;
+    }
+
+    ptr = ptr_realloc;
+
+    // Khởi tạo giá trị cho các thành phần
     for (int i = 0; i < new_size; i++)
     {
         ptr[i] = 2*i;
     }
+
+    // In ra địa chỉ và giá trị con trỏ trỏ tới
     for (int i = 0; i < new_size; i++)
     {
         printf("Add new Heap Address: %p - Value: %d\n", ptr + i, *(ptr + i));
     }
 
-    /* Thu hồi vùng nhớ đã cấp phát */
+    // ***************** Thu hồi vùng nhớ đã cấp phát *****************
     //  Nếu không thu hồi:
     // - Luôn tồn tại những vùng nhớ đó và giá trị đó, và có thể truy xuất được như bình thường ().
     // - Khi cấp phát tiếp thì sẽ bị cộng dồn lên và có thể sẽ bị lỗi memoryleak khiến chương trình bị dừng hoặc treo.
     // Nếu ghi quá giới hạn mảng thì bị overflow.
-    free(ptr);
+    free(ptr);  
+    free(ptr_calloc);
 
-    /* Gán ptr = NULL sau khi không còn sử dụng */
+    // ***************** Gán ptr = NULL sau khi không còn sử dụng *****************
     ptr = NULL;    // tránh trỏ tới những vùng nhớ khác trong RAM gây lỗi không mong muốn
+    ptr_calloc = NULL; 
+    ptr_realloc = NULL;
+
     return 0;
 }
 ```
 >➡️ Kết quả:
 >
->![Image](https://github.com/user-attachments/assets/0abfedda-cf8a-4ed2-80dd-c4f9cb37c0f8)
+>![Image](https://github.com/user-attachments/assets/08c31886-4458-40ff-af5a-7d5f3c55a635)
 
 ### VI. Memory leak & Overflow:
 
-|📋 Heap|📄 Description|
+|📋 So sánh|📄 Memory leak|📄 Overflow|
 |:------------------------:|:------------------------|
 |**Cách dùng**|- Để cấp phát bộ nhớ động trong quá trình thực thi của chương trình.<br>- Cho phép chương trình tạo ra và giải phóng bộ nhớ theo nhu cầu.<br>- Các hàm `malloc()`, `calloc()`, `realloc()` được sử dụng để cấp phát và `free()` để giải phóng bộ nhớ trên heap.|
 |**malloc()**|Cấp phát bộ nhớ với kích thước chỉ định trước.|
@@ -1403,7 +1450,14 @@ int main()
 |**Quyền truy cập**|Quyền read-write.|
 |**Life time**|Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
 
+### VII. malloc vs. calloc vs. realloc:
 
+|📋 So sánh|malloc|calloc|realloc|
+|:------------------------:|:------------------------|:------------------------|:------------------------|
+|**Khái niệm**|- Memory allocation: phân bổ bộ nhớ động.|- Contiguous allocation: phân bổ bộ nhớ động được khởi tạo về 0.|- Reallocation: phân bổ lại bộ nhớ trước đó.|
+|**Cú pháp**|`malloc(số byte phân bố);`|`calloc(số phần tử, kích thước phần tử);`|`realloc(con trỏ trước đó, kích thước mới);`|
+|**Giá trị ban đầu**|Rác|`0`|Rác|
+|**Phân bổ không thành công**|Trả về NULL|Trả về NULL|Trả về NULL|
 
 [🔼 _UP_](#top)
 </details>
