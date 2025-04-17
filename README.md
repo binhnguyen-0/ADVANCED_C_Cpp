@@ -1477,10 +1477,11 @@ int main()
     - Dynamic data structure - **queue, stack, linked list**: Cấu trúc dữ liệu động có kích thước không cố định, kích thước có thể được cập nhật trong thời gian chạy.
   - Cấu trúc dữ liệu phi tuyến tính ( Non - linear data structure) - **trees, graph**: Cấu trúc dữ liệu mà trong đó các phần tử dữ liệu không được đặt tuần tự hoặc tuyến tính, không thể duyệt qua tất cả các phần tử chỉ trong 1 lần chạy.
 
-    
 ### 📑 II. Stack:
-
-
+- Stack là một cấu trúc dữ liệu tuyến tính tuân theo LIFO (Last In First Out), phần tử cuối được lấy ra đầu tiên, hay là FILO (First In Last Out), phần tử đầu được lấy ra cuối.
+- Cách hoạt động của Stack (ngăn xếp):
+  - Là một cấu trúc dữ liệu tuân theo qui tắc "Last in - First out" (LIFO), nghĩa là phần tử vào cuối cùng sẽ được lấy ra đầu tiên.
+  
 
 ### 📑 III. Queue:
 
