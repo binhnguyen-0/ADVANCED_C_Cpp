@@ -1465,8 +1465,19 @@ int main()
  
 ### 📑 I. Cấu trúc dữ liệu:
 
+- **Cấu trúc dữ liệu** là một kho lưu trữ được sử dụng để lưu trữ và sắp xếp dữ liệu. Đây là một cách sắp xếp dữ liệu trên máy tính để có thể truy cập và cập nhật hiệu quả.
+- Không chỉ được sử dụng để tổ chức dữ liệu mà còn được sử dụng để xử lý, truy xuất và lưu dữ liệu.
+- Đóng vai trò quan trọng trong việc giải quyết các bài toán và tối ưu hóa thuật toán, vì nó ảnh hưởng trực tiếp đến tốc độ thực thi và tính năng phức tạp của chương trình.
 
+![Image](https://github.com/user-attachments/assets/9ce30e6b-bb55-437a-bd5c-5e8e3966353c)
 
+- Cấu trúc dữ liệu phân àm 2 loại chính:
+  - Cấu trúc dữ liệu tuyến tính (Linear data structure):
+    - Static data structure - **array**: Cấu trúc dữ liệu tĩnh có kích thước bộ nhớ cố định, việc truy cập dễ dàng hơn.
+    - Dynamic data structure - **queue, stack, linked list**: Cấu trúc dữ liệu động có kích thước không cố định, kích thước có thể được cập nhật trong thời gian chạy.
+  - Cấu trúc dữ liệu phi tuyến tính ( Non - linear data structure) - **trees, graph**: Cấu trúc dữ liệu mà trong đó các phần tử dữ liệu không được đặt tuần tự hoặc tuyến tính, không thể duyệt qua tất cả các phần tử chỉ trong 1 lần chạy.
+
+    
 ### 📑 II. Stack:
 
 
