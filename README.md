@@ -1489,6 +1489,9 @@ int main()
   - **isEmpty()**: điều kiện kiểm tra stack rỗng: top == -1.
   - **isFull()**: điều kiện kiểm tra stack đầy: top == size-1.
 >✍️ **push()**:
+> - Trước khi thêm phần tử vào đỉnh của stack, phải kiểm tra xem stack đầy hay chưa:
+>   - top == size - 1: stack đã đầy -> không thể thêm phần tử vào stack. 
+> - Thêm phần tử vào đỉnh của stack, 
 
 
 
