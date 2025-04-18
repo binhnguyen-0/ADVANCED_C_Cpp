@@ -1491,9 +1491,16 @@ int main()
 >✍️ **push()**:
 > - Trước khi thêm phần tử vào đỉnh của stack, phải kiểm tra xem stack đầy hay chưa:
 >   - top == size - 1: stack đã đầy -> không thể thêm phần tử vào stack. 
-> - Thêm phần tử vào đỉnh của stack, 
+> - Thêm phần tử vào đỉnh của stack -> top = top + 1.
+> 
+> ![Image](https://github.com/user-attachments/assets/18cc7e6c-20a1-452a-85a0-0bd4cc12b669)
 
-
+>✍️ **pop()**:
+> - Trước khi xóa phần tử ở đỉnh của stack, phải kiểm tra xem stack có trống hay không:
+>   - top == - 1: stack trống -> không thể xóa phần tử ở stack. 
+> - Xóa phần tử ở đỉnh của stack -> top = top - 1.
+> 
+> 
 
 
 
