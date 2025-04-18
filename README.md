@@ -1500,7 +1500,7 @@ int main()
 >   - top == - 1: stack trống -> không thể xóa phần tử ở stack. 
 > - Xóa phần tử ở đỉnh của stack -> top = top - 1.
 > 
-> 
+> ![Image](https://github.com/user-attachments/assets/21477252-02ab-4067-83ae-d1c0b49776c2)
 
 
 
