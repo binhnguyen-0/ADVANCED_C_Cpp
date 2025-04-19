@@ -1503,8 +1503,11 @@ int main()
 > ![Image](https://github.com/user-attachments/assets/21477252-02ab-4067-83ae-d1c0b49776c2)
 
 >✍️ **peek() / top()**:
-> - Trước khi lấy giá trị ở đỉnh của stack, phải kiểm tra xem stack có trống hay không:
->   - top == - 1: stack trống -> không thể xóa phần tử ở stack. 
+> - Trong stack chỉ có 1 chỉ số duy nhất là top, dùng để đọc giá trị của phần tử ở đỉnh stack:
+>   - top == - 1: giá trị khởi tạo ban đầu -> stack rỗng.
+>   - push -> top++.
+>   - pop -> top--
+>   - top = size - 1 -> stack full.
 
 ### 📑 III. Queue:
 
