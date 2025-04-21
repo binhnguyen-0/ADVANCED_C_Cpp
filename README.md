@@ -1509,11 +1509,150 @@ int main()
 >   - pop -> top--.
 >   - top = size - 1 -> stack full.
 
->✍️ **isEmpty()**:
+>👉 Ví dụ: Viết code cho cấu trúc dữ liệu stack.
 >
+>`stack.h`
+```c
+#ifndef STACK_H
+#define STACK_H
 
->✍️ **isFull()**:
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+// Khai báo cấu trúc dữ liệu ngăn xếp
+typedef struct 
+{
+    int *item;      // Mảng lưu trữ giá trị các phần tử
+    int size;       // Số lượng phần tử tối đa
+    int top;        // Chỉ số đọc giá trị ở đỉnh stack
+}Stack;
+
+// Khởi tạo các thông số ban đầu
+void stack_init(Stack *stack, int Size);
+
+/* Kiểm tra stack rỗng: TRUE - stack rỗng, FALSE - stack không rỗng */
+bool isEmpty(Stack stack);  // sao chép dữ liệu của stack, chỉ đọc - không cần con trỏ
+
+/* Kiểm tra stack rỗng: TRUE - stack rỗng, FALSE - stack không rỗng */ 
+bool isFull(Stack stack);
+
+/* Chèn thêm phần tử vào stack */
+void push(Stack *stack, int data);  // tác động vào giá trị gốc nên phải có con trỏ
+
+/* Xóa phần tử ở đỉnh stack */
+int pop(Stack *stack);
+
+/* Đọc giá trị ở đỉnh stack */
+int top(Stack stack);
+
+/* Giải phóng bộ nhớ stack */
+void stack_free(Stack *stack);
+
+#endif  // STACK_H
+```
+>`stack.c`
+```c
+#include "stack.h"
+
+// Khởi tạo các thông số ban đầu
+void stack_init(Stack *stack, int Size)
+{
+    stack->item = (int*)malloc(Size*sizeof(int));
+    stack->size = Size;
+    stack->top = -1;
+}
+
+bool isEmpty(Stack stack)
+{
+    return (stack.top == -1 ? true : false);
+}
+
+bool isFull(Stack stack)
+{
+    return (stack.top == (stack.size - 1) ? true : false);
+}
+
+void push(Stack *stack, int data)
+{
+    if (isFull(*stack))
+    {
+        printf("Stack is Full\n");
+    }
+    else
+    {
+        printf("Insert the %d element: %d\n", ++stack->top, data);
+        stack->item[stack->top] = data;
+    }
+}
+
+int pop(Stack *stack)
+{
+    if (isEmpty(*stack))
+    {
+        printf("Stack is Empty\n");
+        return -1;
+    }
+    else 
+    {
+        int value = stack->item[stack->top];
+        printf("Delete the %d element: %d\n", stack->top--, stack->item[stack->top]);
+        stack->item[stack->top] == 0;
+        return value;
+    }
+}
+
+int top(Stack stack)
+{
+    if (isEmpty(stack))
+    {
+        printf("Stack rỗng");
+        return -1;
+    }
+    else
+    {
+        return stack.item[stack.top];
+    }
+}
+
+void stack_free(Stack *stack)
+{
+    if (stack->item != NULL)
+    {
+        free(stack->item);
+        stack->item = NULL;
+    }
+}
+```
+>`main.c`
+```c
+#include "stack.h"
+
+int main()
+{
+    Stack stack1;
+    stack_init(&stack1, 5);
+
+    push(&stack1, 1);
+    push(&stack1, 2);
+    push(&stack1, 3);
+    push(&stack1, 4);
+    push(&stack1, 5);
+    push(&stack1, 6);
+
+    pop(&stack1);
+    pop(&stack1);
+    pop(&stack1);
+    pop(&stack1);
+    pop(&stack1);
+    pop(&stack1);
+    
+    return 0;
+}
+```
+>➡️ Kết quả:
 >
+>![Image](https://github.com/user-attachments/assets/33edcaff-4bb1-4351-9097-000f4154f642)
 
 
 
