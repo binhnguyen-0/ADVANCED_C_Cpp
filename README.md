@@ -1656,8 +1656,20 @@ int main()
 
 
 
-### 📑 III. Queue:
+### 📑 III. Queue - Hàng đợi:
+- Hàng đợi Queue là một cấu trúc dữ liệu tuân theo nguyên tắc "First In - First Out" (FIFO), nghãi là các phần tử đầu tiên được thêm vào hàng đợi sẽ là phần tử đầu tiên được lấy ra.
+- Các thao tác cơ bản:
+  - **enqueue**: thêm phần tử vào CUỐI hàng đợi.
+  - **dequeue**: xóa phần tử ở ĐẦU hàng đợi.
+  - **front**: đọc giá trị của phần tử ĐẦU hàng đợi.
+  - **rear**: đọc giá trị của phần tử CUỐI hàng đợi.
+  - **isEmpty**: kiểm tra hàng đợi rỗng = - 1.
+  - **isFull**: kiểm tra hàng đợi đầy = size - 1.
 
+>✍️ **enqueue**:
+> - Ban đầu khởi tạo 2 chỉ số:
+>   - front = -1.
+>   - rear = - 1.
 
 
 
