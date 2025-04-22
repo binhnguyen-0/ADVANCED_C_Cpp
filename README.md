@@ -1670,6 +1670,22 @@ int main()
 > - Ban đầu khởi tạo 2 chỉ số:
 >   - front = -1.
 >   - rear = - 1.
+> - **enqueue** chèn 1 phần tử vào cuối hàng đợi:
+>   - rear++.
+>   - rear = size - 1 -> Queue đầy
+>   
+> ![Image](https://github.com/user-attachments/assets/8459bf2a-caa3-4277-a48b-95924dbb33b0)
+
+>✍️ **dequeue**:
+> - Xóa 1 phần tử ở đầu hàng đợi:
+>   - front++.
+>  
+>     
+>   - front = size -> Queue rỗng.
+>
+>
+
+
 
 
 
