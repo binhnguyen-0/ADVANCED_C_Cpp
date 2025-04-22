@@ -1677,14 +1677,20 @@ int main()
 > ![Image](https://github.com/user-attachments/assets/8459bf2a-caa3-4277-a48b-95924dbb33b0)
 
 >✍️ **dequeue**:
-> - Xóa 1 phần tử ở đầu hàng đợi:
->   - front++.
->   - front = size hoặc front > rear -> Queue rỗng -> reset chỉ số front, rear = - 1.
->  ![Image](https://github.com/user-attachments/assets/1d57330e-71f9-47c4-946c-d2ef6ee04645)
->     
+>  - front++.
 > 
+>![Image](https://github.com/user-attachments/assets/1d57330e-71f9-47c4-946c-d2ef6ee04645)
 >
->
+>  - front = size hoặc front > rear -> Queue rỗng -> reset chỉ số front, rear = - 1.
+>  
+>  ![image](https://github.com/user-attachments/assets/806a1ea1-2dce-44c0-b0dc-f5928906a73c)
+
+#### 1. Linear Queue - Hàng đợi tuyến tính:
+- Khi `rear` đã max (= size - 1) thì queue luôn được coi là đầy:
+  - Không thể thêm phần tử mới dù có khoảng trống ở đầu hàng đợi (do đã xóa phần tử ở đầu).
+  - Chỉ thêm được phần tử khi dequeue toàn bộ phần tử -> `front` và `rear` được reset (= - 1).
+
+>👉 Ví dụ: Viết code cho cấu trúc dữ liệu stack.
 
 
 
