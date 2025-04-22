@@ -1679,9 +1679,10 @@ int main()
 >✍️ **dequeue**:
 > - Xóa 1 phần tử ở đầu hàng đợi:
 >   - front++.
->  
+>   - front = size hoặc front > rear -> Queue rỗng -> reset chỉ số front, rear = - 1.
+>  ![Image](https://github.com/user-attachments/assets/1d57330e-71f9-47c4-946c-d2ef6ee04645)
 >     
->   - front = size -> Queue rỗng.
+> 
 >
 >
 
