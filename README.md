@@ -1689,6 +1689,8 @@ int main()
 - Khi `rear` đã max (= size - 1) thì queue luôn được coi là đầy:
   - Không thể thêm phần tử mới dù có khoảng trống ở đầu hàng đợi (do đã xóa phần tử ở đầu).
   - Chỉ thêm được phần tử khi dequeue toàn bộ phần tử -> `front` và `rear` được reset (= - 1).
+ 
+> ![Image](https://github.com/user-attachments/assets/53907ee8-a5e7-4e74-8b44-f98979e8e84e)
 
 >👉 Ví dụ: Viết code cho cấu trúc dữ liệu stack.
 
