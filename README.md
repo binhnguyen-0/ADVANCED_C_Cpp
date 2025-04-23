@@ -1907,7 +1907,7 @@ int main()
 ```
 >➡️ Kết quả:
 >
->
+> ![Image](https://github.com/user-attachments/assets/b77e1b3f-62b0-4449-8ba0-3edc284902fd)
 
 [🔼 _UP_](#top)
 </details>
