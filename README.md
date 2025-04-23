@@ -1510,8 +1510,10 @@ int main()
 >   - top = size - 1 -> stack full.
 
 >👉 Ví dụ: Viết code cho cấu trúc dữ liệu stack.
->
->`stack.h`
+
+<details>
+<summary>stack.h</summary>
+ 
 ```c
 #ifndef STACK_H
 #define STACK_H
@@ -1551,7 +1553,11 @@ void stack_free(Stack *stack);
 
 #endif  // STACK_H
 ```
->`stack.c`
+</details>
+
+<details>
+<summary>stack.c</summary>
+ 
 ```c
 #include "stack.h"
 
@@ -1624,6 +1630,11 @@ void stack_free(Stack *stack)
     }
 }
 ```
+</details>
+
+<details>
+<summary>main.c</summary>
+ 
 >`main.c`
 ```c
 #include "stack.h"
@@ -1653,7 +1664,7 @@ int main()
 >➡️ Kết quả:
 >
 >![Image](https://github.com/user-attachments/assets/33edcaff-4bb1-4351-9097-000f4154f642)
-
+</details>
 
 
 ### 📑 III. Queue - Hàng đợi:
