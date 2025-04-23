@@ -1564,31 +1564,31 @@ void stack_free(Stack *stack);
 // Khởi tạo các thông số ban đầu
 void stack_init(Stack *stack, int Size)
 {
-    stack->item = (int*)malloc(Size*sizeof(int));
-    stack->size = Size;
-    stack->top = -1;
+    stack->item = (int*)malloc(Size*sizeof(int));   // cấp phát động cho mảng item.
+    stack->size = Size;     // gán số lượng phần tử
+    stack->top = -1;        // khởi tạo giá trị ban đầu cho chỉ số top
 }
 
 bool isEmpty(Stack stack)
 {
-    return (stack.top == -1 ? true : false);
+    return (stack.top == -1 ? true : false);    // Kiểm tra stack rỗng: top == -1
 }
 
 bool isFull(Stack stack)
 {
-    return (stack.top == (stack.size - 1) ? true : false);
+    return (stack.top == (stack.size - 1) ? true : false);      // Kiểm tra stack đầy: top == size - 1
 }
 
 void push(Stack *stack, int data)
 {
     if (isFull(*stack))
     {
-        printf("Stack is Full\n");
+        printf("Stack is Full\n");      // kiểm tra stack đầy
     }
     else
     {
-        printf("Insert the %d element: %d\n", ++stack->top, data);
-        stack->item[stack->top] = data;
+        printf("Insert the %d element: %d\n", ++stack->top, data);  
+        stack->item[stack->top] = data;     // gán thêm giá trị vào stack
     }
 }
 
@@ -1596,15 +1596,15 @@ int pop(Stack *stack)
 {
     if (isEmpty(*stack))
     {
-        printf("Stack is Empty\n");
+        printf("Stack is Empty\n");      // kiểm tra stack rỗng
         return -1;
     }
     else 
     {
-        int value = stack->item[stack->top];
+        int value = stack->item[stack->top];    // đọc giá trị phần tử trong stack
         printf("Delete the %d element: %d\n", stack->top--, stack->item[stack->top]);
-        stack->item[stack->top] == 0;
-        return value;
+        stack->item[stack->top] == 0;   // gán giá trị 0 vào phần tử cần xóa
+        return value;   // trả về hàm giá trị value
     }
 }
 
@@ -1612,21 +1612,21 @@ int top(Stack stack)
 {
     if (isEmpty(stack))
     {
-        printf("Stack rỗng");
+        printf("Stack rỗng");   // kiểm tra stack rỗng
         return -1;
     }
     else
     {
-        return stack.item[stack.top];
+        return stack.item[stack.top];   // đọc phần tử trong stack
     }
 }
 
 void stack_free(Stack *stack)
 {
-    if (stack->item != NULL)
+    if (stack->item != NULL)    // kiểm tra mảng có = NULL không
     {
-        free(stack->item);
-        stack->item = NULL;
+        free(stack->item);      // giải phóng bộ nhớ động cho mảng item
+        stack->item = NULL;     // gán NULL cho con trỏ khi không dùng nữa
     }
 }
 ```
@@ -1925,8 +1925,22 @@ int main()
 >➡️ Kết quả:
 >
 > ![Image](https://github.com/user-attachments/assets/b77e1b3f-62b0-4449-8ba0-3edc284902fd)
-
 </details>
+
+#### 2. Circular Queue - Hàng đợi vòng tròn:
+- Khi `rear` đã max (= size - 1) và `front` đã tăng do dequeue phần tử:
+  - `rear` sẽ quay về vị trí 0 để thêm phần tử, tận dụng khoảng trống (rear = 0).
+  - `front` cũng sẽ reset khi dequeue hết phần tử.
+- Các thao tác:
+  - Kiểm tra queue empty:
+    - front == -1 hoặc,
+    - rear == -1.
+    - Bỏ điều kiện front > rear vì front đã tự động quay về.
+  - Kiểm tra queue full:
+    - front == (rear + 1) % size.
+    - Bỏ điều kiện rear == size - 1 vì rear tự động quay về.
+
+ 
 
 [🔼 _UP_](#top)
 </details>
