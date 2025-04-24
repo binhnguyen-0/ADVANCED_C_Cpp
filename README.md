@@ -1940,7 +1940,6 @@ int main()
     - front == (rear + 1) % size.
     - Bỏ điều kiện rear == size - 1 vì rear tự động quay về.
 
- 
 
 [🔼 _UP_](#top)
 </details>
