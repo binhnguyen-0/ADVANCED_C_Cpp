@@ -1998,7 +1998,173 @@ void display(c_queue queue);
 <summary>circular.c</summary>
 
 ```c
+#include "circular.h"
 
+/* Hàm khởi tạo các chỉ số ban đầu */
+void c_queue_init(c_queue *queue, int Capacity)
+{
+    queue->item = (int*)malloc(Capacity * sizeof(int));     // cấp phát động cho mảng item
+    queue->size = Capacity;     // gán size = Capacity
+    queue->front = queue->rear = -1;        // khởi tạo giá trị chỉ số ban đầu
+}
+
+/* Kiểm tra Queue rỗng */
+bool cqueue_isEmpty(c_queue queue)
+{
+    return queue.front == -1 ? true : false;        // kiểm tra điều kiện hàng đơi rỗng: front == -1
+}
+
+/* Kiểm tra Queue đầy */
+bool cqueue_isFull(c_queue queue)
+{
+    return queue.front == ((queue.rear+1)%queue.size) ? true : false;       // kiểm tra điều kiện hàng đợi đầy: front == (rear + 1) % size
+}
+
+/* Thêm phần tử */
+void enqueue(c_queue *queue, int value)
+{
+    if (cqueue_isFull(*queue))
+    {
+        printf("Queue is Full!\n");     // kiểm tra hàng đợi đầy
+    }
+    else
+    {
+        if (queue->front == -1)     // nếu front hoặc rear == -1 thì gán 0 cho chỉ số front và rear 
+        {
+            queue->front = queue->rear = 0;
+        }
+        else
+        {
+            queue->rear = (queue->rear + 1) % queue->size;      // phép tính để rear quay vòng
+        }
+        queue->item[queue->rear] = value;       // gán giá trị mới vào phần tử chỉ số rear
+        printf("Enqueue: %d\n", value);
+    }
+}
+
+/* Xóa phần tử */
+int dequeue(c_queue *queue)
+{
+    if (cqueue_isEmpty(*queue))
+    {
+        printf("Queue is Empty!\n");        // kiểm tra hàng đợi rỗng
+        return -1;
+    }
+    else
+    {
+        int dequeue_val = queue->item[queue->front];    // đọc giá trị chuần bị xóa
+
+        queue->item[queue->front] = 0;      // xóa phần tử chỉ số front
+
+        if (queue->front == queue->rear)        // khi xóa phần tử cuối cùng thì reset chỉ số
+        {
+            queue->front = queue->rear = -1;        // reset lại chỉ số front và rear
+        }
+        else
+        {
+            queue->front = (queue->front + 1) % queue->size;        // phép tính để front xoay vòng
+        }
+        printf("Dequeue: %d\n", dequeue_val);   // in giá trị vừa xóa
+        return dequeue_val;     // trả về giá trị vừa xóa
+    }
+}
+
+/* Đọc giá trị phần tử chỉ số front */
+int front(c_queue queue)
+{
+    if (cqueue_isEmpty(queue))
+    {
+        printf("Queue is Empty\n");     // kiểm tra hàng đợi rỗng
+        return -1;
+    }
+    return queue.item[queue.front];     // trả về giá trị phần tử chỉ số front
+}
+
+/* Đọc giá trị phần tử chỉ số rear */
+int rear(c_queue queue)
+{
+    if (cqueue_isEmpty(queue))
+    {
+        printf("Queue is Empty\n");     // kiểm tra hàng đợi rỗng
+        return -1;
+    }
+    return queue.item[queue.rear];      // trả về giá trị phần tử chỉ số rear
+}
+
+/* Giải phóng bộ nhớ hàng đợi */
+void free_cqueue(c_queue *queue)
+{
+    if(queue->item != NULL)     // kiểm tra cấp phát động có = NULL
+    {
+        free(queue->item);      // giải phóng bộ nhớ cho mảng item
+        queue->item = NULL;     // gán NULL cho con trỏ đã dùng xong
+    }
+}
+
+/* Hiển thị giá trị các phần tử hàng đợi */
+void display(c_queue queue)
+{
+    if (cqueue_isEmpty(queue))
+    {
+        printf("Queue is Empty\n");     // kiểm tra hàng đợi rỗng
+    }
+    printf("Queue: ");
+
+    int i = queue.front;      // bắt đầu in từ đầu hàng đợi, không in ra những ô trống đã bị dequeue
+
+    /* Dùng while(i != rear) */
+    // while (i != queue.rear)
+    // {
+    //     printf("%d ", queue.item[i]);   // in bắt đầu từ phần tử chỉ số front
+    //     i = (i + 1) % queue.size;       // in những phần tử tiếp theo cho tới khi i = rear thì không in nữa
+    // }
+    // printf("%d\n", queue.item[queue.rear]);     // in ra phần tử cuối cùng
+
+    /* Dùng while(1) */
+    while (1)
+    {
+        printf("%d ", queue.item[i]);      // in bắt đầu từ phần tử chỉ số front
+        if (i == queue.rear)
+        {
+            break;      // dừng sau khi in ra phần tử cuối
+        }
+        i = (i + 1) % queue.size;       // in những phần tử tiếp theo
+    }
+}
+
+/* Hiển thị tất cả giá trị các phần tử hàng đợi */
+void display_full_queue(c_queue queue)
+{
+    printf("Queue: ");
+    for (int i = 0; i < queue.size; i++) 
+    {
+        int cqueue_isFilled = 0;
+
+        if (queue.front != -1)  // kiểm tra hàng đợi không rỗng
+        {
+            // Trường hợp front <= rear
+            if (queue.front <= queue.rear && i >= queue.front && i <= queue.rear)       // trường hợp bình thường khi chưa xong lại: front <= rear
+            {
+                cqueue_isFilled = 1;    // i thỏa mãn điều kiện: i >= front && i <= rear (nằm trong khoảng từ front -> rear) nghĩa là các phần tử đã được enqueue
+            }
+            // Trường hợp queue đã vòng lại
+            else if (queue.front > queue.rear && (i >= queue.front || i <= queue.rear))     // trường hợp front > rear (rear đã vòng lại) 
+            {
+                cqueue_isFilled = 1;    // i thỏa mãn điều kiện: i >= front || i <= rear (i >= front -> đã dequeue và rear đã vòng lại ; i <= rear -> rear vòng lại, ví dụ i = 0 - rear = 1)
+            } 
+        }
+
+        if (cqueue_isFilled)
+        {
+            printf("%d ", queue.item[i]);       // in ra những phần tử có chứa giá trị
+        }
+        else
+        {
+            printf("* ");       // phần tử không có giá trị sẽ in ra '*'
+        }
+    }
+    printf("\n");
+}
 ```
 
 </details>
@@ -2016,34 +2182,58 @@ int main()
     // Khởi tạo hàng đợi Circular
     c_queue_init(&cqueue1, 5);
 
+    /* Hiển thị tất cả giá trị các phần tử hàng đợi */
+    printf("Display full queue: \n");
+    display_full_queue(cqueue1);
+    printf("\n");
+
     // Chèn phần tử
+    printf("Case 1: front <= rear (not returned)\n");
+    printf("Insert into the end of queue: \n");
     enqueue(&cqueue1, 1);
     enqueue(&cqueue1, 2);
     enqueue(&cqueue1, 3);
     enqueue(&cqueue1, 4);
     enqueue(&cqueue1, 5);
     enqueue(&cqueue1, 6);
+    printf("\n");
 
     // Hiển thị hàng đợi
+    printf("Display queue (normal): \n");
     display(cqueue1);
+    printf("\n");
 
     // Xóa phần tử
+    printf("Delete at the start of queue: \n");
     dequeue(&cqueue1);
     dequeue(&cqueue1);
 
     // Hiển thị hàng đợi
+    printf("Display queue (normal): \n");
     display(cqueue1);
+    printf("\n");
+
+    /* Hiển thị tất cả giá trị các phần tử hàng đợi */
+    printf("Display full queue: \n");
+    display_full_queue(cqueue1);
+    printf("\n");
 
     // Chèn phần tử
+    printf("Case 2: front > rear (rear returned)\n");
     enqueue(&cqueue1, 7);
     enqueue(&cqueue1, 8);
 
-    // Hiển thị hàng đợi
-    display(cqueue1);
-    
+    /* Hiển thị tất cả giá trị các phần tử hàng đợi */
+    printf("Display full queue: \n");
+    display_full_queue(cqueue1);
+    printf("\n");
+
     return 0;
 }
 ```
+>➡️ Kết quả:
+>
+> ![Image](https://github.com/user-attachments/assets/312c138a-f01c-4b91-a66b-56a8d4e17d15)
 
 </details>
 
