@@ -1940,6 +1940,113 @@ int main()
     - front == (rear + 1) % size.
     - Bỏ điều kiện rear == size - 1 vì rear tự động quay về.
 
+>👉 Ví dụ: Viết code cho cấu trúc dữ liệu Linear Queue.
+
+<details>
+<summary>circular.h</summary>
+
+```c
+#ifndef CIRCULAR_H
+#define CIRCULAR_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+// Khai báo cấu trúc dữ liệu hàng đợi vòng tròn
+typedef struct 
+{
+    int *item;
+    int size;
+    int front;
+    int rear;
+}c_queue;
+
+/* Hàm khởi tạo các chỉ số ban đầu */
+void c_queue_init(c_queue *queue, int Capacity);
+
+/* Kiểm tra Queue rỗng */
+bool cqueue_isEmpty(c_queue queue);
+
+/* Kiểm tra Queue đầy */
+bool cqueue_isFull(c_queue queue);
+
+/* Thêm phần tử */
+void enqueue(c_queue *queue, int value);
+
+/* Xóa phần tử */
+int dequeue(c_queue *queue);
+
+/* Đọc giá trị phần tử chỉ số front */
+int front(c_queue queue);
+
+/* Đọc giá trị phần tử chỉ số rear */
+int rear(c_queue queue);
+
+/* Giải phóng bộ nhớ hàng đợi */
+void free_cqueue(c_queue *queue);
+
+/* Hiển thị giá trị các phần tử hàng đợi */
+void display(c_queue queue);
+
+#endif // CIRCULAR_H
+```
+
+</details>
+
+<details>
+<summary>circular.c</summary>
+
+```c
+
+```
+
+</details>
+
+<details>
+<summary>main.c</summary>
+
+```c
+#include "circular.h"
+
+int main()
+{
+    c_queue cqueue1;
+
+    // Khởi tạo hàng đợi Circular
+    c_queue_init(&cqueue1, 5);
+
+    // Chèn phần tử
+    enqueue(&cqueue1, 1);
+    enqueue(&cqueue1, 2);
+    enqueue(&cqueue1, 3);
+    enqueue(&cqueue1, 4);
+    enqueue(&cqueue1, 5);
+    enqueue(&cqueue1, 6);
+
+    // Hiển thị hàng đợi
+    display(cqueue1);
+
+    // Xóa phần tử
+    dequeue(&cqueue1);
+    dequeue(&cqueue1);
+
+    // Hiển thị hàng đợi
+    display(cqueue1);
+
+    // Chèn phần tử
+    enqueue(&cqueue1, 7);
+    enqueue(&cqueue1, 8);
+
+    // Hiển thị hàng đợi
+    display(cqueue1);
+    
+    return 0;
+}
+```
+
+</details>
+
 
 [🔼 _UP_](#top)
 </details>
