@@ -1940,7 +1940,7 @@ int main()
     - front == (rear + 1) % size.
     - Bỏ điều kiện rear == size - 1 vì rear tự động quay về.
 
->👉 Ví dụ: Viết code cho cấu trúc dữ liệu Linear Queue.
+>👉 Ví dụ: Viết code cho cấu trúc dữ liệu Circular Queue.
 
 <details>
 <summary>circular.h</summary>
