@@ -2241,11 +2241,10 @@ int main()
 </details>
 
 
-
 <details>
 <summary>🔖 <b>BÀI 10: LINKED LIST</b></summary>
 
-
+### I. Array - Mảng:
 
 [🔼 _UP_](#top)
 </details>
