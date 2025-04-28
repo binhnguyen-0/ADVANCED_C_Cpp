@@ -2253,7 +2253,8 @@ int main()
 - Cách để xóa phần tử trong mảng:
   - Xóa dữ liệu: ghi `0` hoặc `\0` vào vị trí phần tử cần xóa.
   - Dịch trái 4 byte. (int array[] = {})
-  - 
+
+> ![Image](https://github.com/user-attachments/assets/e3b52be2-c5ad-4a98-99b2-5e70f4cd2744)
 
 [🔼 _UP_](#top)
 </details>
