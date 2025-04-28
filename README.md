@@ -2244,9 +2244,10 @@ int main()
 <details>
 <summary>🔖 <b>BÀI 10: LINKED LIST</b></summary>
 
-### I. Cấu trúc dữ liệu Array:
+### I. Array:
 
 - Mảng là một tập hợp các phần tử có kích thước cố định được lưu trữ trong các vị trí bộ nhớ liền kề.
+- Thêm và xóa 1 phần tử trong array có rất nhiều bước khiến tốc độ chương trình sẽ bị chậm.
 
 >👉 Ví dụ: Xóa 1 phần tử trong array: int arr[] = {1, 2, 3, 4, 5};.
 
@@ -2257,6 +2258,19 @@ int main()
 
 > ![image](https://github.com/user-attachments/assets/8b9138a9-414b-4afa-9f9e-3299f292da85)
 
+>👉 Ví dụ: Thêm 1 phần tử trong array: int arr[] = {1, 2, 4, 5};.
 
+- Cách để thêm phần tử trong mảng:
+  - Dùng realloc để phân bổ lại.
+  - Dịch phải 4 byte.
+  - Ghi giá trị mới
+
+> ![Image](https://github.com/user-attachments/assets/a2711cb2-d73f-4cb9-ae9a-5b7f13fe611a)
+
+### II. Danh sách liên kết - Linked list:
+
+- Linked list là một cấu trúc dữ liệu trong lập trình máy tính, dùng để tổ chức và lưu trữ dữ liệu.
+- 1 linked list gồm 1 chuỗi các nút (nodes), mỗi nút chứa 1 giá trị dữ liệu và 1 con trỏ trỏ đến nút tiếp theo trong chuỗi (lưu trữ trong những vùng nhớ riêng biệt không liền kề).
+- 
 [🔼 _UP_](#top)
 </details>
