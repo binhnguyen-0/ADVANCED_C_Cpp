@@ -2244,7 +2244,16 @@ int main()
 <details>
 <summary>🔖 <b>BÀI 10: LINKED LIST</b></summary>
 
-### I. Array - Mảng:
+### I. Cấu trúc dữ liệu Array:
+
+- Mảng là một tập hợp các phần tử có kích thước cố định được lưu trữ trong các vị trí bộ nhớ liền kề.
+
+>👉 Ví dụ: Xóa 1 phần tử trong array: int arr[] = {1, 2, 3, 4, 5};.
+
+- Cách để xóa phần tử trong mảng:
+  - Xóa dữ liệu: ghi `0` hoặc `\0` vào vị trí phần tử cần xóa.
+  - Dịch trái 4 byte. (int array[] = {})
+  - 
 
 [🔼 _UP_](#top)
 </details>
