@@ -2263,14 +2263,16 @@ int main()
 - Cách để thêm phần tử trong mảng:
   - Dùng realloc để phân bổ lại.
   - Dịch phải 4 byte.
-  - Ghi giá trị mới
+  - Ghi giá trị mới.
 
 > ![Image](https://github.com/user-attachments/assets/a2711cb2-d73f-4cb9-ae9a-5b7f13fe611a)
 
 ### II. Danh sách liên kết - Linked list:
 
 - Linked list là một cấu trúc dữ liệu trong lập trình máy tính, dùng để tổ chức và lưu trữ dữ liệu.
-- 1 linked list gồm 1 chuỗi các nút (nodes), mỗi nút chứa 1 giá trị dữ liệu và 1 con trỏ trỏ đến nút tiếp theo trong chuỗi (lưu trữ trong những vùng nhớ riêng biệt không liền kề).
+- Một linked list gồm một chuỗi các nút (nodes), mỗi nút chứa 1 giá trị dữ liệu và 1 con trỏ trỏ đến nút tiếp theo trong chuỗi (lưu trữ trong những vùng nhớ riêng biệt không liền kề).
+
+> ![image](https://github.com/user-attachments/assets/16d830fa-85c9-4ce0-a024-77d5148e695e)
 
 
 
