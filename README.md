@@ -148,8 +148,10 @@
 |0100 (4)|1000 (8)|0100 (4)|
 
 - Ví dụ: 
-<br>
 
+<details>
+<summary>main.c</summary>
+ 
 ```C
 #define GENDER 1 << 0    // 0b00000001
 #define TSHIRT 1 << 1    // 0b00000010
@@ -205,6 +207,8 @@ int main(int argc, char const *argv[])
   listSelectedFeatures(options);    // truyền vào giá trị sao chép của options sau khi đã bật cá tính năng để in ra các tính năng đó.
   return 0;
 ```
+</details>
+
 [🔼 _UP_](#top)
 </details>
 
@@ -247,6 +251,10 @@ int main(int argc, char const *argv[])
 - Là con trỏ không có kiểu dữ liệu liên kết với nó. Nó có thể trỏ tới bất kỳ địa chỉ nào thuộc bất kỳ kiểu dữ liệu nào.
 - Ví dụ:
   - Con trỏ void không thể giải tham chiếu để lấy giá trị nên phải sử dụng ép kiểu và sau đó là giải tham chiếu cho nó.
+
+<details>
+<summary>main.c</summary>
+
 ```c
 int main()
 {
@@ -272,6 +280,8 @@ int main()
 }
 ```
 
+</details>
+
 ### IV. Function Pointer - Con trỏ hàm:
 
 <br>
@@ -284,6 +294,9 @@ int main()
 |**Function call**|Có 3 cách gọi hàm khi có con trỏ hàm: <br>1. `sum(1, 2);`<br>2. `ptr(1,2);`: gọi trực tiếp giống gọi hàm.<br>3. `(*ptr)(1,2);`: dùng `*` để giải tham chiếu.||
 
 <br>
+
+<details>
+<summary>main.c</summary>
 
 - Ví dụ:
 ```c
@@ -309,6 +322,8 @@ int main ()
   tinhtoan(hieu, 1, 2);  // Truyền tham số là hàm hieu để tính hiệu.
 }
 ```
+
+</details>
 
 ### V. Pointer & Constant - Con trỏ & Hằng số:
 
@@ -516,6 +531,10 @@ int main()
     - Trả về khác `0` khi quay lại từ `longjmp`.
   - **longjmp(jmp_buf env, int value)**: nhảy về vị trí hiện tại của `setjump` và tiếp tục thực thi từ đó.
  - Ví dụ:
+
+<details>
+<summary>main.c</summary>
+ 
 ```c
 #include <stdio.h>
 #include <setjmp.h>
@@ -562,6 +581,9 @@ int main(int argc, char const *argv[])
     return 0;
 }
 ```
+
+</details>
+
 - Ứng dụng xử lý lỗi của setjmp:
   - Exception Handling: Xử lý ngoại lệ là một cơ chế trong lập trình giúp phát hiện và xử lý các lỗi bất thường xảy ra trong quá trình thực thi, giúp chương trình hoạt động ổn định và không bị dừng đột ngột.
   - Những ngoại lệ gồm:
@@ -597,6 +619,10 @@ int main(int argc, char const *argv[])
 ```
   - Ví dụ:
     - Phát hiện lỗi khi chia cho 0.
+
+<details>
+<summary>main.c</summary>
+ 
 ```c
 #include <stdio.h>
 #include <setjmp.h>
@@ -637,8 +663,15 @@ int main()
   return 0;
 }
 ```
+
+</details>
+ 
 - Định nghĩa **try, catch, throw** trong C:
   - Thay vì phải sử dụng trực tiếp setjmp hay longjmp ta sẽ define chúng.
+
+<details>
+<summary>main.c</summary>
+ 
 ```c
 #include <stdio.h>
 #include <setjmp.h>
@@ -691,6 +724,9 @@ int main()
 }
 
 ```
+
+</details>
+
 [🔼 _UP_](#top)
 </details>
 
@@ -805,6 +841,10 @@ int main()
   - Lấy kiểu dữ liệu lớn nhất trong số các thành viên làm chuẩn để cấp phát bộ nhớ.
   - Tổng kích thước bằng tổng kích thước của các thành viên + padding.
 >👉 Ví dụ: Tìm kích thước của struct và in ra từng byte với địa chỉ tương ứng.
+
+<details>
+<summary>main.c</summary>
+ 
 ```c
 #include <stdio.h>
 
@@ -838,9 +878,12 @@ int main()
     return 0;
 }
 ```
+
+</details>
+
 >➡️ Tổng là 12 byte (là bội số của 4):
 
-![Image](https://github.com/user-attachments/assets/9bbd7654-4522-45cb-ba48-f8d6533e65e7)
+> ![Image](https://github.com/user-attachments/assets/9bbd7654-4522-45cb-ba48-f8d6533e65e7)
 
 > - Trong cấu trúc này, `int` có kích thước lớn nhất nên Compiler lấy 4 byte làm chuẩn để cấp phát 4 byte địa chỉ.
 > - `char` - thành viên đầu tiên, địa chỉ bắt đầu là: `00000000005FFE84` là bội số của 1, 3 byte tiếp theo là padding: `85, 86, 87` vì không những địa chỉ này không phải là bội số của 4.
@@ -850,7 +893,7 @@ int main()
 
 <br>
 
-![Image](https://github.com/user-attachments/assets/5c57ccd9-24a5-433b-8c58-5f4bd6d96fef)
+> ![Image](https://github.com/user-attachments/assets/5c57ccd9-24a5-433b-8c58-5f4bd6d96fef)
 
 <br>
 
@@ -859,6 +902,10 @@ int main()
 >ℹ️ Nếu thêm một thành viên thứ 5 kiểu `char` thì tổng số byte sẽ là 16 (bội số của 4), vì 3 byte padding sẽ được thêm vào những địa chỉ cuối.
 
 >👉 Ví dụ: Tìm kích thước của struct có thành viên là mảng.
+
+<details>
+<summary>main.c</summary>
+ 
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -905,12 +952,15 @@ int main()
     return 0;
 }
 ```
+
+</details>
+
 >➡️ Tổng là 24 byte (là bội số của 4):
 > - Trong cấu trúc này, `int` có kích thước lớn nhất nên Compiler lấy 4 byte làm chuẩn để cấp phát 4 byte địa chỉ.
 > - Thành viên đầu có 5 phần tử `char arr1[5]` có 5 byte thực + 1 byte padding: bắt đầu từ địa chỉ `00000000005FFE70` -> `00000000005FFE75` lần lượt là giá trị của các ký tự trong chuỗi "Hello", cuối cùng là byte padding = `0`.
 > - Thành viên thứ 2 có 4 phần tử kiểu short_kích thước 2 byte  `short arr2[4]` có 8 byte thực và 2 byte padding: bắt đầu từ địa chỉ `00000000005FFE76` với `76` là bội số của 2 -> `00000000005FFE7F` lần lượt là địa chỉ của các giá trị đã được gán, 2 byte padding ở cuối = `0`.
 > - Thành viên thứ 3 có 2 phần tử kiểu int_kích thước 4 byte  `int arr3[2]` có 8 byte: bắt đầu từ địa chỉ `00000000005FFE80` với `80` là bội số của 4 -> `00000000005FFE87` lần lượt là địa chỉ của các giá trị đã được gán.
-![Image](https://github.com/user-attachments/assets/27757309-d213-4651-ba0c-631d2b2468bb)
+> ![Image](https://github.com/user-attachments/assets/27757309-d213-4651-ba0c-631d2b2468bb)
 
 ### II. Bit Field:
 - Trong C, ta có thể chỉ định kích thước theo bit của thành viên trong 1 struct hay union.
@@ -989,6 +1039,10 @@ Point p1, p2;  // khi khai báo biến không cần thêm union.
   - Kích thước của union sẽ bằng với kích thước của thành viên lớn nhất.
   - Chỉ một thành viên lưu trữ giá trị tại một thời điểm nếu không dữ liệu sẽ bị ghi đè.
 >👉 Ví dụ: So sánh kích thước của union với struct.
+
+<details>
+<summary>main.c</summary>
+ 
 ```c
 #include <stdio.h>
 
@@ -1059,9 +1113,16 @@ int main()
 }
 ```
 >➡️ Kết quả:
-![Image](https://github.com/user-attachments/assets/de162709-3e48-4f89-abb9-6af26607a557)
+>
+> ![Image](https://github.com/user-attachments/assets/de162709-3e48-4f89-abb9-6af26607a557)
+
+</details>
 
 >👉 Ví dụ: Sự khác nhau giữa đọc giá trị của các thành viên riêng lẻ và cùng lúc.
+
+<details>
+<summary>main.c</summary>
+ 
 ```c
 #include <stdio.h>
 
@@ -1106,11 +1167,16 @@ int main()
 >
 >![Image](https://github.com/user-attachments/assets/96e8e621-33c1-42fb-90d6-16971d344f08)
 
+</details>
+
 ### IV. Kết hợp STRUCT và UNION:
 
 >👉 Ví dụ: Kết hợp `struct` với `union`.
 > - Để struct làm thành viên của union, để tiết kiệm (không để có byte padding) ta sẽ chỉ cần dùng `uint8_t` - 1 byte cho tất cả các thành viên của struct.
 
+<details>
+<summary>main.c</summary>
+ 
 ```c
 #include <stdio.h>
 #include <stdint.h>
@@ -1159,6 +1225,8 @@ int main(int argc, char const *argv[])
 >
 ![Image](https://github.com/user-attachments/assets/f340caf1-f886-4ce6-af17-7efa0c8263f4)
 
+</details>
+
 ### V. So sánh `STRUCT` và `UNION`:
 
 ![Image](https://github.com/user-attachments/assets/b8444418-1695-4ada-9b0a-cce6271a06be)
@@ -1206,6 +1274,10 @@ int main(int argc, char const *argv[])
 |**Life time**|Các biến trên sẽ bị thu hồi khi chương trình kết thúc - những địa chỉ cấp phát ra sẽ bị thu hồi.|
 
 >👉 Ví dụ: Các biến thường và biến struct lưu trữ trong memory.
+
+<details>
+<summary>main.c</summary>
+
 ```c
 #include <stdio.h>
 
@@ -1264,6 +1336,8 @@ int main()
 >
 >![Image](https://github.com/user-attachments/assets/937241d9-498f-44cb-8b68-3ac29e142c4e)
 
+</details>
+
 ### IV. Stack:
 
 |📋 Stack|📄 Description|
@@ -1273,6 +1347,10 @@ int main()
 |**Life time**|Sau khi ra khỏi hàm, tự động thu hồi vùng nhớ.|
 
 >👉 Ví dụ: Cách mảng được lưu trữ trong vùng nhớ.
+
+<details>
+<summary>main.c</summary>
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -1320,6 +1398,8 @@ int main()
 >
 >![Image](https://github.com/user-attachments/assets/3574fd7e-a74f-42aa-a11d-0135fd851b81)
 
+</details>
+
 ### V. Heap:
 
 |📋 Heap|📄 Description|
@@ -1332,6 +1412,10 @@ int main()
 |**Life time**|- Phải thu hồi thủ công, không tự động thu hồi khi kết thúc hàm như stack.<br>- Sau khi kết thúc chương trình, tự động thu hồi vùng nhớ.|
 
 >👉 Ví dụ: Dùng malloc(), calloc(), realloc().
+
+<details>
+<summary>main.c</summary>
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -1439,6 +1523,8 @@ int main()
 >➡️ Kết quả:
 >
 >![Image](https://github.com/user-attachments/assets/08c31886-4458-40ff-af5a-7d5f3c55a635)
+
+</details>
 
 ### VI. Memory leak & Overflow:
 
