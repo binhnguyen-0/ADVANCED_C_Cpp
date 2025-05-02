@@ -9,7 +9,7 @@
 - Quá trình biên dịch gồm 4 giai đoạn:
   - Preprocess (Tiền xử lý):
     - **Lệnh tạo _file.i_ từ _file.c_ với trình gcc trong VS Code:** `gcc -E file.c -o file.i`.
-    - **Xử lý các loại chỉ thị tiền xử lý:** `#include`, `#define`, `#ifdef`, etc.
+    - **Xử lý các loại chỉ thị tiền xử lý:** thêm các header file - `#include`, expand macro - `#define`, `#ifdef`, etc.
     - **Xóa các comment:** `// comment`, `/* comment */`.
   - Compiler (Quá trình biên dịch):
     - **Lệnh tạo _file.s_ từ _file.i_:** `gcc -S file.i -o file.s`.
