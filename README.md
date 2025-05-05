@@ -2567,15 +2567,46 @@ int size_list(Node *head)
 
 
 <details>
-<summary>list.c</summary>
+<summary>main.c</summary>
  
 ```c
+#include "list.h"
 
+int main()
+{
+    Node *node1 = create_node(90);
+    Node *node2 = create_node(91);
+    Node *node3 = create_node(92);
+
+    node1->next = node2;
+    node2->next = node3;
+
+    display(node1);
+    printf("\n");
+    
+    push_back(&node1, 93);
+    push_front(&node1, 89);
+
+    display(node1);
+    printf("\n");
+
+    insert(&node1, 0, 0);
+    insert(&node1, 1, 1);
+    insert(&node1, 2, 2);
+    insert(&node1, 3, 3);
+    insert(&node1, 4, 4);
+    insert(&node1, 5, 5);
+    insert(&node1, 6, 6);
+
+    display(node1);
+
+    return 0;
+}
 ```
 
 >➡️ Kết quả:
 >
-> ![Image](https://github.com/user-attachments/assets/312c138a-f01c-4b91-a66b-56a8d4e17d15)
+> ![Image](https://github.com/user-attachments/assets/991987cc-0c67-4754-9b84-bd01e797282d)
 
 </details>
 
