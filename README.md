@@ -235,7 +235,8 @@ int main(int argc, char const *argv[])
  ![Cách lưu trữ địa chỉ và giá trị của biến int](https://github.com/user-attachments/assets/3f4514ad-3758-4354-9fec-4e81327a2e0c)
 - Cách 1 con trỏ được lưu trữ trong bộ nhớ:
   - Ví dụ 1 con trỏ trỏ tới 1 biến int, mỗi địa chỉ của con trỏ sẽ lưu trữ 1 giá trị là địa chỉ của biến int đó, và những địa chỉ còn lại sẽ được mặc định là chứa 0x00 (địa chỉ mặc định này có thể chứa giá trị rác).
-![image](https://github.com/user-attachments/assets/ead4d1e7-bd97-4098-bb93-aa32a198e32a)
+
+> ![image](https://github.com/user-attachments/assets/ead4d1e7-bd97-4098-bb93-aa32a198e32a)
 
 ### II. Array Pointer - Con trỏ mảng:
 
@@ -346,7 +347,9 @@ int main ()
 ### VII. Pointer to Pointer - Con trỏ trỏ đến con trỏ:
 - Là con trỏ lưu trữ địa chỉ của con trỏ khác - con trỏ kép.
 - Để truy cập giá trị được trỏ bởi con trỏ kép ta phải giải tham chiếu 2 lần:
-![Image](https://github.com/user-attachments/assets/65958e2e-2243-45f0-81b4-dd802755b3f6)
+
+> ![Image](https://github.com/user-attachments/assets/65958e2e-2243-45f0-81b4-dd802755b3f6)
+
 - Được ứng dụng trong:
   - Kiểu dữ liệu JSON.
   - Cấu trúc dữ liệu danh sách liên kết.
@@ -382,7 +385,8 @@ int main ()
 >Các biến & hàm này phải là global scope, còn nếu trong local scope thì Compiler không thể tìm thấy được.
 - Ví dụ:
   - Sử dụng từ khóa `extern` để khai báo các biến và hàm trong file.h để dễ dàng thêm vào các file khác.
-![Image](https://github.com/user-attachments/assets/98f450b0-f6b5-4ee3-a5d9-d873eac24129)
+  
+> ![Image](https://github.com/user-attachments/assets/98f450b0-f6b5-4ee3-a5d9-d873eac24129)
 
 ### II. Static local:
 - Khi `static` được sử dụng với biến cục bộ thì:
@@ -391,11 +395,11 @@ int main ()
 - Ví dụ:
   - Khi mỗi lần gọi hàm `count` thì kết quả biến `a` luôn = 1 bởi vì dòng khởi tạo biến luôn được thực thi nên mỗi lần gọi kết quả đều giống nhau.
 
-![image](https://github.com/user-attachments/assets/e3d99e12-f937-4b09-88e5-60403b8dfb75)
+> ![image](https://github.com/user-attachments/assets/e3d99e12-f937-4b09-88e5-60403b8dfb75)
 
   - Khi sử dụng từ khóa `static` thì kết quả biến `a` sẽ được giữ nguyên sau mỗi lần gọi hàm bởi vì dòng khởi tạo sẽ bị bỏ qua trong lần gọi hàm tới nên giá trị sẽ được cộng thêm.
  
-![Image](https://github.com/user-attachments/assets/71b379bd-c709-4b8d-ac9d-d9a046600f3a)
+> ![Image](https://github.com/user-attachments/assets/71b379bd-c709-4b8d-ac9d-d9a046600f3a)
 
 >ℹ️ Không thể khai báo hàm static bên trong 1 hàm khác, từ khóa `static` chỉ áp dụng cho hàm global.<br>
 >Có thể thay đổi giá trị của biến static từ bên ngoài bằng con trỏ:
@@ -429,7 +433,7 @@ int main()
   - Khi sử dụng từ khóa static cho các biến `var_global` và hàm `display` trong `file1.c` thì biến và hàm đó đã bị hạn chế chỉ được sử dụng trong `file1.c` đó.
   - Dù có sử dụng thêm `extern int var_global` trong `main.c` đã được include `file1.h` để thông báo Compiler nhưng Compiler không thể tìm thấy do đặc tính của **static global**.
 
-![Image](https://github.com/user-attachments/assets/71f2ee4a-b1f6-4481-a4fd-337aafb34f62)
+> ![Image](https://github.com/user-attachments/assets/71f2ee4a-b1f6-4481-a4fd-337aafb34f62)
 
 ### IV. Từ khóa register:
 - Từ khóa `register` được sử dụng để yêu cầu Compiler lưu trữ một biến trong **thanh ghi CPU** thay vì bộ nhớ RAM, nhằm tăng tốc độ truy xuất.
