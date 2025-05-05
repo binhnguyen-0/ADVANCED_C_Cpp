@@ -2364,7 +2364,220 @@ int main()
 
 > ![Image](https://github.com/user-attachments/assets/d01cad54-5b32-4af9-af2b-3bbe01e4ab1c)
 
+>👉 Ví dụ: Viết code cho Danh sách liên kết - Linked list.
 
+<details>
+<summary>list.h</summary>
+ 
+```c
+#ifndef LIST_H
+#define LIST_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+}Node;
+
+/* Khởi tạo các thông số ban đầu cho Linked list */
+Node *create_node(int newData);
+
+/* Thêm vào đầu danh sách */
+void push_front(Node **array, int value);
+
+/* Thêm vào cuối danh sách */
+void push_back(Node **head, int value);
+
+/* Hàm hiển thị node */
+void display(Node *head);
+
+/* Chèn một node mới vào vị trí bất kỳ */
+void insert(Node **head, int value, int pos);
+
+/* Đếm số lượng node hiện tại */
+int size_list(Node *head);
+
+/* Xóa 1 node cuối list */
+void pop_back(Node **head);
+
+/* Xóa 1 node đầu list */
+void pop_front(Node **head);
+
+/* Xóa 1 node bất kỳ */
+void erase(Node **head, int pos);
+
+/* Xóa toàn bộ node */
+void clear(Node **head);
+
+#endif // LIST_H
+```
+
+</details>
+
+<details>
+<summary>list.c</summary>
+ 
+```c
+#include "list.h"
+
+/* Khởi tạo các thông số ban đầu cho Linked list */
+
+// Cách 1: dùng hàm void (con trỏ node nhận địa chỉ ở stack)
+// - Khi khai báo những biến struct cục bộ ở hàm main thì vị trí vùng nhớ sẽ nằm ở stack.
+// - Vì stack có dung lượng rất hạn chế nên không thích hợp đới với linked list (dễ bị stack overflow).
+// void create_node(Node *node, int newData)
+// {
+//     node->next = NULL;
+//     node->data = newData;
+// }
+
+// Cách 2: dùng hàm con trỏ (cấp phát động cho con trỏ node)
+// - Cấp phát động vùng nhớ trước rồi cho thông tin của các node vào vùng nhớ đó.
+// - Khi sử dụng phải khai báo 1 biến cùng kiểu - con trỏ để trỏ đến vùng nhớ đó:
+//      - Node *node1 = create(5); 
+//      --> *node1 = địa chỉ đầu tiên của vùng cấp phát động chứa dữ liệu: giá trị 5 và con trỏ NULL.
+Node *create_node(int newData)
+{
+    Node *node = (Node*)malloc(sizeof(Node));
+    node->next = NULL;
+    node->data = newData;
+    return node;        // trả về địa chỉ đầu tiên của vùng nhớ được cấp phát động
+}
+
+/* Thêm vào đầu danh sách */
+void push_front(Node **head, int value)
+{
+    Node *new_node = create_node(value);    // tạo node mới chứa value và new_node sẽ nhận được con trỏ đến node này.
+
+    if(*head == NULL)      // con trỏ cấp 2: **p2p = &ptr; thì *p2p  = *giá trị p2p (địa chỉ ptr) = giá trị của ptr (địa chỉ biến gốc) - **p2p = *giá trị ptr (địa chỉ biến gốc) = giá trị của biến gốc
+    {
+        *head = new_node;   // nếu head đang trỏ tới NULL thì danh sách rỗng và node đầu tiên sẽ là new_node
+    }
+    else    // danh sách không rỗng
+    {
+        new_node->next = *head;     // gán con trỏ next của new_node = *head (địa chỉ của node đầu tiên HIỆN TẠI)
+        *head = new_node;           // cập nhật *head = địa chỉ new_node (địa chỉ của node đầu tiên MỚI)
+    }
+}
+
+/* Thêm vào cuối danh sách */
+void push_back(Node **head, int value)
+{
+    Node *new_node = create_node(value);    // tạo node mới chứa value và new_node sẽ nhận được con trỏ đến node này.
+    if(*head == NULL)      // con trỏ cấp 2: **p2p = &ptr; thì *p2p  = *giá trị p2p (địa chỉ ptr) = giá trị của ptr (địa chỉ biến gốc) - **p2p = *giá trị ptr (địa chỉ biến gốc) = giá trị của biến gốc
+    {
+        *head = new_node;   // nếu head đang trỏ tới NULL thì danh sách rỗng và node đầu tiên sẽ là new_node
+    }
+    else
+    {
+        Node *temp = *head;
+        while (temp->next != NULL)   // điều kiện con trỏ next chưa bằng NULL thì tiếp tục duyệt qua
+        {
+            temp = temp->next;      // duyệt danh sách đến node cuối cùng (nơi (*head)->next == NULL)
+        }
+        temp->next = new_node;       // gắn new_node vào cuối danh sách
+    }
+}
+
+/* Hàm hiển thị node */
+void display(Node *head)
+{
+    int index = 0;
+    if(head == NULL)
+    {
+        printf("Không có node!\n");     // kiểm tra danh sách rỗng
+    }
+    else
+    {
+        while (head != NULL)    // duyệt từng nốt trong danh sách
+        {
+            printf("Node %d: %d\n", index, head->data);     // in ra thứ tự node (index), và data của từng node
+            head = head->next;      // cập nhật head bằng head->next: trỏ sang node tiếp theo (khi == NULL thì dừng)
+            index++;    // tăng chỉ số thứ tự node
+        }
+    }
+}
+
+/* Chèn một node mới vào vị trí bất kỳ */
+void insert(Node **head, int value, int pos)
+{
+    Node *new_node = create_node(value);    // tạo node mới chứa value và new_node sẽ nhận được con trỏ đến node này.
+    if(*head == NULL)      // con trỏ cấp 2: **p2p = &ptr; thì *p2p  = *giá trị p2p (địa chỉ ptr) = giá trị của ptr (địa chỉ biến gốc) - **p2p = *giá trị ptr (địa chỉ biến gốc) = giá trị của biến gốc
+    {
+        *head = new_node;   // nếu head đang trỏ tới NULL thì danh sách rỗng và node đầu tiên sẽ là new_node
+    }
+    else
+    {   
+        // vị trí đầu 
+        if (pos == 0)
+        {
+            push_front(head, value);    // chèn node mới ở vị trí đầu tiên của list
+        }
+        // vị trí cuối
+        else if (pos >= size_list(*head))   // nếu pos >= số phần tử node trong list hiện tại thì đang ở vị trí cuối
+        {
+            push_back(head, value);     // chèn node mới ở vị trí cuối cùng của list
+        }
+        // vị trí bất kỳ
+        else 
+        {
+            Node *temp = *head;     // gán địa chỉ node đầu tiên cho con trỏ temp
+            uint8_t index = 0;      // khởi tạo biến index để theo dõi vị trí hiện tại của node (<= 255 phần tử node)
+            while (temp != NULL && index != pos - 1)    // vòng lặp duyệt qua từng node cho tới khi đến node có vị trí pos - 1 thì dừng 
+            {
+                index++;                // tăng chỉ số index đến pos - 1
+                temp = temp->next;      // trỏ đến địa chỉ node tiếp theo
+            }
+            if (index == pos - 1)       // tìm được đến vị trí cần chèn thì chèn new_node vào đúng pos
+            {
+                new_node->next = temp->next;     // gán địa chỉ tiếp theo của node hện tại - temp->next cho con trỏ next của new_node, ví dụ chèn ở vị trí pos = 3, index = 2 & temp->next = địa chỉ node 3, thì gán temp->next cho new_node->next và new_node sẽ thành node 3
+                temp->next = new_node;           // rồi gán địa chỉ new_node cho temp->next (new_node trở thành node tiếp theo)
+            }
+        }
+    }
+}
+
+/* Kích thước của Linked list*/
+int size_list(Node *head)
+{
+    unsigned int count = 0;     // biến count đếm số node trong list
+
+    // kiểm tra list rỗng
+    if (head == NULL)
+    {
+        return 0;   // trả về 0 phần tử
+    }
+    else
+    {
+        while (head != NULL)    // duyệt qua tất cả các node cho tới khi head = head->next = NULL
+        {
+            count++;            // tăng biến count
+            head = head->next;  // gán head bằng head->next
+        }
+    }
+    return count;       // trả về giá trị của biến count
+}
+```
+
+</details>
+
+
+<details>
+<summary>list.c</summary>
+ 
+```c
+
+```
+
+>➡️ Kết quả:
+>
+> ![Image](https://github.com/user-attachments/assets/312c138a-f01c-4b91-a66b-56a8d4e17d15)
+
+</details>
 
 [🔼 _UP_](#top)
 </details>
