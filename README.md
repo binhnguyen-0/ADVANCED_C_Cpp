@@ -228,7 +228,7 @@ int main(int argc, char const *argv[])
 |**Initialize Pointer**|Để khởi tạo 1 con trỏ, ta dùng Address Operator (&) để gán giá trị địa chỉ của 1 biến vào con trỏ.|`*ptr = &variable;`|
 |**Pointer Definition**|Có thể vừa khai báo vừa khởi tạo trong một bước - định nghĩa con trỏ.|`int *ptr = &variable;`|
 
-### I. Con trỏ thường:
+### 📑 I. Con trỏ thường:
 - Con trỏ có thể trỏ tới bất kỳ kiểu dữ liệu nguyên thủy nào.
 - Cách 1 biến được lưu trữ trong bộ nhớ:
   - Ví dụ 1 biến int 32 bit (4 byte) được lưu trữ thành 1 nhóm địa chỉ, mỗi địa chỉ lưu trữ 8 bit (1 byte) giá trị bắt đầu từ LSB đến MSB.
@@ -238,7 +238,7 @@ int main(int argc, char const *argv[])
 
 > ![image](https://github.com/user-attachments/assets/ead4d1e7-bd97-4098-bb93-aa32a198e32a)
 
-### II. Array Pointer - Con trỏ mảng:
+### 📑 II. Array Pointer - Con trỏ mảng:
 
 - Con trỏ mảng là con trỏ trỏ tới phần tử đầu tiên của mảng hoặc là trỏ tới toàn bộ mảng.
 <br>
@@ -248,7 +248,7 @@ int main(int argc, char const *argv[])
 |`int main() {`<br>`int arr[5] = {1, 2, 3, 4, 5};`<br>`int *ptr = arr;`<br>`int (*ptr_arr)[5] = &arr;`|<br><br>: ptr là con trỏ trỏ tới phần tử đầu tiên của mảng.<br>: ptr_arr là con trỏ trỏ đến toàn bộ mảng|
 |`int n = sizeof(arr)/sizeof(arr[0]);`<br>`for (int i; i < n; i++)`<br>`printf("%d", (*ptr)[i]);`<br>`for (int i; i < n; i++)`<br>`printf("%d", ptr+i);`|: n = số phần tử trong mảng.<br><br>: truy cập từng phần tử trong mảng đối với con trỏ trỏ đến toàn bộ mảng<br><br>: truy cập phần tử trong mảng đối với con trỏ trỏ đến thành phần đầu tiên của mảng.|
 
-### III. Void Pointer:
+### 📑 III. Void Pointer:
 - Là con trỏ không có kiểu dữ liệu liên kết với nó. Nó có thể trỏ tới bất kỳ địa chỉ nào thuộc bất kỳ kiểu dữ liệu nào.
 - Ví dụ:
   - Con trỏ void không thể giải tham chiếu để lấy giá trị nên phải sử dụng ép kiểu và sau đó là giải tham chiếu cho nó.
@@ -283,7 +283,7 @@ int main()
 
 </details>
 
-### IV. Function Pointer - Con trỏ hàm:
+### 📑 IV. Function Pointer - Con trỏ hàm:
 
 <br>
 
@@ -326,7 +326,7 @@ int main ()
 
 </details>
 
-### V. Pointer & Constant - Con trỏ & Hằng số:
+### 📑 V. Pointer & Constant - Con trỏ & Hằng số:
 
 |📋 Đặc điểm |Pointer to Constant|Constant Pointer|Constant Pointer to Constant|
 |:------------------------:|:------------------------:|:------------------------:|:------------------------:|
@@ -375,7 +375,7 @@ int main ()
 |**Memory location**|RAM|RAM|RAM|RAM|Thanh ghi trong CPU|
 |**Đặc điểm**|Sử dụng để khai báo 1 biến cục bộ với bộ nhớ tự động. Tuy nhiên trong C, các biến cục bộ sẽ theo mặc định là 1 auto nên việc thêm auto là tùy chọn.|Dùng lại biến toàn cục trong 1 hàm khác. Hoặc sử dụng biến từ file khác|Duy trì giá trị của 1 biến|Hạn chế truy cập từ file khác|Truy xuất nhanh hơn, nhưng không thể lấy địa chỉ - `&`|
 
-### I. Từ khóa Extern:
+### 📑 I. Từ khóa Extern:
 - Cú pháp:
   - extern type var_name;
   - extern return_type func_name;
@@ -388,7 +388,7 @@ int main ()
   
 > ![Image](https://github.com/user-attachments/assets/98f450b0-f6b5-4ee3-a5d9-d873eac24129)
 
-### II. Static local:
+### 📑 II. Static local:
 - Khi `static` được sử dụng với biến cục bộ thì:
   - Giữ phạm vi của biến chỉ trong hàm chứa nó.
   - Giữ giá trị của biến qua các lần gọi.
@@ -425,7 +425,7 @@ int main()
     return 0;
 }
 ```
-### III. Static global:
+### 📑 III. Static global:
 - Khi `static` sử dụng với biến và hàm ở phạm vi global thì nó sẽ hạn chế phạm vi của biến và hàm đó chỉ được dùng trong file hiện tại.
 - Ứng dụng:
   - Thiết kế file thư viện mà không muốn người dùng sử dụng đến 1 số biến hay hàm có chức năng đặc biệt.
@@ -435,7 +435,7 @@ int main()
 
 > ![Image](https://github.com/user-attachments/assets/71f2ee4a-b1f6-4481-a4fd-337aafb34f62)
 
-### IV. Từ khóa register:
+### 📑 IV. Từ khóa register:
 - Từ khóa `register` được sử dụng để yêu cầu Compiler lưu trữ một biến trong **thanh ghi CPU** thay vì bộ nhớ RAM, nhằm tăng tốc độ truy xuất.
 - Ví dụ:
   - Tính thời gian chạy khi sử dụng `register`.
@@ -466,7 +466,7 @@ int main()
 >ℹ️ Không dùng toán tử `&` cho các biến `register` được vì biến lưu trữ trong thanh ghi thì không có địa chỉ.
 >Không thể sử dụng từ khóa `register` cho các biến global: <br>1. Do biến được lưu trữ trên thanh ghi sẽ không có địa chỉ (do tính chất của biến global là tồn tại xuyên suốt chương trình nên phải có 1 địa chỉ cố định để có thể tham chiếu đến). <br>2. Thanh ghi có số lượng hạn chế mà biến toàn cục thì không.
 
-### V. Type qualifier - Từ khóa định kiểu volatile:
+### 📑 V. Type qualifier - Từ khóa định kiểu volatile:
 - Trong quá trình biên dịch, Compiler thường cố gắng tối ưu hóa đầu ra để chỉ cần thực thi ít mã máy hơn, nếu mã máy đó không cần thiết khi truy cập biến cái mà không thay đổi gì xét theo quan điểm của Compiler.
 - Ví dụ:
   - Tối ưu hóa vòng lặp while thành vô hạn vì bỏ qua kiểm tra biến check.
@@ -494,7 +494,7 @@ while (check)
 <details>
 <summary>🔖 <b>BÀI 6: GOTO - SETJMP.H</b></summary>
  
-### I. Câu lệnh goto trong C:
+### 📑 I. Câu lệnh goto trong C:
 - Là một lệnh nhảy không điều kiện, cho phép chương trình nhảy đến 1 nhãn (label) trong cùng 1 hàm để thực thi tiếp.
 - Cú pháp: 
  ```c
@@ -528,7 +528,7 @@ int main()
 }
 ```
 
-### II. Thư viện setjmp:
+### 📑 II. Thư viện setjmp:
 - Cung cấp 2 hàm chính là `setjump` và `longjmp`:
   - **setjmp(jmp_buf env)**: đánh dấu vị trí để quay lại bằng `longjump`.
     - Trả về `0` khi được gọi lần đầu.
@@ -737,7 +737,7 @@ int main()
 <details>
 <summary>🔖 <b>BÀI 7: STRUCT - UNION</b></summary>
 
-### I. Struct:
+### 📑 I. Struct:
 - Khái niệm:
   - Là 1 kiểu dữ liệu do người dùng tự định nghĩa. Struct được sử dụng khi muốn lưu trữ một tập hợp các kiểu dữ liệu khác nhau dưới một tên duy nhất.	
 - Declaration - Cú pháp khai báo:
@@ -966,7 +966,7 @@ int main()
 > - Thành viên thứ 3 có 2 phần tử kiểu int_kích thước 4 byte  `int arr3[2]` có 8 byte: bắt đầu từ địa chỉ `00000000005FFE80` với `80` là bội số của 4 -> `00000000005FFE87` lần lượt là địa chỉ của các giá trị đã được gán.
 > ![Image](https://github.com/user-attachments/assets/27757309-d213-4651-ba0c-631d2b2468bb)
 
-### II. Bit Field:
+### 📑 II. Bit Field:
 - Trong C, ta có thể chỉ định kích thước theo bit của thành viên trong 1 struct hay union.
 - Cú pháp:
 ```c
@@ -981,7 +981,7 @@ struct
   char data2 : 4;  // chỉ sử dụng 4 bit trong tổng số 1 byte
 }
 ```
-### III. UNION:
+### 📑 III. UNION:
 - Khái niệm:
   - Là 1 kiểu dữ liệu do người dùng tự định nghĩa, có thể chứa các phần tử có kiểu dữ liệu khác nhau như struct.
   - Nhưng không giống cấu trúc, tất cả các thành viên của `union` được lưu trữ trong cùng một vị trí bộ nhớ, vì vậy mà chỉ có 1 thành viên mới có thể lưu trữ dữ liệu tại 1 thời điểm.
@@ -1173,7 +1173,7 @@ int main()
 
 </details>
 
-### IV. Kết hợp STRUCT và UNION:
+### 📑 IV. Kết hợp STRUCT và UNION:
 
 >👉 Ví dụ: Kết hợp `struct` với `union`.
 > - Để struct làm thành viên của union, để tiết kiệm (không để có byte padding) ta sẽ chỉ cần dùng `uint8_t` - 1 byte cho tất cả các thành viên của struct.
@@ -1231,7 +1231,7 @@ int main(int argc, char const *argv[])
 
 </details>
 
-### V. So sánh `STRUCT` và `UNION`:
+### 📑 V. So sánh `STRUCT` và `UNION`:
 
 ![Image](https://github.com/user-attachments/assets/b8444418-1695-4ada-9b0a-cce6271a06be)
 
@@ -1254,14 +1254,14 @@ int main(int argc, char const *argv[])
   - Stack.
   - Heap.
 
-### I. Text segment (Code segment):
+### 📑 I. Text segment (Code segment):
 
 |📋 Text segment|📄 Description|
 |:------------------------:|:------------------------|
 |**Chứa**| - Chứa mã thực thi của chương trình - mã máy đã được biên dịch.<br> - Đối với trình biên dịch Clang (macOS), còn lưu trữ biến hằng số toàn cục `const` và chuỗi hằng `char *ptr = "Hello"; // Hello là chuỗi hằng` nhưng với quyền là read-only.|
 |**Quyền truy cập**|Chỉ read-only, không có quyền write - thay đổi giá trị, địa chỉ là không được phép.|
 
-### II. Data segment (Initialized data):
+### 📑 II. Data segment (Initialized data):
 
 |📋 Data segment|📄 Description|
 |:------------------------:|:------------------------|
@@ -1269,7 +1269,7 @@ int main(int argc, char const *argv[])
 |**Quyền truy cập**|Quyền read-write, được phép đọc và thay đổi giá trị của biến.|
 |**Life time**|Các biến trên sẽ bị thu hồi khi chương trình kết thúc - những địa chỉ cấp phát ra sẽ bị thu hồi.|
 
-### III. BSS segment (Uninitialized data):
+### 📑 III. BSS segment (Uninitialized data):
 
 |📋 BSS segment|📄 Description|
 |:------------------------:|:------------------------|
@@ -1342,7 +1342,7 @@ int main()
 
 </details>
 
-### IV. Stack:
+### 📑 IV. Stack:
 
 |📋 Stack|📄 Description|
 |:------------------------:|:------------------------|
@@ -1404,7 +1404,7 @@ int main()
 
 </details>
 
-### V. Heap:
+### 📑 V. Heap:
 
 |📋 Heap|📄 Description|
 |:------------------------:|:------------------------|
@@ -1530,7 +1530,7 @@ int main()
 
 </details>
 
-### VI. Memory leak & Overflow:
+### 📑 VI. Memory leak & Overflow:
 
 |📋 So sánh|📄 Memory leak|📄 Overflow|
 |:------------------------:|:------------------------|:------------------------|
@@ -2334,7 +2334,7 @@ int main()
 <details>
 <summary>🔖 <b>BÀI 10: LINKED LIST</b></summary>
 
-### I. Array:
+### 📑 I. Array:
 
 - Mảng là một tập hợp các phần tử có kích thước cố định được lưu trữ trong các vị trí bộ nhớ liền kề.
 - Thêm và xóa 1 phần tử trong array có rất nhiều bước khiến tốc độ chương trình sẽ bị chậm.
@@ -2357,7 +2357,7 @@ int main()
 
 > ![Image](https://github.com/user-attachments/assets/a2711cb2-d73f-4cb9-ae9a-5b7f13fe611a)
 
-### II. Danh sách liên kết - Linked list:
+### 📑 II. Danh sách liên kết - Linked list:
 
 - Linked list là một cấu trúc dữ liệu trong lập trình máy tính, dùng để tổ chức và lưu trữ dữ liệu.
 - Một linked list gồm một chuỗi các nút (nodes), mỗi nút chứa 1 giá trị dữ liệu và 1 con trỏ trỏ đến nút tiếp theo trong chuỗi (lưu trữ trong những vùng nhớ riêng biệt không liền kề).
