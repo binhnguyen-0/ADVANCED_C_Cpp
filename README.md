@@ -2776,14 +2776,87 @@ int main(int argc, char const *argv[])
 >👉 Ví dụ: Viết code triển khai xử lý JSON.
 
 <details>
-<summary>json.h</summary>
+<summary>jsonparse.h</summary>
 
+```c
+#ifndef JSONPARSE_H
+#define JSONPARSE_H
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <ctype.h>
+#include <stdbool.h>
+
+typedef enum
+{
+    JSON_NULL,
+    JSON_BOOLEAN,
+    JSON_NUMBER,
+    JSON_STRING,
+    JSON_ARRAY,
+    JSON_OBJECT
+} JsonType;
+
+typedef struct JsonValue
+{
+    JsonType type;
+    union 
+    {
+        int boolean;
+        double number;
+        char *string;
+        struct 
+        {
+            struct JsonValue *values;
+            size_t count;
+        } array;
+        struct 
+        {
+            char **keys;
+            struct JsonValue *values;
+            size_t count;
+        } object;
+    } value;
+} JsonValue;
+
+
+JsonValue *parse_json(const char **json);
+
+void free_json_value(JsonValue *json_value);
+
+static void skip_whitespace(const char **json);
+
+JsonValue *parse_null(const char **json);
+
+JsonValue *parse_boolean(const char **json);
+
+JsonValue *parse_number(const char **json);
+
+JsonValue *parse_string(const char **json);
+
+JsonValue *parse_array(const char **json);
+
+JsonValue *parse_object(const char **json);
+
+JsonValue *parse_json(const char **json);
+
+void free_json_value(JsonValue *json_value);
+
+void test(JsonValue* json_value);
+
+#endif  // JSONPARSE_H
+```
 
 </details>
 
 <details>
-<summary>json.c</summary>
+<summary>jsonparse.c</summary>
 
+```c
+
+```
 
 </details>
 
