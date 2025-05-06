@@ -2616,12 +2616,186 @@ int main()
 <details>
 <summary>🔖 <b>BÀI 11: JSON</b></summary>
 
-### 📑 I. :
+### 📑 I. Khái niệm:
+- JSON (JavaScript Object Notation) là một định dạng dữ liệu dùng để trao đổi dữ liệu giữa các hệ thống.
+- Đặc điểm:
+  - Thiết kế dễ đọc dễ viết cho người dùng.
+  - Dễ phân tích và tạo ra bởi máy tính.
+  - Được hỗ trợ bởi hầu hết các ngôn ngữ lập trình: C, C++, Python, Java, ...
+- Các định dạng:
+  - Dạng Object: chứa các nhóm cặp key - value trong dấu `{ }`.
+  - Dạng Array: chứa danh sách các giá trị như chuỗi, số được biểu diễn bên trong dấu `[ ]`.
+- Các kiểu dữ liệu:
+
+|📋 Data type|📄 Description|💡 Examples|
+|:------------------------:|:------------------------|:------------------------|
+|**string**|Trong dấu ngoặc kép `""`.|`"Software Engineer"`|
+|**number**|Không cần dấu ngoặc|`30`, `50`|
+|**boolean**|Không viết hoa|`true`, `false`|
+|**null**|Rỗng|`null`|
+|**Object**|Tập hợp các cặp key-value|`{ "key": value, ... }`|
+|**Array**|Danh sách các giá trị: object, string, number, array ... |`[ { "key": value, ... }, 20, "Hello World", true, null, [80, 70, 90] ]`|
+
+- Lưu ý:
+  - Key luôn là chuỗi: "key".
+  - Không có dấu phẩy ở phần tử cuối cùng.
+
+>👉 Ví dụ: Viết code triển khai xử lý một mảng trong JSON như sau:
 
 
+```c
+[
+    50.456, true, [5, "hello world"],
+    {
+        "name": "John Doe",
+        "age": 30.1234,
+        "city": "New York",
+        "isStudent": true,
+        "grades": [85, 90, 78]
+    }
+ ]
+```
+
+<details>
+<summary>example.c</summary>
+
+```c 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+// Các kiểu dữ liệu có thể có trong JSON
+typedef enum{
+    JSON_NULL,      // kiểu NULL
+    JSON_BOOLEAN,   // kiểu boolean 
+    JSON_NUMBER,    // kiểu number
+    JSON_STRING,    // kiểu string
+    JSON_ARRAY,     // kiểu array
+    JSON_OBJECT     // kiểu object
+} JSONType;
+
+typedef struct JSONValue{
+
+    JSONType type;      // biến type kiểu JSONType
+
+    union
+    {
+        int     boolean;    // value.boolean: giá trị là boolean
+        double  number;     // value.number: giá trị là số
+        char    *string;    // value.string: giá trị là chuỗi
+
+        struct
+        {
+            struct JSONValue *valueA;   // mảng các giá trị
+            size_t count;   // số phần tử để cấp phát động
+        } array;            // value.array: mảng JSON
+
+        struct
+        {
+            char **keys;    // mảng các key
+            struct JSONValue *valueO;   // mảng các giá trị
+            size_t count;   // số phần tử để cấp phát động
+        } object;           // value.object: đối tượng JSON
+    } value;
+} JSONValue;
+
+int main(int argc, char const *argv[])
+{
+    JSONValue *json_str = (JSONValue*)malloc(sizeof(JSONValue));    // cấp phát động trước một vùng nhớ
+
+    json_str->type = JSON_ARRAY;        // kiểu mảng
+    json_str->value.array.count = 4;    // có 4 phần tử
+    json_str->value.array.valueA = (JSONValue*)malloc(json_str->value.array.count * sizeof(JSONValue));     // cấp phát động cho 3 phần tử đó
+
+    // phần tử 0
+    json_str->value.array.valueA[0].type = JSON_NUMBER;         // phần tử 0 có kiểu là number
+    json_str->value.array.valueA[0].value.number = 50.456;      // phần tử 0 có giá trị kiểu number là 50.456
+
+    // phần tử 1
+    json_str->value.array.valueA[1].type = JSON_BOOLEAN;        // phần tử 1 có kiểu boolean
+    json_str->value.array.valueA[1].value.boolean = true;       // giá trị boolean là true
+
+    // phần tử 2
+    json_str->value.array.valueA[2].type = JSON_ARRAY;          // phần tử 2 là 1 mảng
+    json_str->value.array.valueA[2].value.array.count = 2;      // có 2 phần tử
+    // cấp phát động cho 2 phần tử của phần tử 2 
+    json_str->value.array.valueA[2].value.array.valueA = (JSONValue*)malloc(json_str->value.array.valueA[2].value.array.count * sizeof(JSONValue));
+
+    // phần tử 2.0
+    json_str->value.array.valueA[2].value.array.valueA[0].type = JSON_NUMBER;   // phần tử 2.0 là number
+    json_str->value.array.valueA[2].value.array.valueA[0].value.number = 5;     // có giá trị số là 5
+
+    // phần tử 2.1
+    json_str->value.array.valueA[2].value.array.valueA[1].type = JSON_STRING;               // phần tử 2.1 là chuỗi
+    json_str->value.array.valueA[2].value.array.valueA[1].value.string = "hello world";     // có giá trị là "hello world"
+
+    // phần tử 3
+    json_str->value.array.valueA[3].type = JSON_OBJECT;
+    json_str->value.array.valueA[3].value.object.count = 5;
+    json_str->value.array.valueA[3].value.object.keys = (char**)malloc(json_str->value.array.valueA[3].value.object.count * sizeof(char*));;
+    json_str->value.array.valueA[3].value.object.valueO = (JSONValue*)malloc(json_str->value.array.valueA[3].value.object.count * sizeof(JSONValue));
+    
+    // phần tử 3.1: cặp key-value 1
+    json_str->value.array.valueA[3].value.object.keys[0] = "name";
+    json_str->value.array.valueA[3].value.object.valueO[0].type = JSON_STRING;
+    json_str->value.array.valueA[3].value.object.valueO[0].value.string = "John Doe";
+
+    // phần tử 3.2: cặp key-value 2
+    json_str->value.array.valueA[3].value.object.keys[1] = "age";
+    json_str->value.array.valueA[3].value.object.valueO[1].type = JSON_NUMBER;
+    json_str->value.array.valueA[3].value.object.valueO[1].value.number = 30.1234;
+
+    // phần tử 3.3: cặp key-value 3
+    json_str->value.array.valueA[3].value.object.keys[2] = "city";
+    json_str->value.array.valueA[3].value.object.valueO[2].type = JSON_STRING;
+    json_str->value.array.valueA[3].value.object.valueO[2].value.string = "New York";
+
+    // phần tử 3.4: cặp key-value 4
+    json_str->value.array.valueA[3].value.object.keys[3] = "isStudent";
+    json_str->value.array.valueA[3].value.object.valueO[3].type = JSON_BOOLEAN;
+    json_str->value.array.valueA[3].value.object.valueO[3].value.boolean = true;
+ 
+    // phần tử 3.5: cặp key-value 5
+    json_str->value.array.valueA[3].value.object.keys[4] = "grades";
+    json_str->value.array.valueA[3].value.object.valueO[4].type = JSON_ARRAY;
+    json_str->value.array.valueA[3].value.object.valueO[4].value.array.count = 3;
+    json_str->value.array.valueA[3].value.object.valueO[4].value.array.valueA = (JSONValue*)malloc(json_str->value.array.valueA[3].value.object.valueO[4].value.array.count * sizeof(JSONValue));
+    json_str->value.array.valueA[3].value.object.valueO[4].value.array.valueA[0].type = JSON_NUMBER;
+    json_str->value.array.valueA[3].value.object.valueO[4].value.array.valueA[0].value.number = 85;
+    json_str->value.array.valueA[3].value.object.valueO[4].value.array.valueA[1].type = JSON_NUMBER;
+    json_str->value.array.valueA[3].value.object.valueO[4].value.array.valueA[1].value.number = 90;
+    json_str->value.array.valueA[3].value.object.valueO[4].value.array.valueA[2].type = JSON_NUMBER;
+    json_str->value.array.valueA[3].value.object.valueO[4].value.array.valueA[2].value.number = 78;
+
+    return 0;
+}
+```
+
+</details>
+
+>👉 Ví dụ: Viết code triển khai xử lý JSON.
+
+<details>
+<summary>json.h</summary>
 
 
+</details>
 
+<details>
+<summary>json.c</summary>
+
+
+</details>
+
+
+<details>
+<summary>main.c</summary>
+
+>➡️ Kết quả:
+>
+> 
+
+</details>
 
 [🔼 _UP_](#top)
 </details>
