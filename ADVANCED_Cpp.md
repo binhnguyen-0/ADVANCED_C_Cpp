@@ -4,22 +4,90 @@
 <details>
 <summary>🔖 <b>Bài 15: CLASS</b></summary>
 
-### 📑 I. Class trong C++:
+### 📑 I. Khái niệm:
 
-- Là kiểu dữ liệu do người dùng định nghĩa, chứa các data member và member function.
-- Trong C++, từ khóa `class` được dùng để định nghĩa một lớp, là một cấu trúc dữ liệu tự định nghĩa có thể chứa dữ liệu và các hàm thành viên.
+- Từ khóa `class` được dùng để định nghĩa một lớp, là một cấu trúc dữ liệu do người dùng tự định nghĩa có thể chứa dữ liệu và các hàm thành viên.
 - Class là nền tảng của lập trình hướng đối tượng OOP trong C++.
 - Định nghĩa Class (class definition hoặc template):
-```c
+  
+```cpp
 class class_Name
 {
     access_specifier:    // phạm vi truy cập là private, public, protected
-    data member;         // những biến thành viên 
-    member funtions(){}  // hàm được khai báo bên trong class, còn gọi là member method.
+    data member;         // những biến thành viên - thuộc tính attribute
+    member funtions(){}  // hàm được khai báo bên trong class - phương thức method.
 };
 ```
 
+- Access Modifier:
+  - Kiểm soát quyền truy cập vào các thành viên của class.
+  - Các cấp độ truy cập:
+    - public: các thành viên class có thể truy cập được từ bên ngoài.
+    - private: chỉ có thể truy cập trong chính class.
+    - protected: truy cập trong class và bởi class con kế thừa.
+    - Cấp độ mặc định là private.
 
+> 👉 Ví dụ: Cấp độ truy cập public:
+> - truy cập từ ngoài class
+> - truy cập bên trong class
+
+<details>
+<summary>🔖 <b>publicEx.cpp</b></summary>
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class User
+{
+    public:
+
+    int a;
+    double b;
+    char c;
+
+    void create()        // truy cập từ bên trong Class
+    {
+        User user1;      // user1 là đối tượng (object)
+
+        user1.a = 30;
+        user1.b = 20;
+        user1.display();
+    }
+
+    void display()        // định nghĩa hàm bên trong class
+    {
+        cout << a << endl;
+        cout << b << endl;
+    }
+};
+
+void User::display()     // định nghĩa hàm bên ngoài class sử dụng toán tử `::`
+{
+    cout << a << endl;
+    cout << b << endl;
+}
+
+int main()
+{
+    User user1, user2;    // user1, user2 là đối tượng (object)
+
+    user1.a = 10;        // truy cập bên ngoài class
+    user1.b = 20.6;
+
+    user1.display();
+    user1.create();
+    return 0;
+}
+```
+
+</details>
+
+
+
+
+
+ 
 [🔼 _UP_](#top)
 
 </details>
