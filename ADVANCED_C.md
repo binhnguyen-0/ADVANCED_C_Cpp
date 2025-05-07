@@ -2640,7 +2640,7 @@ int main()
   - Key luôn là chuỗi: "key".
   - Không có dấu phẩy ở phần tử cuối cùng.
 
->👉 Ví dụ: Viết code triển khai xử lý một mảng trong JSON như sau:
+>👉 Ví dụ: Viết code triển khai xử lý một mảng trong chuỗi JSON như sau:
 
 
 ```c
@@ -2773,7 +2773,7 @@ int main(int argc, char const *argv[])
 
 </details>
 
->👉 Ví dụ: Viết code triển khai xử lý JSON.
+>👉 Ví dụ: Viết code triển khai xử lý chuỗi JSON.
 
 <details>
 <summary>jsonparse.h</summary>
