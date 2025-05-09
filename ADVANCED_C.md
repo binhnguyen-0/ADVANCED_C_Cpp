@@ -2826,7 +2826,6 @@ JsonValue *parse_json(const char **json);
 
 void free_json_value(JsonValue *json_value);
 
-static void skip_whitespace(const char **json);
 
 JsonValue *parse_null(const char **json);
 
@@ -2844,7 +2843,7 @@ JsonValue *parse_json(const char **json);
 
 void free_json_value(JsonValue *json_value);
 
-void test(JsonValue* json_value);
+void printf_json(JsonValue* json_value) ;
 
 #endif  // JSONPARSE_H
 ```
@@ -2855,18 +2854,480 @@ void test(JsonValue* json_value);
 <summary>jsonparse.c</summary>
 
 ```c
+#include "jsonparse.h"
+
+/**
+ * @brief Bỏ qua các khoảng trắng trong JSON
+ * @param json Con trỏ trỏ tới con trỏ chuỗi JSON, được cập nhật để trỏ tới ký tự không phải khoảng trắng
+ * @return void
+ */
+static void skip_whitespace(const char **json)      // hàm chỉ dùng trong file này
+{
+    while (isspace(**json))     // duyệt qua tất cả khoảng trắng, isspace() trả về true nếu là khoảng trắng, tab, newline, ...
+    {
+        (*json)++;              // trỏ đến địa chỉ tiếp theo (bỏ qua nếu vị trí hiện tại là khoảng trắng)
+    }
+}
+
+/**
+ * @brief Phân tích giá trị NULL trong chuỗi JSON
+ * @param json Con trỏ trỏ tới con trỏ chuỗi JSON
+ * @return Trả về con trỏ tới kiểu JsonValue với loại JSON_NULL và con trỏ value nếu đúng là chuỗi "null", còn không thì trả về giá trị NULL
+ */
+JsonValue *parse_null(const char **json) 
+{
+    skip_whitespace(json);      // bỏ qua khoảng trắng
+    JsonValue *value = (JsonValue *) malloc(sizeof(JsonValue)); // cấp phát động vùng nhớ cho một đối tượng kiểu Jsonvalue và value trỏ đến vùng nhớ đó
+    if (strncmp(*json, "null", 4) == 0)     // so sánh 4 ký tự đầu tiên với chuỗi "null", đúng thì = 0
+    {
+        value->type = JSON_NULL;    // gán kiểu cho con trỏ value là kiểu mảng
+        *json += 4;                 // di chuyển qua 4 ký tự, tiếp tục phân tích phần tử tiếp theo của chuỗi JSON
+        return value;               // trả về con trỏ value kiểu JSON_NULL
+    }
+    free(value);    // nếu không thỏa mãn điều kiện thì giải phóng vùng nhớ
+    return NULL;    // trả về NULL khi không có "null"
+}
+
+/**
+ * @brief Phân tích giá trị NULL trong chuỗi JSON
+ * @param json Con trỏ trỏ tới con trỏ chuỗi JSON
+ * @return Trả về con trỏ tới kiểu JsonValue với loại JSON_BOOLEAN và con trỏ value nếu đúng là "true" hoặc "false", còn không thì trả về giá trị NULL
+ */
+JsonValue *parse_boolean(const char **json) 
+{
+    skip_whitespace(json);      // bỏ qua khoảng trắng
+    JsonValue *value = (JsonValue *) malloc(sizeof(JsonValue));     // cấp phát động vùng nhớ cho một đối tượng kiểu Jsonvalue và value trỏ đến vùng nhớ đó
+    if (strncmp(*json, "true", 4) == 0)     // so sánh *json với 4 ký tự tiếp với chuỗi "true"
+    {
+        value->type = JSON_BOOLEAN;         // gán kiểu JSON_BOOLEAN cho thành phần type trong value
+        value->value.boolean = true;        // gán giá trị true vào thành phần boolean
+        *json += 4;                         // bỏ qua 4 ký tự tiếp (lưu vị trí ngay sau "true")
+    }
+    else if (strncmp(*json, "false", 5) == 0)   // so sánh *json với 5 ký tự tiếp với chuỗi "false"
+    {
+        value->type = JSON_BOOLEAN;             // gán kiểu JSON_BOOLEAN cho thành phần type trong value
+        value->value.boolean = false;           // gán giá trị true vào thành phần boolean
+        *json += 5;                             // bỏ qua 5 ký tự tiếp (lưu vị trí ngay sau "false")
+    }
+    else
+    {
+        free(value);        // nếu không hợp lệ thì giải phóng value
+        return NULL;        // trả về NULL nếu không hợp lệ
+    }
+    return value;           // trả về con trỏ value sau khi đã gán giá trị xong
+}
+
+/**
+ * @brief Phân tích giá trị true và false trong chuỗi JSON
+ * @param json Con trỏ trỏ tới con trỏ chuỗi JSON
+ * @return Trả về con trỏ tới kiểu JsonValue với loại JSON_NUMBER và giá trị num nếu chuỗi là hợp lệ, còn không thì trả về giá trị NULL
+ */
+JsonValue *parse_number(const char **json) 
+{
+    skip_whitespace(json);      // loại bỏ khoảng trắng
+    char *end;                  // con trỏ end trỏ tới đầu chuỗi
+    double num = strtod(*json, &end);   // chuỗi hợp lệ (là số 100%) thì end trỏ đến cuối chuỗi, không hợp lệ thì end trỏ đến đầu chuỗi.
+
+    if (end != *json)   // ktra xem end và *json có trỏ đến cùng địa chỉ đầu tiên hay không
+    {
+        JsonValue *value = (JsonValue *) malloc(sizeof(JsonValue));     // cấp phát động vùng nhớ cho một đối tượng kiểu Jsonvalue và value trỏ đến vùng nhớ đó
+        value->type = JSON_NUMBER;      // gán kiểu giá trị là kiểu number 
+        value->value.number = num;      // gán giá trị của num vào phần tử number
+        *json = end;                    // gán địa chỉ end (trỏ đến cuối) để cập nhật vị trí
+        return value;                   // trả lại dữ liệu
+    }
+    return NULL;    // end = *json thì trả về NULL
+}
+
+/**
+ * @brief Phân tích những chuỗi con trong chuỗi JSON
+ * @param json Con trỏ trỏ tới con trỏ chuỗi JSON
+ * @return Trả về con trỏ tới kiểu JsonValue với loại JSON_STRING và một chuỗi nếu chuỗi là hợp lệ, còn không thì trả về giá trị NULL
+ */
+JsonValue *parse_string(const char **json) 
+{
+    skip_whitespace(json);      // bỏ qua khoảng trắng
+
+    if (**json == '\"')         // nếu ký tự đầu là dấu " thì phân tích tiếp
+    {
+        (*json)++;                                  // trỏ đến vị trí tiếp theo bỏ qua dấu " để phân tích
+        const char *start = *json;                  // lưu vị trí hiện tại vào con trỏ start
+        while (**json != '\"' && **json != '\0')    // duyệt qua từng thành phần trong chuỗi cho đến khi gặp dấu " kết thúc chuỗi hoặc gặp '\0'  
+        {
+            (*json)++;      // trỏ đến từng vị trí một
+        }
+        if (**json == '\"') // kiểm tra nếu thoát vòng lặp là " thì hợp lệ
+        {
+            size_t length = *json - start;      // tính độ dài chuỗi vừa duyệt từ start đến trước "
+            char *str = (char *) malloc((length + 1) * sizeof(char));   // cấp phát động cho chuỗi str và thêm 1 byte ký tự '\0'
+            strncpy(str, start, length);    // sao chép chuỗi từ vị trí start với độ dài length
+            str[length] = '\0';     // kết thúc chuỗi bằng ký tự '\0'
+
+            JsonValue *value = (JsonValue *) malloc(sizeof(JsonValue));  // cấp phát động vùng nhớ cho một đối tượng kiểu Jsonvalue và value trỏ đến vùng nhớ đó
+            value->type = JSON_STRING;      // gán kiểu JSON_STRING
+            value->value.string = str;      // gán con trỏ str cho thành phần string trong value
+            (*json)++;      // trỏ đến ký tự tiếp theo
+            return value;   // trả về con trỏ value kiểu JsonValue kiểu JSON_STRING và thành phần string đã được gán
+        }
+    }
+    return NULL;        // trả về NULL nếu ký tự đầu không hợp lệ
+}
+
+/**
+ * @brief Phân tích những chuỗi con trong chuỗi JSON
+ * @param json Con trỏ trỏ tới con trỏ chuỗi JSON
+ * @return Trả về con trỏ tới kiểu JsonValue với loại JSON_ARRAY và một chuỗi nếu chuỗi là hợp lệ, còn không thì trả về giá trị NULL
+ */
+JsonValue *parse_array(const char **json)
+{
+    skip_whitespace(json);      // bỏ qua khoảng trắng
+
+    if (**json == '[')          // nếu ký tự đầu tiên là '[' thì xử lý tiếp
+    {
+        (*json)++;              // trỏ đến địa chỉ tiếp theo
+        skip_whitespace(json);  // bỏ qua khoảng trắng
+
+        JsonValue *array_value = (JsonValue *)malloc(sizeof(JsonValue));    // cấp phát động vùng nhớ cho một đối tượng kiểu Jsonvalue và array_value trỏ đến vùng nhớ đó
+        array_value->type = JSON_ARRAY;             // gán kiểu là kiểu mảng
+        array_value->value.array.count = 0;         // khởi tạo số lượng phần tử là 0
+        array_value->value.array.values = NULL;     // khởi tạo giá trị là NULL
+
+        while (**json != ']' && **json != '\0')     // duyệt qua từng ký tự một cho đến khi gặp ']' hoặc ký tự NULL '\0'
+        {
+            JsonValue *element = parse_json(json);  // chạy tất cả các hàm parse cho tới khi có dữ liệu đầu tiên hoặc không
+            if (element != NULL)                    // nếu != NULL thì là có dữ liệu và phân tích tiếp dữ liệu đó
+            {
+                array_value->value.array.count++;   // phần tử đầu tiên hợp lệ thì tăng số lượng phần tử của mảng lên 1
+                array_value->value.array.values = (JsonValue *)realloc(array_value->value.array.values, array_value->value.array.count * sizeof(JsonValue));    // cấp phát động lại cho phần tử đó
+                array_value->value.array.values[array_value->value.array.count - 1] = *element;     // gán giá trị của *element vào phần tử thứ 0 của mảng array[count - 1]
+                free(element);      // giải phóng địa chỉ element
+            }
+            else break;
+            skip_whitespace(json);  // bỏ qua khoảng trắng
+            if (**json == ',')      // nếu phần tử tiếp theo là dấu , thì phân tích tiếp
+            {
+                (*json)++;          // trỏ đến địa chỉ tiếp theo
+            }
+        }
+
+        if (**json == ']')          // đến khi giá trị = `]` thì
+        {
+            (*json)++;              // trỏ đến địa chỉ tiếp theo (dữ liệu tiếp theo)
+            return array_value;     // trả lại địa chỉ đầu array_value
+        } 
+        else                                // nếu giá trị != `]` thì là NULL
+        {
+            free_json_value(array_value);   // giải phóng vùng nhớ array_value 
+            return NULL;                    // trả về NULL
+        }
+    }
+    return NULL;        // // nếu ký tự đầu tiên != '[' thì trả về NULL
+}
+
+/**
+ * @brief Phân tích kiểu object trong chuỗi JSON
+ * @param json Con trỏ trỏ tới con trỏ chuỗi JSON 
+ * @return Trả về con trỏ tới kiểu JsonValue với loại JSON_OBJECT và một object nếu hợp lệ, còn không thì trả về giá trị NULL
+ */
+JsonValue *parse_object(const char **json)  // con trỏ cấp 2 json giúp cập nhật vị trí phân tích trong chuỗi gốc
+{
+    skip_whitespace(json);      // bỏ qua khoảng trống 
+    if (**json == '{')          // nếu ký tự đầu tiên là { thì phân tích tiếp
+    {
+        (*json)++;              // bỏ qua ký tự đầu
+        skip_whitespace(json);  // bỏ qua khoảng trắng
+
+        JsonValue *object_value = (JsonValue *)malloc(sizeof(JsonValue));   // object_value trỏ đến vùng nhớ được cấp phát động cho một JsonValue để lưu đối tượng của JSON
+        object_value->type = JSON_OBJECT;           // gán kiểu JSON_OBJECT
+        object_value->value.object.count = 0;       // khởi tạo số phần tử là 0
+        object_value->value.object.keys = NULL;     // khởi tạo con trỏ key là NULL
+        object_value->value.object.values = NULL;   // khởi tạo con trỏ value là NULL
+
+
+
+        while (**json != '}' && **json != '\0')     // duyệt qua từng ký tự một đến khi gặp kết thúc object '}' hoặc kết thúc chuỗi '\0'
+        {
+            JsonValue *key = parse_string(json);    // gán chuỗi đã xử lý bằng parse_string cho con trỏ key, nếu chuỗi không hợp lệ thì là NULL
+            if (key)    // kiểm tra xem key có là chuỗi hay không
+            {
+                skip_whitespace(json);  // bỏ qua khoảng trắng
+                if (**json == ':')      // nếu ký tự hiện tại là ':' thì phân tích tiếp
+                {
+                    (*json)++;      // bỏ qua ':'
+                    JsonValue *value = parse_json(json);    // gọi parse_json để phân tích value vì value có thể là bất kì kiểu nào
+                    if (value)  // kiểm tra nếu value hợp lệ
+                    {
+                        object_value->value.object.count++;     // tăng số lượng phần tử key-value
+                        object_value->value.object.keys = (char **)realloc(object_value->value.object.keys, object_value->value.object.count * sizeof(char *));             // tăng kích thước cho mảng keys để thêm key mới
+                        object_value->value.object.keys[object_value->value.object.count - 1] = key->value.string;      // lưu key vào mảng keys phần tử count - 1
+
+                        object_value->value.object.values = (JsonValue *)realloc(object_value->value.object.values, object_value->value.object.count * sizeof(JsonValue));  // tăng kích thước cho mảng value để chứa thêm value
+                        object_value->value.object.values[object_value->value.object.count - 1] = *value;   // sao chép nội dung *value cho mảng values ở phần tử count - 1
+                        free(value);    // giải phóng value (do parse_json cấp phát)
+                    } 
+                    else 
+                    {
+                        free_json_value(key);   // giải phóng key nếu value không hợp lệ
+                        break;  // thoát khỏi vòng lặp
+                    }
+                } 
+                else 
+                {
+                    free_json_value(key);       // giải phóng key nếu không có ':' sau chuỗi key
+                    break;  // thoát khỏi vòng lặp
+                }
+            } 
+            else 
+            {
+                break;      // nếu key = NULL thì thoát
+            }
+
+            skip_whitespace(json);      // bỏ qua khoảng trắng
+
+            if (**json == ',')  // nếu ký tự hiện tại là ',' thì phân tích tiếp
+            {
+                (*json)++;      // bỏ qua dấu ',' và phân tích tiếp chuỗi JSON
+            }
+        }
+        if (**json == '}')          // nếu ký tự hiện tại là '}'
+        {
+            (*json)++;              // bỏ qua dấu '}' (lưu vị trí hiện tại sau dấu '}')
+            return object_value;    // trả về con trỏ object_value
+        } 
+        else
+        {
+            free_json_value(object_value);  // nếu không có dấu kết thúc object hợp lệ thfi giải phóng object_value
+            return NULL;                    // trả về NULL
+        }
+    }
+    return NULL;    // trả về NULL nếu ký tự đầu tiên không hợp lệ
+}
+
+/**
+ * @brief Phân tích tổng quát giá trị của JSON
+ * @param json Con trỏ trỏ tới con trỏ chuỗi JSON 
+ * @return Trả về con trỏ tới kiểu JsonValue đã phân tích, trả về giá trị NULL nếu lỗi
+ */
+JsonValue *parse_json(const char **json) 
+{ 
+    skip_whitespace(json);      // bỏ qua khoảng trắng
+
+    switch (**json)     // các trường hợp ký tự hiện tại
+    {
+        case 'n':                           // trường hợp ký tự đầu là 'n'
+            return parse_null(json);        // gọi hàm parse_null để phân tích   
+        case 't':                           // trường hợp là 't' hoặc 'f'
+        case 'f':
+            return parse_boolean(json);     // gọi hàm parse_boolean để phân tích
+        case '\"':                          // trường hợp là dấu "
+            return parse_string(json);      // gọi hàm parse_string để phân tích
+        case '[':                           // trường hợp là dấu [
+            return parse_array(json);       // gọi hàm parse_array để phân tích
+        case '{':                           // trường hợp là dấu {
+            return parse_object(json);      // gọi hàm parse_object để phân tích
+        default:
+            if (isdigit(**json) || **json == '-')   // trường hợp ký tự đầu là số hoặc dấu
+            {
+                return parse_number(json);          // gọi hàm parse_number để phân tích
+            } 
+            else 
+            {
+                return NULL;    // trả về NULL nếu ký tự không hợp lệ
+            }
+    }
+}
+
+/**
+ * @brief Giải phóng bộ nhớ cấp phát cho một JSON
+ * @param json_value Con trỏ trỏ tới JsonValue cần giải phóng
+ * @return void
+ */
+void free_json_value(JsonValue *json_value) 
+{
+    if (json_value == NULL) 
+    {
+        return;     // nếu con trỏ bằng NULL thì không làm gì cả
+    }
+
+    switch (json_value->type)   // giải phóng tùy theo loại 
+    {
+        case JSON_STRING:                       // trường hợp là JSON_STRING
+            free(json_value->value.string);     // giải phóng bộ nhớ cấp phát cho con trỏ value.string
+            break;
+
+        case JSON_ARRAY:                                                    // trường hợp là JSON_ARRAY
+            for (size_t i = 0; i < json_value->value.array.count; i++)      // size_t là kiểu nguyên không âm và độ lớn phụ thuộc vào kiến trúc
+            {
+                free_json_value(&json_value->value.array.values[i]);        // gọi đệ quy free_json_value cho từng phần tử của values vì mỗi phần tử cũng có thể là một JSON phức tạp
+            }
+            free(json_value->value.array.values);                           // giải phóng mảng values chứa các phần tử values[i]
+            break;
+
+        case JSON_OBJECT:                                                   // trường hợp là JSON_ARRAY
+            for (size_t i = 0; i < json_value->value.object.count; i++)     // duyệt qua từng phần tử
+            {
+                free(json_value->value.object.keys[i]);                     // giải phóng cho từng phần tử keys[i]
+                free_json_value(&json_value->value.object.values[i]);       // gọi đệ quy free_json_value cho từng phần tử values[i]
+            }
+            free(json_value->value.object.keys);                            // giải phóng mảng keys chứa các phần tử keys[i]
+            free(json_value->value.object.values);                          // giải phóng mảng values chứa các phần tử values[i]
+            break;
+
+        default:
+            break;          // các loại JSON_NULL, JSON_BOOLEAN, JSON_NUMBER không cần giải phóng vì không có thêm các thành phần có cấp phát động bên trong
+    }
+}
+
+/**
+ * @brief In ra chuỗi JSON
+ * @param json_value Con trỏ trỏ tới JsonValue
+ * @return void
+ */
+void printf_json(JsonValue* json_value) 
+{
+    if (json_value == NULL) return;     // nếu json_value là NULL thì không làm gì cả
+
+    // Trường hợp là JSON_OBJECT
+    if (json_value->type == JSON_OBJECT)    
+    {
+        for (size_t i = 0; i < json_value->value.object.count; ++i)     // duyệt qua từng cặp key-value trong object
+        {
+            // lấy cặp key-value tương ứng ở vị trí i
+            char* key = json_value->value.object.keys[i];               // trong JSON key luôn là dạng chuỗi nên dùng char *
+            JsonValue* value = &json_value->value.object.values[i];     // còn value có thể là bất kì dạng nào nên cần JsonValue * để xử lý các kiểu dữ liệu
+
+            printf("%s: \n", key);    // in ra chuỗi key
+
+            switch (value->type) 
+            {
+                case JSON_STRING:                                               // trường hợp là JSON_STRING
+                    printf("%s\n", value->value.string);                        // in ra chuỗi trong ở chuỗi value.string
+                    break;                                                      // đúng điều kiện thì thoát
+                case JSON_NUMBER:                                               // trường hợp là JSON_NUMBER
+                    printf("%f ", value->value.number);                        // in ra số trong value.number
+                    break;                                                      
+                case JSON_BOOLEAN:                                              // trường hợp là JSON_BOOLEAN
+                    printf("%s\n", value->value.boolean ? "true" : "false");    // in ra số trong value.boolean 
+                    break;
+                case JSON_ARRAY:                                                // trường hợp là JSON_ARRAY
+                    for (size_t j = 0; j < value->value.array.count; ++j)       // duyệt qua từng phần tử trong mảng
+                    {
+                        printf_json(&value->value.array.values[j]);             // gọi printf_json để in các kiểu dữ liệu cho từng phần tử value.array.values[j]
+                        if (j < value->value.array.count - 1) printf(", ");     // nếu chỉ số j nhỏ hơn count thì in dấu ','
+                    }
+                    break;
+                case JSON_OBJECT:           // trường hợp là JSON_OBJECT
+                    printf_json(value);     // in tiếp object con
+                    break;
+                default:
+                    printf("null");
+            }
+            printf("\n");
+        }
+    } 
+    else 
+    {
+        // Trường hợp không phải object thì in ra những phần tử đơn như thường
+        switch (json_value->type) 
+        {
+            case JSON_STRING:
+                printf("%s\n", json_value->value.string);       
+                break;
+            case JSON_NUMBER:
+                printf("%f ", json_value->value.number);
+                break;
+            case JSON_BOOLEAN:
+                printf("%s\n", json_value->value.boolean ? "true" : "false");
+                break;
+            case JSON_ARRAY:
+                for (size_t j = 0; j < json_value->value.array.count; ++j) 
+                {
+                    printf_json(&json_value->value.array.values[j]);
+                    if (j < json_value->value.array.count - 1) printf(", ");
+                }
+                break;
+            case JSON_OBJECT:
+                printf_json(json_value);
+                break;
+            default:
+                printf("null");
+        }
+    }
+}
 
 ```
-
 </details>
-
 
 <details>
 <summary>main.c</summary>
 
+```c
+#include "jsonparse.h"
+
+int main()
+{
+     // Chuỗi JSON đầu vào
+    
+    const char* json_str = "{"
+
+                        "\"1001\":{"
+                          "\"SoPhong\":3,"
+                          "\"NguoiThue\":{"
+                            "\"Ten\":\"Nguyen Van A\","
+                            "\"CCCD\":\"1920517781\","
+                            "\"Tuoi\":26,"
+                            "\"ThuongTru\":{"
+                              "\"Duong\":\"73 Ba Huyen Thanh Quan\","
+                              "\"Phuong_Xa\":\"Phuong 6\","
+                              "\"Tinh_TP\":\"Ho Chi Minh\""
+                            "}"
+                          "},"
+                          "\"SoNguoiO\":{"
+                            "\"1\":\"Nguyen Van A\","
+                            "\"2\":\"Nguyen Van B\","
+                            "\"3\":\"Nguyen Van C\""
+                          "},"
+                          "\"TienDien\": [24, 56, 98],"
+                          "\"TienNuoc\":30.000"
+                        "},"
+                        "\"1002\":{"
+                          "\"SoPhong\":5,"
+                          "\"NguoiThue\":{"
+                            "\"Ten\":\"Phan Hoang Trung\","
+                            "\"CCCD\":\"012345678912\","
+                            "\"Tuoi\":24,"
+                            "\"ThuongTru\":{"
+                              "\"Duong\":\"53 Le Dai Hanh\","
+                              "\"Phuong_Xa\":\"Phuong 11\","
+                              "\"Tinh_TP\":\"Ho Chi Minh\""
+                            "}"
+                          "},"
+                          "\"SoNguoiO\":{"
+                            "\"1\":\"Phan Van Nhat\","
+                            "\"2\":\"Phan Van Nhi\","
+                            "\"2\":\"Phan Van Tam\","
+                            "\"3\":\"Phan Van Tu\""
+                          "},"
+                          "\"TienDien\":23.000,"
+                          "\"TienNuoc\":40.000"
+                        "}"
+                      "}";
+    
+
+  JsonValue* json_value = parse_json(&json_str);
+
+  printf_json(json_value);
+
+  free_json_value(json_value);
+
+  return 0;
+}
+```
+
 >➡️ Kết quả:
 >
-> 
+> ![image](https://github.com/user-attachments/assets/f814a0f5-685c-4d06-885c-d274ea85fdbd)
+
 
 </details>
 
