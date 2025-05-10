@@ -111,7 +111,7 @@
 👉 2. AND bitwise:
    - Truth table:
 
-|A|B|A&B|
+|A|B|Z|
 |:-:|:-:|:-:|
 |0|0|0|
 |0|1|0|
@@ -121,7 +121,7 @@
 👉 3. OR bitwise:
    - Truth table:
 
-|A|B|A&B|
+|A|B|Z|
 |:-:|:-:|:-:|
 |0|0|0|
 |0|1|1|
@@ -131,7 +131,7 @@
 👉 4. XOR bitwise:
    - Truth table: **Bằng 1** nếu 2 bit khác nhau, **bằng 0** nếu 2 bit giống nhau.
 
-|A|B|A&B|
+|A|B|Z|
 |:-:|:-:|:-:|
 |0|0|0|
 |0|1|1|
