@@ -233,7 +233,9 @@ int main(int argc, char const *argv[])
 - Con trỏ có thể trỏ tới bất kỳ kiểu dữ liệu nguyên thủy nào.
 - Cách 1 biến được lưu trữ trong bộ nhớ:
   - Ví dụ 1 biến int 32 bit (4 byte) được lưu trữ thành 1 nhóm địa chỉ, mỗi địa chỉ lưu trữ 8 bit (1 byte) giá trị bắt đầu từ LSB đến MSB.
- ![Cách lưu trữ địa chỉ và giá trị của biến int](https://github.com/user-attachments/assets/3f4514ad-3758-4354-9fec-4e81327a2e0c)
+
+> ![Cách lưu trữ địa chỉ và giá trị của biến int](https://github.com/user-attachments/assets/3f4514ad-3758-4354-9fec-4e81327a2e0c)
+
 - Cách 1 con trỏ được lưu trữ trong bộ nhớ:
   - Ví dụ 1 con trỏ trỏ tới 1 biến int, mỗi địa chỉ của con trỏ sẽ lưu trữ 1 giá trị là địa chỉ của biến int đó, và những địa chỉ còn lại sẽ được mặc định là chứa 0x00 (địa chỉ mặc định này có thể chứa giá trị rác).
 
