@@ -293,16 +293,17 @@ int main()
 |📋 Function Pointer|📄 Description|💡 Examples|
 |:------------------------:|:------------------------|:------------------------|
 |**Khái niệm**|Con trỏ hàm lưu trữ địa chỉ của một hàm, cho phép hàm được truyền dưới dạng tham số cho một hàm khác, hoặc là truyền hàm như một giá trị trả về từ một hàm khác.||
-|**Declaration**|Cú pháp khai báo:<br>`<return type> (*pointer_name) (parameter_types)`.|`int sum(int a, int b)<br>{return a+b;}`<br>-->`int (*ptr) = (int, int);`: con trỏ hàm phải được khai báo sao cho trùng khớp với kiểu trả về, số lượng và loại tham số của hàm.|
-|**Initialization**|Sau khai báo con trỏ hàm thì đến bước khởi tạo nó.|`ptr = &sum`<br>hoặc `ptr = sum;`|
+|**Declaration**|Cú pháp khai báo:<br>`<return type> (*pointer_name) (parameter_types)`.|`int sum(int a, int b)`<br>`{return a+b;}`<br>-->`int (*ptr) = (int, int);`: con trỏ hàm phải được khai báo sao cho trùng khớp với kiểu trả về, số lượng và loại tham số của hàm.|
+|**Initialization**|Sau khai báo con trỏ hàm thì đến bước khởi tạo nó.|`ptr = &sum` hoặc `ptr = sum;`|
 |**Function call**|Có 3 cách gọi hàm khi có con trỏ hàm: <br>1. `sum(1, 2);`<br>2. `ptr(1,2);`: gọi trực tiếp giống gọi hàm.<br>3. `(*ptr)(1,2);`: dùng `*` để giải tham chiếu.||
 
 <br>
 
+- Ví dụ:
+
 <details>
 <summary>main.c</summary>
 
-- Ví dụ:
 ```c
 void tong(int a, int b) {printf("Tổng là: %d", a+b);}
 void hieu(int a, int b) {printf("Hiệu là: %d", a-b);}
