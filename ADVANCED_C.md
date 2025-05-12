@@ -334,7 +334,7 @@ int main ()
 
 |📋 Đặc điểm |Pointer to Constant|Constant Pointer|Constant Pointer to Constant|
 |:------------------------:|:------------------------:|:------------------------:|:------------------------:|
-|**Cách khai báo**|`const int *ptr;`<br>`int const *ptr;`|`int *const ptr;`|`const int *const ptr;`|
+|**Cách khai báo**|`const int *ptr;`|`int *const ptr;`|`const int *const ptr;`|
 |**Giá trị biến**|❌ Không thể thay đổi|✔️ Có thể thay đổi|❌ Không thể thay đổi|
 |**Địa chỉ trỏ tới**|✔️ Có thể thay đổi|❌ Không thể thay đổi|❌ Không thể thay đổi|
 
