@@ -1,5 +1,10 @@
+<a name="top"></a>
+
 ### Phân tích đoạn code sắp xếp lại theo tên, ID, điểm của sinh viên với thứ tự từ thấp đến cao.
 
+<details>
+<summary><b>main.c</b></summary>
+    
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -123,3 +128,8 @@ int main()
 > ➡️ Kết quả:
 > 
 > ![image](https://github.com/user-attachments/assets/aceea4e4-6189-486d-a0b8-ae92f9d59621)
+
+
+[🔼 _UP_](#top)
+
+</details>
