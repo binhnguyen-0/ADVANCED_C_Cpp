@@ -1,4 +1,4 @@
-# Phân tích đoạn code sắp xếp lại theo tên, ID, điểm của sinh viên với thứ tự từ thấp đến cao.
+### Phân tích đoạn code sắp xếp lại theo tên, ID, điểm của sinh viên với thứ tự từ thấp đến cao.
 
 ```c
 #include <stdio.h>
