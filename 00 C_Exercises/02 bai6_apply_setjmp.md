@@ -1,7 +1,7 @@
 
 <a name="top"></a>
 
-### Phân tích đoạn code bật tắt các tính năng trong xe ô tô bằng bitmask.
+### Nâng cấp THROW để có thể nhận được chuỗi thông báo lỗi.
 
 <details>
 <summary><b>main.c</b></summary>
