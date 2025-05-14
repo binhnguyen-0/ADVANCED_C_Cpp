@@ -68,11 +68,6 @@ int main()
 }
 ```
 
-> ➡️ Kết quả:
-> 
-> ![image](https://github.com/user-attachments/assets/f806656f-ce10-4030-8347-05dc36f5caab)
-
-
 [🔼 _UP_](#top)
 
 </details>
