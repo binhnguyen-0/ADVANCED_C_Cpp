@@ -1,13 +1,19 @@
 
+<a name="top"></a>
 
+### Phân tích đoạn code bật tắt các tính năng trong xe ô tô bằng bitmask.
 
+<details>
+<summary><b>main.c</b></summary>
+	
+```c
 #include <stdio.h>
 #include <setjmp.h>
 #include <string.h>
 
 char error_code[50];
 
-#define TRY if (setjmp(buf) == 0)
+#define TRY if ((exception = setjmp(buf)) == 0)
 #define CATCH(x) else if (exception == x)
 #define THROW(x, message)               \
 {                                       \
@@ -21,7 +27,7 @@ char error_code[50];
 }
 
 jmp_buf buf;
-
+int exception = 0;
 typedef enum
 {
   NO_ERROR,
@@ -45,7 +51,7 @@ double divide(int a, int b)
 
 int main()
 {
-  int exception = NO_ERROR;
+  exception = NO_ERROR;
   TRY
   {
     printf("Kết quả: %.2f\n", divide(5,0));  // Lần gọi trực tiếp setjmp đầu tiên luôn có kq là 0 trả về
@@ -60,3 +66,13 @@ int main()
   }
   return 0;
 }
+```
+
+> ➡️ Kết quả:
+> 
+> ![image](https://github.com/user-attachments/assets/f806656f-ce10-4030-8347-05dc36f5caab)
+
+
+[🔼 _UP_](#top)
+
+</details>
