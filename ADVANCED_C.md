@@ -2729,7 +2729,7 @@ int main()
 
 >➡️ Kết quả:
 >
-> ![Image](https://github.com/user-attachments/assets/991987cc-0c67-4754-9b84-bd01e797282d)
+> ![image](https://github.com/user-attachments/assets/11763a5a-9e39-4f9e-8945-35e638354fcd)
 
 </details>
 
