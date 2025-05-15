@@ -3456,3 +3456,71 @@ int main()
 
 [🔼 _UP_](#top)
 </details>
+
+<details>
+<summary>🔖 <b>BÀI 12: BUBBLE SORT - BINARY SEARCH - BINARY SEARCH TREE</b></summary>
+ 
+### 📑 I. Bubble Sort - Sắp xếp nổi bọt:
+
+- Thuật toán này hoạt động theo nguyên tắc hoán đổi các phần tử liền kề để đưa phần tử lớn hơn về cuối dãy và phần tử nhỏ hơn về đầu dãy.
+- Gồm 3 bước:
+  - Duyệt qua danh sách các phần tử.
+  - So sánh 2 phần tử liền kề, nếu phần tử lớn hơn phần tử sau thì hoán đổi vị trí.
+  - Lặp lại cho đến khi không còn sự hoán đổi nào nữa.
+>👉 Hàm bubble sort:
+>    -
+>    - 
+<details>
+<summary>main.c</summary>
+ 
+```c
+#include <stdio.h>
+
+void bubbleSort(int arr[], int n)
+{   
+    for (int i = 0; i <= n - 2; i++)
+    {
+        for (int j = 0; j <= n - i - 2; j++)
+        {
+            if (arr[j] > arr[j+1])
+            {
+                int temp = arr[j];
+                arr[j] = arr [j + 1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+int main()
+{
+    int arr1[10] = {1, 3, 2, 6, 7, 9, 8, -4, 5, 2};
+    printf("Mảng ban đầu: \n");
+    for (int i = 0; i < sizeof(arr1)/sizeof(arr1[0]); i++)
+    {
+        printf("%d ", arr1[i]);
+    }
+    printf("\n");
+
+    bubbleSort(arr1, 10);
+    printf("Mảng đã sắp xếp: \n");
+    for (int i = 0; i < sizeof(arr1)/sizeof(arr1[0]); i++)
+    {
+        printf("%d ", arr1[i]);
+    }
+    return 0;
+}
+```
+
+>➡️ Kết quả:
+>
+> ![image](https://github.com/user-attachments/assets/7425d78a-429e-4117-a003-ea6886d5719a)
+
+</details>
+
+### 📑 II. Linear Search - Tìm kiếm tuyến tính:
+
+
+</details>
+
+[🔼 _UP_](#top)
