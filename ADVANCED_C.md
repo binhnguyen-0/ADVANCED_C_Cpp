@@ -3477,10 +3477,10 @@ int main()
 #include <stdio.h>
 
 void bubbleSort(int arr[], int n)
-{   
-    for (int i = 0; i <= n - 2; i++)
+{
+    for (int i = 0; i < n - 1; i++)             // i < n - 1: số lượt so sánh
     {
-        for (int j = 0; j <= n - i - 2; j++)
+        for (int j = 0; j < n - i - 1; j++)     // ví dụ: n = 5, i = 0, -> j < 5 - 0 - 1, nghĩa là j chạy từ 0 -> 3 
         {
             if (arr[j] > arr[j+1])
             {
@@ -3494,7 +3494,7 @@ void bubbleSort(int arr[], int n)
 
 int main()
 {
-    int arr1[10] = {1, 3, 2, 6, 7, 9, 8, -4, 5, 2};
+    int arr1[5] = {5,4,3,2,1};
     printf("Mảng ban đầu: \n");
     for (int i = 0; i < sizeof(arr1)/sizeof(arr1[0]); i++)
     {
@@ -3502,7 +3502,7 @@ int main()
     }
     printf("\n");
 
-    bubbleSort(arr1, 10);
+    bubbleSort(arr1, 5);
     printf("Mảng đã sắp xếp: \n");
     for (int i = 0; i < sizeof(arr1)/sizeof(arr1[0]); i++)
     {
@@ -3514,7 +3514,7 @@ int main()
 
 >➡️ Kết quả:
 >
-> ![image](https://github.com/user-attachments/assets/7425d78a-429e-4117-a003-ea6886d5719a)
+> ![image](https://github.com/user-attachments/assets/1b564794-c13b-4c71-ade2-1139440c5a07)
 
 </details>
 
