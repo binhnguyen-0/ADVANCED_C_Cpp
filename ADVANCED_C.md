@@ -3467,9 +3467,13 @@ int main()
   - Duyệt qua danh sách các phần tử.
   - So sánh 2 phần tử liền kề, nếu phần tử lớn hơn phần tử sau thì hoán đổi vị trí.
   - Lặp lại cho đến khi không còn sự hoán đổi nào nữa.
+
 >👉 Hàm bubble sort:
 >    -
->    - 
+>
+
+
+
 <details>
 <summary>main.c</summary>
  
@@ -3520,7 +3524,27 @@ int main()
 
 ### 📑 II. Linear Search - Tìm kiếm tuyến tính:
 
+- Thuật toán Linear Search là phương pháp tìm kiếm một phần tử trong mảng.
+- Nguyên lý hoạt động:
+  - Duyệt từng phần tử trong mảng từ trái qua phải.
+  - Phần tử đang xét có giá trị trùng với giá trị cần tìm thì trả về giá trị của nó.
+  - Nếu không tìm thấy thì trả về kết quả không tồn tại.
+- Ưu điểm: dễ thực hiện, đơn giản.
+- Nhược điểm: tốc độ thực chi sẽ rất chậm nếu như số lượng phần tử trong mảng cần so sánh quá lớn.
 
+### 📑 III. Binary Search - Tìm kiếm nhị phân:
+
+- Thuật toán Binary Search hoạt động bằng cách chia đôi mảng để tìm kiếm thay vì duyệt tuần tự.
+- Nguyên lý hoạt động:
+  - Sắp xếp mảng theo thứ tự tăng dần hoặc giảm dần.
+  - So sánh phần tử ở giữa mảng:
+    - Nếu trùng -> trả về vị trí.
+    - Nếu nhỏ hơn -> tiếp tục tìm kiếm ở nửa bên phải.
+    - Nếu lớn hơn thì tiếp tục tìm kiếm ở nửa trái.
+  - Lặp lại bước 2 cho tới khi tìm thấy hoặc không còn phần tử.
+
+
+ 
 </details>
 
 [🔼 _UP_](#top)
