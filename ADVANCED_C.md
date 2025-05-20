@@ -3540,7 +3540,13 @@ int main()
     - Nếu nhỏ hơn -> tiếp tục tìm kiếm ở nửa bên phải.
     - Nếu lớn hơn thì tiếp tục tìm kiếm ở nửa trái.
   - Lặp lại bước 2 cho tới khi tìm thấy hoặc không còn phần tử.
-
+    
+>👉 Hàm binary search:
+>    - Điều kiện kết thúc tìm kiếm: r < l.
+>    - Thông số left và right ban đầu: l = 0, r = size - 1.
+>    - Chia đôi mảng: mid = (r + 1) / 2.
+>    - Tìm kiếm bên trái: l giữ nguyên, r = mid - 1.
+>    - Tìm kiếm bên phải: l = mid + 1, r giữ nguyên.
 
  
 </details>
