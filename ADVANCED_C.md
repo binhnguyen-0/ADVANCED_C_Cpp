@@ -3469,10 +3469,8 @@ int main()
   - Lặp lại cho đến khi không còn sự hoán đổi nào nữa.
 
 >👉 Hàm bubble sort:
->    -
->    - 
-
-
+>    - Số lượt so sánh: i = n - 2.
+>    - Số làn so sánh trong 1 lượt: j = n - i - 2.
 
 <details>
 <summary>main.c</summary>
