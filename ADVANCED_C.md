@@ -3548,7 +3548,145 @@ int main()
 >    - Tìm kiếm bên trái: l giữ nguyên, r = mid - 1.
 >    - Tìm kiếm bên phải: l = mid + 1, r giữ nguyên.
 
+> Code random phần tử cho mảng:
+
+<details>
+<summary>random.c</summary>
  
+```c
+#include "random.h"
+
+void randomNum(int *arr, int size)
+{
+    // Khởi tạo bộ sinh số ngẫu nhiên sau mỗi lần gọi
+    srand(time(NULL));
+
+    // Tạo một mảng chứa phần tử ngẫu nhiên
+    for(int i = 0; i < size; i++)
+    {
+        arr[i] = rand() % 100 + 1;
+    }
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d\t", arr[i]);
+    }
+    printf("\n");
+}
+```
+
+</details>
+
+> Code sắp xếp các phần tử trong mảng:
+> - Dùng phương pháp sắp xếp nổi bọt để sắp xếp lại các phần tử trong mảng theo thứ tự từ bé đến lớn.
+
+<details>
+<summary>bubbleSort.c</summary>
+ 
+```c
+#include "bubbleSort.h"
+
+static void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void bubbleSort(int *arr, int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+                swap(&arr[j], &arr[j+1]);
+        }
+    }
+
+    printf("Mảng sau khi sắp xếp: \n");
+    for (int i = 0; i < n; i++)
+        printf("%d\t", arr[i]);
+    printf("\n");
+}
+```
+</details>
+
+> Code tìm kiếm phần tử trong mảng:
+> - Dùng phương pháp tìm kiếm nhị phân để tìm kiếm một số trong mảng.
+
+<details>
+<summary>binarySearch.c</summary>
+ 
+```c
+#include "binarySearch.h"
+
+int binarySearch(int *arr, int l, int r, int x)
+{
+    if (r >= l)
+    {
+        int mid =  (r + l)/2;
+        if (arr[mid] == x)
+        {
+            return mid;
+        }
+        else if (arr[mid] > x)
+        {
+            return binarySearch(arr, l, mid -1, x);
+        }
+        else
+        {
+            return binarySearch(arr, mid + 1, r, x);
+        }
+    }
+    return -1;
+}
+```
+
+</details>
+
+
+details>
+<summary>main.c</summary>
+ 
+```c
+#include "random.h"
+#include "binarySearch.h"
+#include "bubbleSort.h"
+
+#define SIZE 10000
+
+int main()
+{
+    int arr[SIZE], x;
+
+    randomNum(arr, SIZE);
+
+    bubbleSort(arr, SIZE);
+
+    printf("Nhập giá trị cần tìm: ");
+    scanf("%d", &x);
+
+    int result = binarySearch(arr, 0, SIZE - 1, x);
+
+    if (result == -1)
+    {
+        printf("Không tìm thấy %d trong mảng này. \n", x);
+    }
+    else 
+    {
+        printf("Số %d tại vị trí %d trong mảng.\n", x, result);
+    }
+    return 0;
+}
+```
+
+>➡️ Kết quả:
+>
+> ![image](https://github.com/user-attachments/assets/71e723b5-709b-4520-a754-e7769a7524db)
+
+</details>
+
+
 </details>
 
 [🔼 _UP_](#top)
