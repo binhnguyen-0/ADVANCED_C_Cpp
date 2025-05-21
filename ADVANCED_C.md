@@ -3468,7 +3468,7 @@ int main()
   - So sánh 2 phần tử liền kề, nếu phần tử lớn hơn phần tử sau thì hoán đổi vị trí.
   - Lặp lại cho đến khi không còn sự hoán đổi nào nữa.
 
->👉 Hàm bubble sort:
+>👉 Triển khai hàm bubble sort:
 >    - Số lượt so sánh: i = n - 2.
 >    - Số làn so sánh trong 1 lượt: j = n - i - 2.
 
@@ -3541,7 +3541,7 @@ int main()
     - Nếu lớn hơn thì tiếp tục tìm kiếm ở nửa trái.
   - Lặp lại bước 2 cho tới khi tìm thấy hoặc không còn phần tử.
     
->👉 Hàm binary search:
+>👉 Triển khai hàm binary search:
 >    - Điều kiện kết thúc tìm kiếm: r < l.
 >    - Thông số left và right ban đầu: l = 0, r = size - 1.
 >    - Chia đôi mảng: mid = (r + 1) / 2.
@@ -3712,9 +3712,20 @@ int main()
     - Nút con phải chauws giá trị lớn hơn nút gốc.
     - Quy tắc này áp dụng đệ quy cho toàn bộ cây.
 - Xét mảng: int arr[] = {1, 3, 5, 13, 2, 2, 20, 9, 4};
-  - Bước 1: Sắp xếp mảng theo thứ tự tăng dần.
+  - Bước 1: Sắp xếp mảng theo thứ tự tăng dần. --> {1, 2, 2, 3, 4, 5, 9, 13, 20}.
+  - Bước 2: Xây dựng cây nhị phân theo nguyên tắc:
+```
+        4
+      /   \
+     2     9
+    / \   / \
+   1   2 5   13
+        \      \
+         3      20
+```
 
-
+>👉 Triển khai BST:
+>
 
 </details>
 
