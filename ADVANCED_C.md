@@ -3645,7 +3645,7 @@ int binarySearch(int *arr, int l, int r, int x)
 </details>
 
 
-details>
+<details>
 <summary>main.c</summary>
  
 ```c
@@ -3685,6 +3685,35 @@ int main()
 > ![image](https://github.com/user-attachments/assets/71e723b5-709b-4520-a754-e7769a7524db)
 
 </details>
+
+### 📑 IV. Binary Search Tree - Cây tìm kiếm nhị phân:
+
+- Tree là cấu trúc dữ liệu phi tuyến tính, trong đó các phần tử node được tổ chức theo dạng thứ bậc phân cấp.
+  - Node gốc: i.
+  - Chỉ số node nhánh trái: 2i + 1.
+  - CHỉ số node nhánh phải: 2i + 2.
+- Xét mảng {1, 2, 3, 4, 5, 6, 7}:
+  - Node gốc: i = 0, phần tử thứ 0 = 1.
+  - Chỉ số node nhánh trái: 2*0 + 1 = 1, phần tử thứ 1 = 2.
+  - Chỉ số node nhánh phải: 2*0 + 2 = 2, phần tử thứ 2 = 3.
+
+```
+        1
+      /   \
+     2     3
+    / \   / \
+   4   5 6   7
+```
+
+- Cây tìm kiếm nhị phân là một cấu trúc dữ liệu dạng cây, trong đó:
+  - Mỗi node có tối đa 2 con (cây con trái và cây con phải).
+  - Dữ liệu trong cây theo nguyên tắc:
+    - Nút con trái chứa giá trị nhỏ hơn nút gốc.
+    - Nút con phải chauws giá trị lớn hơn nút gốc.
+    - Quy tắc này áp dụng đệ quy cho toàn bộ cây.
+- Xét mảng: int arr[] = {1, 3, 5, 13, 2, 2, 20, 9, 4};
+  - Bước 1: Sắp xếp mảng theo thứ tự tăng dần.
+
 
 
 </details>
