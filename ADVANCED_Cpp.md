@@ -19,7 +19,7 @@ class class_Name
 };
 ```
 
-- Access Modifier:
+#### a) Access Specifier:
   - Kiểm soát quyền truy cập vào các thành viên của class.
   - Các cấp độ truy cập:
     - public: các thành viên class có thể truy cập được từ bên ngoài.
@@ -83,7 +83,9 @@ int main()
 
 </details>
 
+#### b) Special Member Functions - Methods:
 
+- Constructor là một method sẽ được gọi tự động khi khởi tạo object, và có tên trùng với tên của class.
 
 
 
