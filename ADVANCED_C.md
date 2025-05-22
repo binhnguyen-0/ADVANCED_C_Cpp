@@ -3727,6 +3727,299 @@ int main()
 >👉 Triển khai BST:
 >
 
+<details>
+<summary>binarySearchTree.h</summary>
+ 
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+/**
+ * @struct Node
+ * @brief  Cấu trúc của một node trong LinkedList.
+ */
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+}Node;
+
+/**
+ * @struct CenterPoint
+ * @brief  Cấu trúc của một node trong cây nhị phân tìm kiếm.
+ */
+typedef struct CenterPoint
+{
+    int value;                  // Giá trị của node
+    struct CenterPoint *left;   // Con trỏ đến node con trái
+    struct CenterPoint *right;  // Con trỏ đến node con phải
+}CenterPoint;
+
+/**
+ * @brief  Thêm node vào danh sách liên kết và sắp xếp theo thứ tự tăng dần
+ * @param  head Con trỏ đến con trỏ head của danh sách liên kết
+ * @param  value Giá trị cần thêm vào danh sách.
+ * @return void
+ */
+void add_node(Node **head, int value);
+
+/**
+ * @brief  In danh sách liên kết
+ * @param  head Con trỏ đến danh sách liên kết
+ * @return void
+ */
+void print_list(Node *head);
+
+/**
+ * @brief   Chuyển linked list thành BST
+ * @details Tính độ dài linked list và gọi 'buildTree()' để xây dựng BST.
+ * @param   head Con trỏ đến danh sách liên kết
+ * @return  CenterPoint* Gốc của BST
+ */
+CenterPoint *centerPoint(Node *head);
+
+/**
+ * @brief   Xây dựng BST từ LinkedList
+ * @details Tìm cây gốc và xây dựng BST.
+ * @param   head  Con trỏ đến danh sách liên kết
+ * @param   start Vị trí bắt đầu của danh sách
+ * @param   head  Vị trí kết thúc của danh sách
+ * @return  CenterPoint* Gốc của BST
+ */
+CenterPoint *buildTree(Node *head, int start, int end);
+
+/**
+ * @brief   Tìm kiếm nhị phân trên BST
+ * @details Duyệt cây nhị phân để tìm kiếm giá trị cần tìm.
+ * @param   root  Gốc của cây nhị phân
+ * @param   value Giá trị cần tìm
+ * @return  CenterPoint* Trả về con trỏ đến node tìm thấy, trả về NULL nếu không tìm thấy
+ */
+CenterPoint *binarySearch_Tree(CenterPoint *root, int value);
+```
+
+</details>
+
+
+<details>
+<summary>binarySearchTree.c</summary>
+ 
+```c
+#include "binarySearchTree.h"
+
+/**
+ * @brief  Thêm node vào danh sách liên kết và sắp xếp theo thứ tự tăng dần
+ * @param  head Con trỏ đến con trỏ head của danh sách liên kết
+ * @param  value Giá trị cần thêm vào danh sách.
+ * @return void
+ */
+void add_node(Node **head, int value)
+{
+    Node *new_node = (Node*)malloc(sizeof(Node));
+    new_node->data = value;
+    new_node->next = NULL;
+
+    if (*head == NULL || (*head)->data >= value)    // nếu danh sách rỗng hoặc data của node đầu tiên >= value thì chèn node có value đó ở đầu danh sách
+    {
+        new_node->next = *head;     // gán next của new_node là node hiện tại
+        *head = new_node;           // gán node hiện tại là new_node
+        return;                     // kết thúc hàm luôn sau khi đã thêm 1 node
+    }
+    Node *current = *head;
+    while (current->next != NULL && current->next->data < value)    // duyệt qua từng node một cho tới khi data của node tiếp theo lớn hơn value của node cần thêm vào
+    {
+        current = current->next;    // trỏ đến node tiếp theo
+    }
+    new_node->next = current->next;     // khi đến trước node có data > value: 1. current->next đang trỏ tới node có data > value, 2. gán new_node->next = current->next.
+    current->next = new_node;           // và curent->next sẽ được gán = new_node, tức là new_node sẽ ở ngay trước node có data > value.
+}
+
+/**
+ * @brief  In danh sách liên kết
+ * @param  head Con trỏ đến danh sách liên kết
+ * @return void
+ */
+void print_list(Node *head)
+{
+    while (head != NULL)
+    {
+        printf("%d", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+/**
+ * @brief   Chuyển linked list thành BST
+ * @details Tính độ dài linked list và gọi 'buildTree()' để xây dựng BST.
+ * @param   head Con trỏ đến danh sách liên kết
+ * @return  CenterPoint* Gốc của BST
+ */
+CenterPoint *centerPoint(Node *head)
+{
+    int length = 0;
+    Node *node = head;
+    while (node != NULL)
+    {
+        node = node->next;
+        length++;
+    }
+    return buildTree(head, 0, length - 1);
+}
+
+/**
+ * @brief   Xây dựng BST từ LinkedList
+ * @details Tìm cây gốc và xây dựng BST.
+ * @param   head  Con trỏ đến danh sách liên kết
+ * @param   start Vị trí bắt đầu của danh sách
+ * @param   head  Vị trí kết thúc của danh sách
+ * @return  CenterPoint* Gốc của BST
+ */
+
+CenterPoint *buildTree(Node *head, int start, int end)
+{
+    // Dừng đệ quy
+    if (head == NULL || start > end)
+    {
+        return NULL;
+    }
+
+    int mid = (start + end)/2;              // tìm node giữa là node gốc
+    Node *node = head;                      
+    for (int i = start; i < mid; i++)       // duyệt từ head đến node giữa
+    {
+        if (node->next == NULL) break;      // nếu next = NULL thì thoát hàm
+        node = node->next;                  // trỏ tới node tiếp theo
+    }
+
+    CenterPoint *root = (CenterPoint*)malloc(sizeof(CenterPoint));  // cấp phát cho node gốc
+    root->value = node->data;                                       // data node hiện tại gán cho node gốc của cây
+    root->left = buildTree(head, start, mid - 1);                   // đệ quy buildTree để xây dựng cây con bên trái: dùng head vì từ head -> mid - 1 nằm bên trái node giữa
+    root->right = buildTree(node->next, mid + 1, end);              // đệ quy buildTree để xây dựng cây con bên trái: dùng node->next vì từ node->next -> end nằm bên phải node giữa    
+    return root;                                                    // trả về cây nhị phân tìm kiếm
+}
+
+/**
+ * @brief   Tìm kiếm nhị phân trên BST
+ * @details Duyệt cây nhị phân để tìm kiếm giá trị cần tìm.
+ * @param   root  Gốc của cây nhị phân
+ * @param   value Giá trị cần tìm
+ * @return  CenterPoint* Trả về con trỏ đến node tìm thấy, trả về NULL nếu không tìm thấy
+ */
+CenterPoint *binarySearch_Tree(CenterPoint *root, int value)
+{
+    static int loop = 0;
+    loop++;
+    printf("Số lần lặp: %d\n", loop);       // số lần lặp để tìm ra số cần tìm kiếm
+
+    if (root == NULL) return NULL;
+
+    if (root->value == value)                       // nếu node gốc có value bằng value cần tìm thì trả về node đó
+    {
+        return root;
+    }
+    else if (value < root->value)                   // nếu value < value của node gốc
+    {
+        return binarySearch_Tree(root->left, value);     // đệ quy binarySearch để tìm cây con bên trái
+    }
+    else                                            // nếu value > value của node gốc
+    {
+        return binarySearch_Tree(root->right, value);    // đệ quy binarySearch để tìm cây con bên phải
+    }
+}
+```
+
+</details>
+
+
+<details>
+<summary>main.c</summary>
+ 
+```c
+// #include "random.h"
+// #include "binarySearch.h"
+// #include "bubbleSort.h"
+
+// #define SIZE 10000
+
+// int main()
+// {
+//     int arr[SIZE], x;
+
+//     randomNum(arr, SIZE);
+
+//     bubbleSort(arr, SIZE);
+
+//     printf("Enter value: ");
+//     scanf("%d", &x);
+
+//     int result = binarySearch(arr, 0, SIZE - 1, x);
+
+//     if (result == -1)
+//     {
+//         printf("Can not find \n", x);
+//     }
+//     else 
+//     {
+//         printf("%d at position %d in array.\n", x, result);
+//     }
+//     return 0;
+// }
+
+#include "binarySearchTree.h"
+
+int main()
+{
+    Node *head = NULL;
+
+    /**
+     * @brief   Tạo ngẫu nhiên 10000 node trong danh sách liên kết.
+     */
+    srand(time(NULL));
+    for (int i = 0; i < 10000; i++)
+    {
+        int value = rand() % 10000 + 1;
+        add_node(&head, value);
+    }
+
+    // add_node(&head, 5639); // Thêm node cụ thể nếu cần
+
+    /**
+     * @brief   In danh sách liên kết.
+     */
+    print_list(head);
+
+    /**
+     * @brief   Chuyển danh sách liên kết thành cây nhị phân tìm kiếm (BST).
+     */
+    CenterPoint *ptr = centerPoint(head);
+
+    /**
+     * @brief   Thực hiện tìm kiếm nhị phân trong cây BST.
+     * @details Tìm kiếm giá trị ngẫu nhiên vừa được thêm vào danh sách.
+     */
+    CenterPoint *result = binarySearch_Tree(ptr, rand() % 10000 + 1);
+    if (result != NULL)
+    {
+        printf("Found value: %d\n", result->value);
+    }
+    else
+    {
+        printf("Can not find value.\n");
+    }
+    return 0;
+}
+
+```
+
+>➡️ Kết quả:
+>
+> ![image](https://github.com/user-attachments/assets/b035ca27-c1ec-4c09-9fc3-239b56cb6aa6)
+
+</details>
+
+
 </details>
 
 [🔼 _UP_](#top)
