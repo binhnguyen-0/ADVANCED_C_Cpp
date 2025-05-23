@@ -95,6 +95,11 @@ int main()
 > 👉 Ví dụ:
 >     - Sử dụng Constructor để khởi tạo cho các biến mà không cần qua các object.
 
+> Constructor không có tham số:
+
+<details>
+<summary>🔖 <b>constructor.cpp</b></summary>
+
 ```c
 #include <iostream>
 using namespace std;
@@ -154,7 +159,71 @@ int main()
 >
 > ![image](https://github.com/user-attachments/assets/08f00124-8019-4d29-8359-0ab84d586715)
 
- 
+</details>
+
+> Constructor có tham số:
+
+<details>
+<summary>🔖 <b>constructor.cpp</b></summary>
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class User
+{
+    public:
+        int a;
+        double b;
+        char c;
+
+        // Constructor
+        User(int _a, double _b, char _c) 
+        {
+            a = _a;
+            b = _b;
+            c = _c;
+        }
+
+        void create()   // hàm
+        {
+            User user1(2,4,'c');
+            user1.display();
+        }
+
+        void display();  // hàm
+        // {
+        //     cout << a << endl;
+        //     cout << b << endl;
+        // }
+};
+
+void User::display()
+{
+    cout << a << endl;
+    cout << b << endl;
+    cout << c << endl;
+}
+
+int main()
+{
+    User user1(1, 2, 'a'), user2(3,4,'b');
+
+    user1.display();
+
+    user2.display();
+
+    return 0;
+}
+```
+
+> ➡️ Kết quả:
+>
+> ![image](https://github.com/user-attachments/assets/bfd48341-5b1f-4dae-bbc3-949a0198b721)
+
+</details>
+
+
 [🔼 _UP_](#top)
 
 </details>
