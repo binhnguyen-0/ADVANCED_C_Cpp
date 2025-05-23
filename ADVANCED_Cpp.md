@@ -55,11 +55,11 @@ class User
         user1.display();
     }
 
-    void display()        // định nghĩa hàm bên trong class
-    {
-        cout << a << endl;
-        cout << b << endl;
-    }
+    void display();        // định nghĩa hàm bên trong class
+    //{
+    //    cout << a << endl;
+    //    cout << b << endl;
+    //}
 };
 
 void User::display()     // định nghĩa hàm bên ngoài class sử dụng toán tử `::`
@@ -85,9 +85,74 @@ int main()
 
 #### b) Special Member Functions - Methods:
 
-- Constructor là một method sẽ được gọi tự động khi khởi tạo object, và có tên trùng với tên của class.
+- Constructor:
+  - Là một hàm - method.
+  - Đặc điểm:
+    - Không có kiểu trả về.
+    - Trùng tên với class.
+    - Dùng để khởi tạo những giá trị cho các biến trong class.
+    - Tự động gọi khi khởi tạo một object.
+> 👉 Ví dụ:
+>     - Sử dụng Constructor để khởi tạo cho các biến mà không cần qua các object.
 
+```c
+#include <iostream>
+using namespace std;
 
+class User
+{
+    public:
+        int a;
+        double b;
+        char c;
+
+        // Constructor
+        User() 
+        {
+            a = 1;
+            b = 2.5;
+            c = 'A';
+        }
+
+        void create()   // hàm
+        {
+            User user1;
+
+            user1.a = 30;
+            user1.b = 20;
+            user1.display();
+        }
+
+        void display();  // hàm
+        // {
+        //     cout << a << endl;
+        //     cout << b << endl;
+        // }
+};
+
+void User::display()
+{
+    cout << a << endl;
+    cout << b << endl;
+    cout << c << endl;
+}
+
+int main()
+{
+    User user1, user2;
+
+    // user1.a = 10;
+    // user1.b = 20.6;
+
+    user1.display();
+
+    return 0;
+}
+```
+
+> ➡️ Kết quả:
+>
+> ![image](https://github.com/user-attachments/assets/08f00124-8019-4d29-8359-0ab84d586715)
 
  
 [🔼 _UP_](#top)
