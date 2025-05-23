@@ -83,6 +83,7 @@ int main()
 
 </details>
 
+
 #### b) Special Member Functions - Methods:
 
 - Constructor:
@@ -322,6 +323,8 @@ int main()
 
 </details>
 
+#### c) Từ khóa static trong class:
+
 - Biến static trong class:
   - Khi 1 biến static được khai báo trong class, thì tất cả các object sẽ dùng chung địa chỉ của biến đó.
   - Khai báo trong class và khởi tạo bên ngoài class.
@@ -337,10 +340,13 @@ class User
 {
     public:
         static int x;
+        static int *d;
 
 };
 
 int User::x = 0;
+
+int* User::d = nullptr;
 
 int main()
 {
@@ -362,6 +368,47 @@ int main()
 
 </details>
 
+- Hàm static trong class:
+  - Độc lập với các object, không cần thông qua object gọi ra, có thể gọi trực tiếp từ class.
+  - Có thể được gọi khi không có object nào tồn tại.
+  - Chỉ được sử dụng các biến static.
+
+<details>
+<summary>🔖 <b>staticMethod.cpp</b></summary>
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class User
+{
+    public:
+        int a;
+        static int x;
+
+        static void test()
+        {
+            cout << "static method\n";
+            cout << x;                      // chỉ sử dụng được biến static
+        }
+};
+
+int User::x = 0;
+
+
+int main()
+{
+    User user1, user2;
+
+    user1.test;     // gọi qua object
+
+    User::test();   // gọi trực tiếp từ class
+
+    return 0;
+}
+```
+
+</details>
 
 [🔼 _UP_](#top)
 
