@@ -86,12 +86,16 @@ int main()
 #### b) Special Member Functions - Methods:
 
 - Constructor:
-  - Là một hàm - method.
+  - Là một hàm - method, có 3 dạng:
+    - Không tham số.
+    - Có tham số.
+    - Danh sách khởi tạo (Initialization list).
   - Đặc điểm:
     - Không có kiểu trả về.
     - Trùng tên với class.
     - Dùng để khởi tạo những giá trị cho các biến trong class.
     - Tự động gọi khi khởi tạo một object.
+  
 > 👉 Ví dụ:
 >     - Sử dụng Constructor để khởi tạo cho các biến mà không cần qua các object.
 
@@ -162,6 +166,17 @@ int main()
 </details>
 
 > Constructor có tham số:
+> - Có 2 loại:
+>   - Có giá trị mặc định: khi khởi tạo object không cần thiết truyền giá trị.
+ ```cpp
+      User(int _a = 1, double _b = 2, char _c = 'd')
+       {
+            a = _a;
+            b = _b;
+            c = _c;
+       }
+ ```
+>   - Không có giá trị mặc định: khi khởi tạo object bắt buộc phải truyền giá trị.
 
 <details>
 <summary>🔖 <b>constructor.cpp</b></summary>
@@ -178,7 +193,7 @@ class User
         char c;
 
         // Constructor
-        User(int _a, double _b, char _c) 
+        User(int _a, double _b, char _c)   // tham số không có giá trị mặc định
         {
             a = _a;
             b = _b;
@@ -220,6 +235,130 @@ int main()
 > ➡️ Kết quả:
 >
 > ![image](https://github.com/user-attachments/assets/bfd48341-5b1f-4dae-bbc3-949a0198b721)
+
+</details>
+
+> Constructor danh sách khởi tạo:
+>  - Liệt kê ra một danh sách các biến và các giá trị sẽ truyền vào cho các biến đó.
+>  - Không cần phải gán giá trị cho các biến nữa.
+>  - Sử dụng dấu ':' để Compiler biết mình sử dụng danh sách khởi tạo.
+>  - Câu lệnh bên trong body sẽ được thực thi sau danh sách khởi tạo.
+ ```cpp
+      User(int _a = 1, double _b = 2, char _c = 'd')
+       : a(_a), b(_b), c(_c){}
+ ```
+
+- Destructor:
+  - Là một hàm - method, không có tham số.
+  - Đặc điểm:
+    - Không có kiểu trả về.
+    - Trùng tên với class, nhưng có thêm dấu '~' phía trước.
+    - Tự động gọi trước khi một object được thu hồi.
+    - Dùng để xóa dữ liệu của các biến.
+  
+> 👉 Ví dụ:
+> - Trước khi các object cục bộ trong stack được thu hổi ở hàm main thì destructor sẽ được tự động gọi ra.
+
+<details>
+<summary>🔖 <b>destructor.cpp</b></summary>
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class User
+{
+    public:
+        int a;
+        double b;
+        char c;
+
+        // Constructor
+        User(int _a, double _b, char _c) 
+        {
+            a = _a;
+            b = _b;
+            c = _c;
+        }
+
+        // Destructor
+        ~User() 
+        {
+            printf("Destructor!\n");
+            a = b = 0;
+            c = '\n';
+            display();
+        }
+
+        void display();
+        // {
+        //     cout << a << endl;
+        //     cout << b << endl;
+        // }
+};
+
+void User::display()
+{
+    cout << a << endl;
+    cout << b << endl;
+    cout << c << endl;
+}
+
+int main()
+{
+    User user1(1, 2, 'a'), user2(3,4,'b');
+
+    user1.display();
+
+    user2.display();
+
+    return 0;
+}
+```
+
+> ➡️ Kết quả:
+>
+> ![image](https://github.com/user-attachments/assets/1836ffd8-1085-4c2b-b3dc-fac7b77a8304)
+
+</details>
+
+- Biến static trong class:
+  - Khi 1 biến static được khai báo trong class, thì tất cả các object sẽ dùng chung địa chỉ của biến đó.
+  - Khai báo trong class và khởi tạo bên ngoài class.
+ 
+<details>
+<summary>🔖 <b>staticEx.cpp</b></summary>
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class User
+{
+    public:
+        static int x;
+
+};
+
+int User::x = 0;
+
+int main()
+{
+    User user1, user2;
+
+    user1.x = 100;
+    cout << "x: " << user1.x << endl;
+
+    user2.x = 200;
+    cout << "x: " << user2.x << endl;
+
+    return 0;
+}
+```
+
+> ➡️ Kết quả:
+>
+> ![image](https://github.com/user-attachments/assets/9954845c-74c7-4b53-8913-5750c35cfb2c)
 
 </details>
 
