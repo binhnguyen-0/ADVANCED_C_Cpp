@@ -84,6 +84,11 @@ int main()
 </details>
 
 
+> 👉 Ví dụ: Cấp độ truy cập private:
+> - không thể truy cập từ ngoài class, phải truy cập thông qua trung gian ở cấp độ public.
+> - truy cập bên trong class
+
+
 #### b) Special Member Functions - Methods:
 
 - Constructor:
@@ -413,3 +418,16 @@ int main()
 [🔼 _UP_](#top)
 
 </details>
+
+
+<details>
+<summary>🔖 <b>Bài 16: OPP</b></summary>
+
+### 📑 I. Khái niệm:
+
+
+[🔼 _UP_](#top)
+
+</details>
+
+
