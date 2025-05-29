@@ -640,8 +640,12 @@ class SinhVien
 
 #### 3. Tính kế thừa: 
 
-- 
-
+- Một class có thể sử dụng lại những property hay method được khai báo trong những class khác.
+- Cú pháp:
+  - `class derivedclass : public baseclass`
+- Có 3 kiểu kế thừa:
+  - public, private và protected.
+ 
 
 [🔼 _UP_](#top)
 
