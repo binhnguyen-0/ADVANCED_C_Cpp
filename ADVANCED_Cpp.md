@@ -96,13 +96,22 @@ int main()
 
 using namespace std;
 
-class User
+class SinhVien
 {
     private:
         string name;
+        int age;
         int id;
 
     public:
+        // Tự động +1 khi khởi tạo 1 object.
+        SinhVien()
+        {
+            static int _id = 1;
+            id = _id;
+            _id++;
+        }
+
         // Hàm kiểm tra xem tên có hợp lệ không
         bool checkName(string str)
         {
@@ -117,13 +126,19 @@ class User
             return true;
         }
 
+        // Hàm kiểm tra xem tuổi có hợp lệ không
+        bool checkAge(int age)
+        {
+            if (age <= 0) return false;
+            return true;
+        }
+
         // Hàm truy cập vào name cấp độ private
         void setName(string newName)
         {
             if (checkName(newName))
             {
                 name = newName;
-                cout << newName << endl;
             }
             else
             {
@@ -131,14 +146,47 @@ class User
                 name = "";
             }
         }
+
+        // Hàm truy cập vào age cấp độ private
+        void setAge(int newAge)
+        {
+            if (checkAge(newAge))
+            {
+                age = newAge;
+            }
+            else
+            {
+                cout << "Unvalid age !" << endl;
+                age = 0;
+            }
+        }
+
+        // Hàm hiển thị
+        void display()
+        {
+            cout << "Tên: " << name << endl;
+            cout << "Tuổi: " << age << endl;
+            cout << "MSV: " << id << endl;
+        }
 };
 
 int main()
 {
-    User user1, user2;
+    SinhVien user1, user2;
 
-    user1.setName("ABC2");      // phải truy cập name thông qua hàm setName ở cấp độ public
+    // phải truy cập các property ở cấp độ private thông qua hàm setName ở cấp độ public
+    user1.setName("A");      
+    user1.setAge(1);    
+    user1.display();        
 
+    cout << endl;
+
+    user2.setName("B");
+    user2.setAge(2);
+    user2.display();
+
+    cout << endl;
+    
     return 0;
 }
 ```
@@ -480,6 +528,52 @@ int main()
 <summary>🔖 <b>Bài 16: OPP</b></summary>
 
 ### 📑 I. Khái niệm:
+
+#### 1. Tính đóng gói: 
+
+- Tính đóng gói (Encapsulation) là ẩn đi các property khỏi người dùng. Nghĩa là khai báo các property ở quyền truy cập private hoặc protected, không thể truy cập chúng từ các object bên ngoài.
+
+```cpp
+class SinhVien
+{
+    private:
+        string name;    // tính đóng gói
+        int age;        // tính đóng gói
+        int id;         // tính đóng gói
+}
+```
+
+#### 1. Tính trừu tượng: 
+
+- Tính trừu tượng là ẩn đi các hàm khỏi người dùng. Nghĩa là khai báo các hàm ở quyền truy cập private hoặc protected, không thể truy cập chúng từ các object bên ngoài.
+
+```cpp
+class SinhVien
+{
+    private:
+       /* Tính trừu tượng: khai báo, định nghĩa hàm ở cấp private*/
+        // Hàm kiểm tra xem tên có hợp lệ không
+        bool checkName(string str)
+        {
+            for (int i = 0; i < str.length(); i++)
+            {
+                char c = str[i];
+                if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c == ' ')))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Hàm kiểm tra xem tuổi có hợp lệ không
+        bool checkAge(int age)
+        {
+            if (age <= 0) return false;
+            return true;
+        }
+}
+```
 
 
 [🔼 _UP_](#top)
