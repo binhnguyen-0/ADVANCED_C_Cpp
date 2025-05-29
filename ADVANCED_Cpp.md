@@ -525,7 +525,7 @@ int main()
 
 
 <details>
-<summary>🔖 <b>Bài 16: OPP</b></summary>
+<summary>🔖 <b>Bài 16: OOP</b></summary>
 
 ### 📑 I. Khái niệm:
 
