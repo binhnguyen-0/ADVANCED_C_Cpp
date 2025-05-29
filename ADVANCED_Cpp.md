@@ -28,8 +28,8 @@ class class_Name
     - Cấp độ mặc định là private.
 
 > 👉 Ví dụ: Cấp độ truy cập public:
-> - truy cập từ ngoài class
-> - truy cập bên trong class
+> - truy cập từ ngoài class.
+> - truy cập bên trong class.
 
 <details>
 <summary>🔖 <b>publicEx.cpp</b></summary>
@@ -83,11 +83,67 @@ int main()
 
 </details>
 
-
 > 👉 Ví dụ: Cấp độ truy cập private:
 > - không thể truy cập từ ngoài class, phải truy cập thông qua trung gian ở cấp độ public.
-> - truy cập bên trong class
+> - truy cập bên trong class.
 
+<details>
+<summary>🔖 <b>privateEx.cpp</b></summary>
+
+```cpp
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class User
+{
+    private:
+        string name;
+        int id;
+
+    public:
+        // Hàm kiểm tra xem tên có hợp lệ không
+        bool checkName(string str)
+        {
+            for (int i = 0; i < str.length(); i++)
+            {
+                char c = str[i];
+                if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c == ' ')))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Hàm truy cập vào name cấp độ private
+        void setName(string newName)
+        {
+            if (checkName(newName))
+            {
+                name = newName;
+                cout << newName << endl;
+            }
+            else
+            {
+                cout << "Unvalid name !" << endl;
+                name = "";
+            }
+        }
+};
+
+int main()
+{
+    User user1, user2;
+
+    user1.setName("ABC2");      // phải truy cập name thông qua hàm setName ở cấp độ public
+
+    return 0;
+}
+```
+
+</details>
 
 #### b) Special Member Functions - Methods:
 
