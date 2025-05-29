@@ -193,6 +193,118 @@ int main()
 
 </details>
 
+> 👉 Ví dụ: Cấp độ truy cập protected:
+> - không thể truy cập từ ngoài class, phải truy cập thông qua trung gian ở cấp độ public.
+> - truy cập bên trong base class và derived class.
+
+```cpp
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class DoiTuong
+{
+    protected:
+        string name;
+        int age;
+        int id;
+
+        bool checkName(string str)
+        {
+            for (int i = 0; i < str.length(); i++)
+            {
+                char c = str[i];
+                if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c == ' ')))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        bool checkAge(int age)
+        {
+            if (age <= 0) return false;
+            return true;
+        }
+
+    public:
+    
+        DoiTuong()
+        {
+            static int _id = 1;
+            id = _id;
+            _id++;
+        }
+
+        void setName(string newName)
+        {
+            if (checkName(newName))
+            {
+                name = newName;
+            }
+            else
+            {
+                cout << "Unvalid name !" << endl;
+                name = "";
+            }
+        }
+
+        void setAge(int newAge)
+        {
+            if (checkAge(newAge))
+            {
+                age = newAge;
+            }
+            else
+            {
+                cout << "Unvalid age !" << endl;
+                age = 0;
+            }
+        }
+
+        string getName()
+        {
+            return name;
+        }
+
+        void display()
+        {
+            cout << "Tên: " << getName() << endl;
+            cout << "Tuổi: " << age << endl;
+            cout << "MSV: " << id << endl;
+        }
+};
+
+class SinhVien : public DoiTuong
+{
+    private:
+        string chuyenNganh;
+    public:
+        void create()
+        {
+            // Kế thừa được cả method và property cấp độ protected trong DoiTuong
+            SinhVien sv1;
+            sv1.setAge(6);
+            sv1.age;
+            sv1.checkAge(6);
+        }
+};
+
+int main()
+{
+    SinhVien user1, user2;
+
+    // Kế thừa được những method cấp độ public trong class DoiTuong, không kế thừa được cấp độ protected trong DoiTuong
+    user1.setAge(9);
+    user1.setName("n");
+
+    return 0;
+}
+```
+
+
 #### b) Special Member Functions - Methods:
 
 - Constructor:
