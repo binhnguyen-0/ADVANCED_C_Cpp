@@ -756,12 +756,32 @@ class SinhVien
 - Chỉ có thể kế thừa được những property và method ở cấp độ public, protected trong base class còn private thì không thể kế thừa.
 - Cú pháp:
   - `class derivedclass : public baseclass`
+  - Đa kế thừa: `class derivedClass : public baseclass1, protected baseclass2, private baseclass3`
 - Có 3 kiểu kế thừa:
   - public, private và protected.
- 
-> 👉 Tính kế thừa kiểu public:
-> - không thể truy cập từ ngoài class, phải truy cập thông qua trung gian ở cấp độ public.
-> - truy cập bên trong base class và derived class.
+
+- Cách truy cập của các property hay method trong base class:
+
+|Cấp độ truy cập|Base class|Derived class|Thông qua object|
+|:---:|:---:|:---:|:---:|
+|`public`|✔️|✔️|✔️|
+|`protected`|✔️|✔️|❌|
+|`private`|✔️|❌|❌|
+
+- Cách chuyển đổi cấp độ truy cập khi kế thừa từ các cấp truy cập của base class:
+
+|Kiểu kế thừa|public|protected|private|
+|:---:|:---:|:---:|:---:|
+|`public`|giữ nguyên|giữ nguyên|không kế thừa|
+|`protected`|protected|protected|không kế thừa|
+|`private`|private|private|không kế thừa|
+
+> 👉 Ví dụ:
+> 
+
+```cpp
+
+```
 
 
 [🔼 _UP_](#top)
