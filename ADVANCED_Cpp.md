@@ -543,7 +543,7 @@ class SinhVien
 }
 ```
 
-#### 1. Tính trừu tượng: 
+#### 2. Tính trừu tượng: 
 
 - Tính trừu tượng là ẩn đi các hàm khỏi người dùng. Nghĩa là khai báo các hàm ở quyền truy cập private hoặc protected, không thể truy cập chúng từ các object bên ngoài.
 
@@ -574,6 +574,73 @@ class SinhVien
         }
 }
 ```
+
+- Hàm setter dùng để cài dữ liệu, còn hàm getter dùng để lấy dữ liệu.
+
+```cpp
+class SinhVien
+{
+    private:
+        string name;
+        int age;
+        int id;
+
+    public:
+        // Constructor
+        SinhVien()
+        {
+            static int _id = 1;
+            id = _id;
+            _id++;
+        }
+
+        // setter
+        void setName(string newName)
+        {
+            if (checkName(newName))
+            {
+                name = newName;
+            }
+            else
+            {
+                cout << "Unvalid name !" << endl;
+                name = "";
+            }
+        }
+
+        // setter: đặt dữ liệu
+        void setAge(int newAge)
+        {
+            if (checkAge(newAge))
+            {
+                age = newAge;
+            }
+            else
+            {
+                cout << "Unvalid age !" << endl;
+                age = 0;
+            }
+        }
+
+        // getter: lấy dữ liệu
+        string getName()
+        {
+            return name;
+        }
+
+        // Hàm hiển thị
+        void display()
+        {
+            cout << "Tên: " << getName << endl;
+            cout << "Tuổi: " << age << endl;
+            cout << "MSV: " << id << endl;
+        }
+};
+```
+
+#### 3. Tính kế thừa: 
+
+- 
 
 
 [🔼 _UP_](#top)
