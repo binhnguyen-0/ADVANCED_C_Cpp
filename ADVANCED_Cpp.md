@@ -776,13 +776,88 @@ class SinhVien
 |`protected`|protected|protected|không kế thừa|
 |`private`|private|private|không kế thừa|
 
-> 👉 Ví dụ:
-> 
+> 👉 Ví dụ: Các trường hợp kế thừa cấp độ public, protected, private.
 
+<details>
+<summary>🔖 <b>main.cpp</b></summary>
+  
 ```cpp
+#include <iostream>
+#include <string>
 
+using namespace std;
+
+class BaseClass
+{
+    public:
+        int a;
+    
+    protected:
+        int b;
+
+    private:
+        int c;
+};
+
+class publicDerivedClass : public BaseClass
+{
+    public:
+        void testPublic()
+        {
+            a = 1;          // truy cập được vào cấp public
+            b = 2;          // truy cập được vào protected
+            // c = 3;       // không thể truy cập vào cấp private của BaseClass
+        }
+
+};
+
+class protectedDerivedClass : protected BaseClass
+{
+    public:
+        void testProtected()
+        {
+            a = 1;          // truy cập được vào cấp public và trở thành protected trong protectedDerivedClass
+            b = 2;          // truy cập được vào cấp protected và trở thành protected trong protectedDerivedClass
+            // c = 3;       // không thể truy cập vào cấp private của BaseClass
+        }
+
+};
+
+class privateDerivedClass : private BaseClass
+{
+    public:
+        void testPrivate()
+        {
+            a = 1;          // truy cập được vào cấp public và trở thành private trong privateDerivedClass
+            b = 2;          // truy cập được vào cấp protected và trở thành private trong privateDerivedClass
+            // c = 3;       // không thể truy cập vào cấp private của BaseClass
+        }
+
+};
+
+int main()
+{
+    // Kế thừa public
+    publicDerivedClass pb;
+    pb.a = 1;                   // a giữ nguyên là public
+    //pb.b = 2;                 // b giữ nguyên là protected: không truy cập được từ bên ngoài
+    //pb.c = 3;                 // c giữ nguyên là private: không được kế thừa
+
+    // Kế thừa protected
+    protectedDerivedClass pt;
+    //pt.a = 1;                 // a trở thành protected: không truy cập được từ bên ngoài
+    //pb.b = 2;                 // b trở thành protected: không truy cập được từ bên ngoài
+    //pb.c = 3;                 // c giữ nguyên là private: không được kế thừa
+
+    // Kế thừa private
+    privateDerivedClass pv;
+    //pt.a = 1;                 // a trở thành private: không truy cập được từ bên ngoài
+    //pb.b = 2;                 // b trở thành private: không truy cập được từ bên ngoài
+    //pb.c = 3;                 // c giữ nguyên là private: không được kế thừa
+}
 ```
 
+</details>
 
 [🔼 _UP_](#top)
 
