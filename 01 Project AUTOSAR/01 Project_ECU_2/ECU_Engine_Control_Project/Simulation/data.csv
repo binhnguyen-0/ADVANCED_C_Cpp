@@ -1,0 +1,12 @@
+temp,27.09
+voltage,59.32
+current,1.35
+torque,5.00
+currentSpeed,115.00
+requestedSpeed,120
+can,0x3F0 8 03 2B 1D 00 00 00 00 00
+newTemperature,45.99
+newStatus,OK
+temperature,28.75
+status,ERROR
+mode,AUTO
