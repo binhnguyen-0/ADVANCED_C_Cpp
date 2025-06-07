@@ -1,7 +1,0 @@
-temp,31.45
-voltage,49.59
-current,20.81
-torque,77.00
-currentSpeed,43.00
-requestedSpeed,120
-can,0x3F0 8 03 A0 28 00 00 00 00 00
