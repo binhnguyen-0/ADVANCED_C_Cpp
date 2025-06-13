@@ -29,7 +29,7 @@
     - AUTOSAR project.
     
 ## 🧠 What I Learned
-- Gained Deep understanding in C/C++.
+- Gained deep understanding in C/C++.
 - Hands-on with data structure, algorithm, OOP, SOLID, template, STL, AUTOSAR.
 - Built an automotive software project based on AUTOSAR CP.
 
